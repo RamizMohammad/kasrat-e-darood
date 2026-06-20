@@ -1,0 +1,8 @@
+tests/
+*.env
+docker-compose.yml
+Dockerfile
+pytest.ini
+scripts_seed.py
+.pytest
+__pycache__
