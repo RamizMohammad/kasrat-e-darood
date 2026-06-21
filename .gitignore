@@ -1,5 +1,7 @@
 tests/
 *.env
+.env.example
+.dockerignore
 docker-compose.yml
 Dockerfile
 pytest.ini

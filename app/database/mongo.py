@@ -27,10 +27,12 @@ mongo = _Mongo()
 async def connect_to_mongo() -> None:
     """Open the Motor client and register Beanie document models."""
     logger.info("Connecting to MongoDB …")
+    is_atlas = "mongodb+srv" in settings.MONGODB_URI or "mongodb.net" in settings.MONGODB_URI
     mongo.client = AsyncIOMotorClient(
         settings.MONGODB_URI,
         uuidRepresentation="standard",
         tz_aware=True,
+        **({"tls": True, "tlsAllowInvalidCertificates": False} if is_atlas else {}),
     )
     await init_beanie(database=mongo.db, document_models=ALL_DOCUMENT_MODELS)
     logger.info("MongoDB connected, Beanie initialized ({} models)",

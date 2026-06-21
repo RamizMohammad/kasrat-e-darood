@@ -1,7 +1,7 @@
 """Authentication endpoints."""
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Response, status
 
 from app.dependencies.auth import get_current_user
 from app.models.user import User
@@ -30,10 +30,11 @@ async def refresh(body: RefreshRequest) -> TokenPair:
     return await auth_service.refresh(body.refresh_token)
 
 
-@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
-async def logout(body: LogoutRequest) -> None:
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT, response_class=Response)
+async def logout(body: LogoutRequest) -> Response:
     """Revoke a refresh token."""
     await auth_service.logout(body.refresh_token)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.get("/me", response_model=UserOut)

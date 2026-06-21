@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from beanie import PydanticObjectId
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, Response, status
 
 from app.dependencies.auth import get_current_user, require_permission
 from app.models.group import Membership
@@ -62,11 +62,12 @@ async def update_group(
     )
 
 
-@router.post("/{group_id}/leave", status_code=status.HTTP_204_NO_CONTENT)
+@router.post("/{group_id}/leave", status_code=status.HTTP_204_NO_CONTENT, response_class=Response)
 async def leave_group(
     group_id: PydanticObjectId, user: User = Depends(get_current_user)
-) -> None:
+) -> Response:
     await group_service.leave_group(user, group_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.post("/{group_id}/invite-code")
