@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@color/surface_container_lowest"
+    app:contentPadding="16dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="center_vertical" android:orientation="horizontal">
+        <FrameLayout android:layout_width="44dp" android:layout_height="44dp"
+            android:background="@drawable/bg_icon_chip">
+            <ImageView android:id="@+id/quick_icon"
+                android:layout_width="22dp" android:layout_height="22dp"
+                android:layout_gravity="center" android:src="@drawable/ic_book_open"
+                app:tint="@color/primary" />
+        </FrameLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content" android:layout_marginStart="14dp"
+            android:orientation="vertical">
+            <TextView android:id="@+id/quick_title"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Surah Yaseen" android:textSize="17sp" android:fontFamily="serif"
+                android:textStyle="bold" android:textColor="@color/on_surface" />
+            <TextView android:id="@+id/quick_subtitle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Favorite Recitation" android:textSize="12sp"
+                android:textColor="@color/on_surface_variant" />
+        </LinearLayout>
+        <ImageView android:layout_width="28dp" android:layout_height="28dp"
+            android:src="@drawable/ic_add" app:tint="@color/primary" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

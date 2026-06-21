@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Noor design system (from Stitch DESIGN.md) -->
+    <color name="surface">#fafaf5</color>
+    <color name="surface_dim">#dadad5</color>
+    <color name="surface_container_lowest">#ffffff</color>
+    <color name="surface_container_low">#f4f4ef</color>
+    <color name="surface_container">#eeeee9</color>
+    <color name="surface_container_high">#e8e8e3</color>
+    <color name="surface_container_highest">#e3e3de</color>
+
+    <color name="on_surface">#1a1c19</color>
+    <color name="on_surface_variant">#3f4944</color>
+    <color name="inverse_surface">#2f312e</color>
+    <color name="inverse_on_surface">#f1f1ec</color>
+    <color name="outline">#6f7973</color>
+    <color name="outline_variant">#bec9c2</color>
+
+    <color name="primary">#004532</color>
+    <color name="on_primary">#ffffff</color>
+    <color name="primary_container">#065f46</color>
+    <color name="on_primary_container">#8bd6b7</color>
+    <color name="primary_fixed">#a6f2d1</color>
+
+    <color name="secondary">#735c00</color>
+    <color name="on_secondary">#ffffff</color>
+    <color name="secondary_container">#fed65b</color>
+    <color name="on_secondary_container">#745c00</color>
+    <color name="gold">#e9c349</color>
+    <color name="gold_dim">#c9a227</color>
+
+    <color name="tertiary">#004533</color>
+    <color name="tertiary_container">#1d5d49</color>
+    <color name="on_tertiary_container">#95d4ba</color>
+
+    <color name="error">#ba1a1a</color>
+    <color name="on_error">#ffffff</color>
+    <color name="error_container">#ffdad6</color>
+
+    <color name="background">#fafaf5</color>
+    <color name="on_background">#1a1c19</color>
+
+    <color name="heat_0">#e3e3de</color>
+    <color name="heat_1">#cfe3d6</color>
+    <color name="heat_2">#a6cdb6</color>
+    <color name="heat_3">#5e9e7e</color>
+    <color name="heat_4">#1d5d49</color>
+    <color name="heat_5">#004532</color>
+</resources>

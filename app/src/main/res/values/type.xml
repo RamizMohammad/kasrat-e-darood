@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Noor typography. "Display" roles use a scholarly serif (Source Serif 4),
+  functional UI uses Plus Jakarta Sans. To ship the exact Stitch fonts, drop
+  the TTFs into res/font/ and change the fontFamily values below to @font/...
+  (see app README). System serif / sans-serif are used as faithful fallbacks.
+-->
+<resources>
+    <style name="Text.Display" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.Display.Large">
+        <item name="android:textSize">34sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+    <style name="Text.Serif.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/on_surface</item>
+    </style>
+    <style name="Text.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/on_surface_variant</item>
+    </style>
+    <style name="Text.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/on_surface_variant</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+    <style name="Text.Overline" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/outline</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.12</item>
+    </style>
+
+    <!-- Primary emerald button -->
+    <style name="Widget.Noor.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="Widget.Noor.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="strokeColor">@color/outline_variant</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+    <style name="Widget.Noor.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">@color/surface_container_lowest</item>
+        <item name="contentPadding">20dp</item>
+    </style>
+    <style name="Widget.Noor.Chip" parent="Widget.Material3.Chip.Assist">
+        <item name="chipCornerRadius">50dp</item>
+    </style>
+</resources>

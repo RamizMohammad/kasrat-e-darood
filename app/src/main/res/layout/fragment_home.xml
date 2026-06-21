@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <View android:layout_width="44dp" android:layout_height="44dp"
+                android:background="@drawable/bg_avatar_green" />
+            <LinearLayout
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp" android:orientation="vertical">
+                <TextView android:id="@+id/txt_greeting"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/greeting" android:textSize="22sp"
+                    android:textStyle="bold" android:fontFamily="serif"
+                    android:textColor="@color/primary" />
+                <TextView android:id="@+id/txt_welcome"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Welcome back, Omar" android:textSize="13sp"
+                    android:textColor="@color/on_surface_variant" />
+            </LinearLayout>
+            <ImageView android:layout_width="24dp" android:layout_height="24dp"
+                android:src="@drawable/ic_bell" app:tint="@color/on_surface_variant" />
+        </LinearLayout>
+
+        <!-- Today's date -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Noor.Card"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                <!-- Skeleton -->
+                <LinearLayout android:id="@+id/date_skeleton"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View android:layout_width="96dp" android:layout_height="12dp"
+                        android:background="@drawable/bg_skeleton" />
+                    <View android:layout_width="180dp" android:layout_height="26dp"
+                        android:layout_marginTop="10dp" android:background="@drawable/bg_skeleton" />
+                    <View android:layout_width="140dp" android:layout_height="14dp"
+                        android:layout_marginTop="8dp" android:background="@drawable/bg_skeleton" />
+                    <View android:layout_width="90dp" android:layout_height="26dp"
+                        android:layout_marginTop="12dp" android:background="@drawable/bg_skeleton_pill" />
+                </LinearLayout>
+
+                <!-- Content -->
+                <LinearLayout android:id="@+id/date_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView style="@style/Text.Overline"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="TODAY'S DATE" />
+                    <TextView android:id="@+id/txt_hijri_date"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp" android:text="—"
+                        android:textSize="26sp" android:textStyle="bold" android:fontFamily="serif"
+                        android:textColor="@color/on_surface" />
+                    <TextView android:id="@+id/txt_greg_date"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="—" android:textColor="@color/on_surface_variant"
+                        android:textSize="14sp" />
+                    <TextView android:id="@+id/txt_fasting"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp" android:background="@drawable/bg_gold_chip"
+                        android:text="Fasting" android:textColor="@color/secondary"
+                        android:textSize="12sp" android:fontFamily="sans-serif-medium"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Prayer times -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Noor.Card"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                <!-- Skeleton -->
+                <LinearLayout android:id="@+id/prayer_skeleton"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View android:layout_width="160dp" android:layout_height="12dp"
+                        android:layout_marginBottom="6dp" android:background="@drawable/bg_skeleton" />
+                    <include layout="@layout/row_prayer_skeleton" />
+                    <include layout="@layout/row_prayer_skeleton" />
+                    <include layout="@layout/row_prayer_skeleton" />
+                    <include layout="@layout/row_prayer_skeleton" />
+                    <include layout="@layout/row_prayer_skeleton" />
+                </LinearLayout>
+
+                <!-- Content -->
+                <LinearLayout android:id="@+id/prayer_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView style="@style/Text.Overline" android:id="@+id/txt_prayer_location"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="PRAYER TIMES" />
+                    <include layout="@layout/row_prayer" android:id="@+id/row_fajr" />
+                    <include layout="@layout/row_prayer" android:id="@+id/row_dhuhr" />
+                    <include layout="@layout/row_prayer" android:id="@+id/row_asr" />
+                    <include layout="@layout/row_prayer" android:id="@+id/row_maghrib" />
+                    <include layout="@layout/row_prayer" android:id="@+id/row_isha" />
+                </LinearLayout>
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Countdown -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Noor.Card"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:gravity="center">
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:gravity="center_vertical" android:orientation="horizontal">
+                    <ImageView android:layout_width="16dp" android:layout_height="16dp"
+                        android:src="@drawable/ic_star" app:tint="@color/gold" />
+                    <TextView style="@style/Text.Overline"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp" android:text="COUNTDOWN TO JUMU'AH" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:orientation="horizontal" android:gravity="center">
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/txt_jumuah_days"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="—" android:textSize="34sp" android:textStyle="bold"
+                            android:fontFamily="serif" android:textColor="@color/primary" />
+                        <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="DAYS" />
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp" android:text=":" android:textSize="30sp"
+                        android:textColor="@color/outline_variant" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/txt_jumuah_hours"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="—" android:textSize="34sp" android:textStyle="bold"
+                            android:fontFamily="serif" android:textColor="@color/primary" />
+                        <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="HOURS" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" android:text="Prepare your heart"
+                    android:textColor="@color/on_surface_variant" android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Personal goal -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Noor.Card"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <TextView style="@style/Text.Headline"
+                        android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:text="@string/personal_goal"
+                        android:textSize="20sp" />
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:src="@drawable/ic_stats" app:tint="@color/secondary" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="160dp" android:layout_height="160dp"
+                    android:layout_gravity="center_horizontal" android:layout_marginTop="16dp">
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/goal_ring"
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:progress="70"
+                        android:indeterminate="false"
+                        app:indicatorColor="@color/primary"
+                        app:trackColor="@color/surface_container_high"
+                        app:indicatorSize="160dp"
+                        app:trackThickness="14dp"
+                        app:trackCornerRadius="8dp" />
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_gravity="center" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/goal_percent"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="70%" android:textSize="32sp" android:textStyle="bold"
+                            android:fontFamily="serif" android:textColor="@color/primary" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Complete" android:textColor="@color/on_surface_variant"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <TextView android:id="@+id/goal_subtitle"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:gravity="center"
+                    android:text="You've completed 5 out of 7 planned recitations this week."
+                    android:textColor="@color/on_surface_variant" android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_log_progress"
+                    style="@style/Widget.Noor.Button"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" android:text="@string/log_progress"
+                    app:icon="@drawable/ic_add" app:iconGravity="textStart"
+                    app:iconTint="@color/on_primary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Quick Add -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView style="@style/Text.Headline" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="@string/quick_add" android:textSize="20sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/manage_favorites" android:textColor="@color/secondary"
+                android:textSize="13sp" android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <include layout="@layout/item_quick_add" android:id="@+id/quick_yaseen"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <include layout="@layout/item_quick_add" android:id="@+id/quick_astagh"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        <!-- Group Activity -->
+        <TextView style="@style/Text.Headline" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginTop="24dp"
+            android:text="@string/group_activity" android:textSize="20sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_activity"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:nestedScrollingEnabled="false" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

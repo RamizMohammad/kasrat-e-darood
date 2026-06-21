@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_noor">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <FrameLayout
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:background="@drawable/bg_logo_circle"
+            android:elevation="4dp">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_star"
+                app:tint="@color/secondary"
+                xmlns:app="http://schemas.android.com/apk/res-auto" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/brand"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="@color/primary" />
+
+        <View
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_avatar_gold" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="48dp"
+        android:text="@string/spiritual_consistency"
+        android:textColor="@color/outline"
+        android:textSize="12sp"
+        android:letterSpacing="0.2"
+        android:fontFamily="sans-serif-medium" />
+</FrameLayout>

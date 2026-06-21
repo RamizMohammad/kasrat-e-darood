@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Kasrat-e-Darrod</string>
+    <string name="brand">Noor</string>
+    <string name="tagline">Mindful progress for your spiritual journey.</string>
+    <string name="greeting">Assalamu Alaikum</string>
+
+    <string name="welcome_back">Welcome back, %1$s</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="forgot">Forgot?</string>
+    <string name="or_continue_with">OR CONTINUE WITH</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="no_account">Don\'t have an account? </string>
+    <string name="register">Register</string>
+    <string name="have_account">Already have an account? </string>
+    <string name="login">Login</string>
+
+    <string name="email_tab">Email</string>
+    <string name="phone_tab">Phone Number</string>
+    <string name="hint_email">name@example.com</string>
+
+    <string name="welcome_to_noor">Welcome to Noor</string>
+    <string name="join_noor">Join Noor and begin your journey of mindful spiritual progress.</string>
+    <string name="personal_details">Personal details</string>
+    <string name="full_name">Full Name</string>
+    <string name="enter_name">Enter your name</string>
+    <string name="email_or_phone">Email or Phone Number</string>
+    <string name="cont">Continue</string>
+    <string name="step_1_of_3">Step 1 of 3</string>
+
+    <string name="log_progress">Log Progress</string>
+    <string name="quick_add">Quick Add</string>
+    <string name="manage_favorites">Manage Favorites</string>
+    <string name="group_activity">Group Activity</string>
+    <string name="personal_goal">Personal Goal</string>
+    <string name="library">Library</string>
+    <string name="weekly_insights">Weekly Insights</string>
+    <string name="view_full_leaderboard">View Full Leaderboard</string>
+    <string name="get_started">Get Started</string>
+    <string name="spiritual_consistency">SPIRITUAL CONSISTENCY</string>
+</resources>

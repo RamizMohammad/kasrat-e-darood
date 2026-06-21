@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:paddingHorizontal="24dp" android:paddingTop="24dp"
+        android:paddingBottom="24dp">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:orientation="horizontal">
+            <View android:layout_width="36dp" android:layout_height="36dp"
+                android:background="@drawable/bg_avatar_green" />
+            <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                android:layout_marginStart="12dp" android:text="@string/greeting" android:textSize="18sp"
+                android:textStyle="bold" android:fontFamily="serif" android:textColor="@color/primary" />
+            <ImageView android:layout_width="24dp" android:layout_height="24dp"
+                android:src="@drawable/ic_bell" app:tint="@color/on_surface_variant" />
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" android:text="@string/weekly_insights"
+            android:textSize="28sp" android:textStyle="bold" android:fontFamily="sans-serif-medium"
+            android:textColor="@color/on_surface" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Celebrating collective growth and individual consistency in our spiritual journey."
+            android:textColor="@color/on_surface_variant" android:textSize="14sp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                android:text="Anonymous Mode" android:textColor="@color/on_surface" android:textSize="14sp" />
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Podium -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Noor.Card"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="bottom" android:baselineAligned="false">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:gravity="center">
+                    <View android:layout_width="56dp" android:layout_height="56dp"
+                        android:background="@drawable/bg_avatar_green" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp" android:text="Sarah A." android:textStyle="bold"
+                        android:fontFamily="serif" android:textColor="@color/on_surface" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="420 Ayahs" android:textColor="@color/on_surface_variant" android:textSize="11sp" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:gravity="center">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:src="@drawable/ic_trophy" app:tint="@color/gold" />
+                    <View android:layout_width="72dp" android:layout_height="72dp"
+                        android:layout_marginTop="4dp" android:background="@drawable/bg_avatar_gold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp" android:text="Omar K." android:textStyle="bold"
+                        android:fontFamily="serif" android:textColor="@color/primary" android:textSize="16sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="584 Ayahs" android:textColor="@color/secondary" android:textSize="11sp" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:gravity="center">
+                    <View android:layout_width="56dp" android:layout_height="56dp"
+                        android:background="@drawable/bg_avatar_green" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp" android:text="Yusuf M." android:textStyle="bold"
+                        android:fontFamily="serif" android:textColor="@color/on_surface" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="392 Ayahs" android:textColor="@color/on_surface_variant" android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Group impact -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" app:cardCornerRadius="24dp" app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@drawable/bg_emerald_card" android:orientation="vertical" android:padding="20dp">
+                <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="GROUP IMPACT"
+                    android:textColor="@color/on_primary_container" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp" android:text="12,840" android:textSize="36sp"
+                    android:textStyle="bold" android:fontFamily="serif" android:textColor="@color/white" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Total Ayahs completed this week" android:textColor="@color/on_primary_container"
+                    android:textSize="13sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" android:text="↑ 12% more than last week"
+                    android:textColor="@color/primary_fixed" android:textSize="12sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Community standings -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView style="@style/Text.Headline" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="Community Standings" android:textSize="20sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="42 active members" android:textColor="@color/on_surface_variant" android:textSize="12sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_leaderboard"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:nestedScrollingEnabled="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_full_leaderboard"
+            style="@style/Widget.Noor.Button.Outlined"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" android:text="@string/view_full_leaderboard" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

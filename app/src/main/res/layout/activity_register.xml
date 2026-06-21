@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_noor"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="40dp">
+
+        <FrameLayout
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_avatar_green">
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_mosque"
+                app:tint="@color/primary" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/greeting"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:textColor="@color/primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/join_noor"
+            android:gravity="center"
+            android:textColor="@color/on_surface_variant"
+            android:textSize="16sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Noor.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            app:contentPadding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="horizontal">
+                        <View android:layout_width="8dp" android:layout_height="8dp"
+                            android:background="@drawable/bg_avatar_green" />
+                        <View android:layout_width="8dp" android:layout_height="8dp"
+                            android:layout_marginStart="6dp" android:background="@drawable/bg_avatar_gold"
+                            android:alpha="0.4" />
+                        <View android:layout_width="8dp" android:layout_height="8dp"
+                            android:layout_marginStart="6dp" android:background="@drawable/bg_avatar_gold"
+                            android:alpha="0.4" />
+                    </LinearLayout>
+                    <TextView style="@style/Text.Label"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/step_1_of_3" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" android:text="@string/personal_details"
+                    android:textSize="22sp" android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" android:textColor="@color/primary" />
+
+                <TextView style="@style/Text.Title"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" android:text="@string/full_name" />
+                <EditText
+                    android:id="@+id/input_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingHorizontal="16dp"
+                    android:hint="@string/enter_name"
+                    android:inputType="textPersonName"
+                    android:textColorHint="@color/outline"
+                    android:textColor="@color/on_surface" />
+
+                <TextView style="@style/Text.Title"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" android:text="@string/email_or_phone" />
+                <EditText
+                    android:id="@+id/input_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingHorizontal="16dp"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/outline"
+                    android:textColor="@color/on_surface" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_continue"
+                    style="@style/Widget.Noor.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/cont"
+                    app:icon="@drawable/ic_arrow_right"
+                    app:iconGravity="textEnd"
+                    app:iconTint="@color/on_primary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/have_account" android:textColor="@color/on_surface_variant" />
+            <TextView android:id="@+id/link_login"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/login" android:textColor="@color/primary"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
