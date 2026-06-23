@@ -26,8 +26,8 @@ jobs:
             echo "Starting deployment..."
             cd /root/Projects/kasrat-e-darood
             echo "===> Pulling latest code"
-            git fetch origin backend_production
-            git reset --hard origin/backend_production
+            git fetch origin server
+            git reset --hard origin/server
             echo "===> Stopping old containers"
             docker compose down
             echo "===> Building new image"
