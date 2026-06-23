@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kasrat-e-Darood — Join the Closed Beta</title>
+<meta name="description" content="Kasrat-e-Darood — mindful progress for your spiritual journey. Join the Android closed beta for early access to the community recitation tracker." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --surface:#fafaf5; --surface-low:#f4f4ef; --surface-high:#e8e8e3; --surface-highest:#e3e3de;
+    --container-lowest:#ffffff;
+    --on-surface:#1a1c19; --on-surface-variant:#3f4944; --outline:#6f7973; --outline-variant:#bec9c2;
+    --primary:#004532; --primary-container:#065f46; --on-primary:#ffffff; --primary-fixed:#a6f2d1;
+    --secondary:#735c00; --secondary-container:#fed65b; --gold:#e9c349;
+    --tertiary-container:#1d5d49; --error:#ba1a1a;
+    --radius-card:24px; --radius-input:14px;
+    --shadow: 0 2px 14px rgba(0,69,50,0.06);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+    color:var(--on-surface);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #eef3ee 0%, transparent 60%),
+      radial-gradient(1000px 500px at -10% 110%, #f6efe0 0%, transparent 55%),
+      var(--surface);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .serif { font-family:'Source Serif 4', Georgia, serif; }
+
+  /* Language-specific typography */
+  html[lang="hi"] body, html[lang="hi"] .serif { font-family:'Noto Sans Devanagari','Plus Jakarta Sans',sans-serif; }
+  html[lang="ur"] body { font-family:'Noto Nastaliq Urdu','Plus Jakarta Sans',sans-serif; line-height:2.1; }
+  html[lang="ur"] .serif { font-family:'Noto Nastaliq Urdu','Source Serif 4',serif; }
+  html[lang="ur"] h1 { line-height:1.7; }
+  html[lang="ur"] .pill, html[lang="ur"] .stat .l, html[lang="ur"] label .hint { letter-spacing:normal; }
+
+  .wrap { max-width:1100px; margin:0 auto; padding:0 clamp(16px,5vw,24px); }
+
+  /* Decorative star pattern */
+  body::before {
+    content:""; position:fixed; inset:0; z-index:-1; opacity:.04; pointer-events:none;
+    background-image:radial-gradient(currentColor 1.4px, transparent 1.4px);
+    background-size:28px 28px; color:var(--primary);
+  }
+
+  /* Nav */
+  nav { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:20px 0; flex-wrap:wrap; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .logo {
+    width:42px; height:42px; border-radius:13px; background:var(--primary);
+    display:grid; place-items:center; box-shadow:var(--shadow); flex:none;
+  }
+  .logo svg { width:22px; height:22px; }
+  .brand b { font-size:21px; color:var(--primary); letter-spacing:-.01em; }
+  .nav-right { display:flex; align-items:center; gap:8px; }
+  .langs { display:flex; background:var(--surface-high); border-radius:50px; padding:3px; }
+  .lang-btn {
+    border:none; background:transparent; cursor:pointer; font-family:inherit; font-size:13px; font-weight:600;
+    color:var(--on-surface-variant); padding:7px 12px; border-radius:50px; transition:.15s;
+  }
+  .lang-btn.active { background:var(--primary); color:#fff; }
+  .nav-cta {
+    background:var(--primary); color:#fff; text-decoration:none; font-weight:600;
+    padding:10px 18px; border-radius:50px; font-size:14px; white-space:nowrap;
+  }
+
+  /* Hero */
+  .hero { display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,5vw,48px); align-items:center; padding:32px 0 64px; }
+  .pill {
+    display:inline-flex; align-items:center; gap:8px; background:var(--surface-high);
+    color:var(--primary); border-radius:50px; padding:7px 14px; font-size:13px; font-weight:600;
+  }
+  .pill .dot { width:7px; height:7px; border-radius:50%; background:var(--gold); flex:none; }
+  h1 { font-size:clamp(34px,6.5vw,52px); line-height:1.06; letter-spacing:-.02em; color:var(--primary); margin:18px 0 16px; }
+  .lead { font-size:clamp(16px,2.4vw,19px); color:var(--on-surface-variant); max-width:34ch; }
+  .stats { display:flex; gap:28px; margin-top:28px; flex-wrap:wrap; }
+  .stat .n { font-size:30px; font-weight:700; color:var(--primary); }
+  .stat .l { font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--outline); font-weight:600; }
+  .features { margin-top:28px; display:grid; gap:14px; }
+  .feature { display:flex; gap:12px; align-items:flex-start; }
+  .feature .star { color:var(--gold); flex:none; margin-top:2px; }
+  .feature b { color:var(--on-surface); }
+  .feature span.t { color:var(--on-surface-variant); font-size:15px; }
+
+  /* Card / form */
+  .card {
+    background:rgba(255,255,255,.80); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.7); border-radius:var(--radius-card);
+    box-shadow:0 10px 40px rgba(0,69,50,.10); padding:clamp(22px,4vw,32px);
+  }
+  .card h2 { font-size:clamp(21px,3vw,24px); color:var(--primary); margin-bottom:4px; }
+  .card .sub { color:var(--on-surface-variant); font-size:14px; margin-bottom:22px; }
+  .field { margin-bottom:16px; }
+  label { display:block; font-size:13px; font-weight:600; color:var(--on-surface); margin-bottom:7px; }
+  label .hint { font-weight:400; color:var(--outline); }
+  input, select, textarea {
+    width:100%; font-family:inherit; font-size:16px; color:var(--on-surface);
+    background:var(--surface-low); border:1px solid var(--outline-variant);
+    border-radius:var(--radius-input); padding:13px 14px; outline:none; transition:border-color .15s, box-shadow .15s;
+  }
+  textarea { resize:vertical; min-height:74px; }
+  input:focus, select:focus, textarea:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(0,69,50,.12); }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .note { font-size:12.5px; color:var(--outline); margin-top:7px; display:flex; gap:6px; align-items:center; }
+  .note svg { flex:none; }
+  .consent { display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--on-surface-variant); margin:6px 0 18px; }
+  .consent input { width:auto; margin-top:3px; flex:none; }
+  button.submit {
+    width:100%; background:var(--primary); color:#fff; border:none; cursor:pointer;
+    font-family:inherit; font-size:16px; font-weight:600; padding:16px; border-radius:50px;
+    display:flex; align-items:center; justify-content:center; gap:8px; transition:transform .08s, background .15s;
+  }
+  button.submit:hover { background:var(--primary-container); }
+  button.submit:active { transform:scale(.99); }
+  button.submit:disabled { opacity:.6; cursor:not-allowed; }
+  [dir="rtl"] .submit svg { transform:scaleX(-1); }
+  .msg { margin-top:14px; font-size:14px; text-align:center; min-height:20px; }
+  .msg.err { color:var(--error); }
+  .hp { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+  /* Success state */
+  .success { text-align:center; display:none; }
+  .success .badge {
+    width:76px; height:76px; border-radius:50%; background:var(--primary-fixed);
+    display:grid; place-items:center; margin:0 auto 18px;
+  }
+  .success h2 { color:var(--primary); }
+  .success p { color:var(--on-surface-variant); margin-top:8px; }
+
+  /* Steps band */
+  .band { padding:40px 0 72px; }
+  .band h3 { text-align:center; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--outline); font-weight:600; }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:26px; }
+  .step { background:var(--container-lowest); border-radius:20px; padding:24px; box-shadow:var(--shadow); }
+  .step .num { width:34px; height:34px; border-radius:11px; background:var(--surface-high); color:var(--primary);
+    display:grid; place-items:center; font-weight:700; font-family:'Source Serif 4',serif; }
+  .step h4 { margin:14px 0 6px; font-size:17px; color:var(--on-surface); }
+  .step p { color:var(--on-surface-variant); font-size:14px; }
+
+  footer { border-top:1px solid var(--outline-variant); padding:24px 0; color:var(--outline); font-size:13px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  /* ===== Splash screen ===== */
+  #splash {
+    position:fixed; inset:0; z-index:1000; display:grid; place-items:center;
+    background:
+      radial-gradient(900px 500px at 50% 35%, #0a6b4e 0%, transparent 60%),
+      var(--primary);
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #splash.hide { opacity:0; visibility:hidden; }
+  .splash-inner { display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center; }
+  .splash-logo {
+    width:88px; height:88px; border-radius:26px; background:rgba(255,255,255,.10);
+    display:grid; place-items:center; backdrop-filter:blur(6px);
+    box-shadow:0 12px 40px rgba(0,0,0,.25);
+    animation:splashPop .8s cubic-bezier(.2,.8,.2,1) both, splashFloat 3s ease-in-out 0.8s infinite;
+  }
+  .splash-logo svg { width:46px; height:46px; animation:splashSpin 1.2s ease-out both; }
+  .splash-title {
+    font-family:'Source Serif 4',Georgia,serif; color:#fff; font-size:26px; letter-spacing:.01em;
+    opacity:0; animation:fadeUp .6s ease .35s forwards;
+  }
+  .splash-sub {
+    color:var(--primary-fixed); font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    opacity:0; animation:fadeUp .6s ease .55s forwards;
+  }
+  .splash-bar { width:140px; height:4px; border-radius:50px; background:rgba(255,255,255,.18); overflow:hidden; margin-top:6px; }
+  .splash-bar span { display:block; height:100%; width:40%; border-radius:50px; background:var(--gold); animation:loadBar 1.6s ease-in-out infinite; }
+  @keyframes splashPop { 0%{transform:scale(.4);opacity:0} 100%{transform:scale(1);opacity:1} }
+  @keyframes splashFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  @keyframes splashSpin { 0%{transform:rotate(-90deg) scale(.6);opacity:0} 100%{transform:rotate(0) scale(1);opacity:1} }
+  @keyframes loadBar { 0%{transform:translateX(-120%)} 100%{transform:translateX(360%)} }
+
+  /* ===== Language picker modal ===== */
+  #lang-modal {
+    position:fixed; inset:0; z-index:900; display:grid; place-items:center; padding:20px;
+    background:rgba(10,30,24,.45); backdrop-filter:blur(6px);
+    opacity:0; visibility:hidden; transition:opacity .35s ease, visibility .35s ease;
+  }
+  #lang-modal.show { opacity:1; visibility:visible; }
+  .lang-sheet {
+    background:var(--container-lowest); border-radius:28px; padding:30px clamp(22px,4vw,34px);
+    width:min(420px,100%); box-shadow:0 24px 70px rgba(0,69,50,.28); text-align:center;
+    transform:translateY(24px) scale(.96); opacity:0; transition:transform .4s cubic-bezier(.2,.8,.2,1), opacity .4s ease;
+  }
+  #lang-modal.show .lang-sheet { transform:translateY(0) scale(1); opacity:1; }
+  .lang-sheet .ico {
+    width:60px; height:60px; border-radius:18px; background:var(--surface-high); color:var(--primary);
+    display:grid; place-items:center; margin:0 auto 16px; font-size:26px;
+  }
+  .lang-sheet h3 { font-family:'Source Serif 4',serif; color:var(--primary); font-size:22px; margin-bottom:4px; }
+  .lang-sheet p { color:var(--on-surface-variant); font-size:14px; margin-bottom:22px; }
+  .lang-options { display:grid; gap:10px; }
+  .lang-option {
+    display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer;
+    border:1.5px solid var(--outline-variant); background:var(--surface-low); border-radius:16px;
+    padding:14px 18px; font-family:inherit; font-size:16px; font-weight:600; color:var(--on-surface);
+    transition:border-color .15s, background .15s, transform .12s;
+  }
+  .lang-option:hover { border-color:var(--primary); background:#fff; transform:translateY(-2px); }
+  .lang-option .native { color:var(--outline); font-weight:500; font-size:14px; }
+  .lang-option svg { color:var(--primary); opacity:0; transform:translateX(-6px); transition:.15s; }
+  .lang-option:hover svg { opacity:1; transform:translateX(0); }
+
+  /* ===== Entrance + scroll animations ===== */
+  @media (prefers-reduced-motion:no-preference){
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity:1; transform:none; }
+    .hero-anim > * { opacity:0; transform:translateY(18px); animation:fadeUp .7s cubic-bezier(.2,.8,.2,1) forwards; }
+    .card.hero-anim-card { opacity:0; transform:translateY(18px) scale(.99); animation:fadeUp .8s cubic-bezier(.2,.8,.2,1) .25s forwards; }
+    nav { opacity:0; transform:translateY(-12px); animation:fadeDown .6s ease forwards; }
+    .logo:hover { animation:wiggle .5s ease; }
+    .feature .star { display:inline-block; }
+    .feature:hover .star { animation:starPulse .6s ease; }
+    .step { transition:transform .25s ease, box-shadow .25s ease; }
+    .step:hover { transform:translateY(-6px); box-shadow:0 14px 36px rgba(0,69,50,.12); }
+    .nav-cta, .pill { transition:transform .2s ease, box-shadow .2s ease; }
+    .nav-cta:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,69,50,.25); }
+  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes wiggle { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-8deg)} 75%{transform:rotate(8deg)} }
+  @keyframes starPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
+  /* Counter pop when stat numbers arrive */
+  .stat .n.pop { animation:numPop .5s ease; }
+  @keyframes numPop { 0%{transform:scale(.6);opacity:.3} 60%{transform:scale(1.12)} 100%{transform:scale(1);opacity:1} }
+  /* Success badge entrance */
+  .success.show-anim .badge { animation:badgePop .6s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes badgePop { 0%{transform:scale(0) rotate(-30deg)} 70%{transform:scale(1.15)} 100%{transform:scale(1) rotate(0)} }
+  /* Submit button gentle shine on hover */
+  button.submit { position:relative; overflow:hidden; }
+  button.submit::after {
+    content:""; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+    transform:skewX(-20deg); transition:left .6s ease;
+  }
+  button.submit:hover::after { left:130%; }
+
+  @media (max-width:880px){
+    .hero { grid-template-columns:1fr; padding:8px 0 44px; }
+    .steps { grid-template-columns:1fr; }
+  }
+  @media (max-width:560px){
+    nav { padding:14px 0; }
+    .nav-cta { display:none; }
+    .row { grid-template-columns:1fr; }
+    .brand b { font-size:19px; }
+    .lead { max-width:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Splash screen -->
+<div id="splash">
+  <div class="splash-inner">
+    <div class="splash-logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z" fill="#a6f2d1"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z" fill="#e9c349"/></svg>
+    </div>
+    <div class="splash-title serif">Kasrat-e-Darood</div>
+    <div class="splash-sub">Closed beta</div>
+    <div class="splash-bar"><span></span></div>
+  </div>
+</div>
+
+<!-- Language picker -->
+<div id="lang-modal" role="dialog" aria-modal="true" aria-label="Choose language">
+  <div class="lang-sheet">
+    <div class="ico">🌐</div>
+    <h3>Choose your language</h3>
+    <p>اپنی زبان منتخب کریں · अपनी भाषा चुनें</p>
+    <div class="lang-options">
+      <button class="lang-option" type="button" data-lang="en">
+        <span>English</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h13m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="lang-option" type="button" data-lang="hi">
+        <span>हिंदी <span class="native">Hindi</span></span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h13m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="lang-option" type="button" data-lang="ur">
+        <span>اردو <span class="native">Urdu</span></span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h13m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <nav>
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z" fill="#a6f2d1"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z" fill="#e9c349"/></svg>
+      </div>
+      <b class="serif" data-i18n="brand">Kasrat-e-Darood</b>
+    </div>
+    <div class="nav-right">
+      <div class="langs" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="hi" type="button">हिं</button>
+        <button class="lang-btn" data-lang="ur" type="button">اردو</button>
+      </div>
+      <a class="nav-cta" href="#join" data-i18n="nav_cta">Join the beta</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-anim">
+      <span class="pill"><span class="dot"></span> <span data-i18n="hero_pill">Closed beta · Early access</span></span>
+      <h1 class="serif" data-i18n="hero_h1">Mindful progress for your spiritual journey.</h1>
+      <p class="lead" data-i18n="hero_lead">Kasrat-e-Darood replaces scattered WhatsApp tallies with a calm, shared space to track your recitations, celebrate consistency, and grow together as a community.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="n" id="stat-total">—</div><div class="l" data-i18n="stat_total">Testers joined</div></div>
+        <div class="stat"><div class="n" id="stat-closed">—</div><div class="l" data-i18n="stat_closed">Closed beta</div></div>
+      </div>
+
+      <div class="features">
+        <div class="feature"><span class="star">✦</span><span><b data-i18n="f1b">One tap to log.</b> <span class="t" data-i18n="f1t">Submit Surahs, Darood &amp; Dhikr — your totals roll up automatically.</span></span></div>
+        <div class="feature"><span class="star">✦</span><span><b data-i18n="f2b">Weekly Hall of Fame.</b> <span class="t" data-i18n="f2t">Every Friday the week is finalized and celebrated.</span></span></div>
+        <div class="feature"><span class="star">✦</span><span><b data-i18n="f3b">Prayer times &amp; Hijri date</b> <span class="t" data-i18n="f3t">built right into your dashboard.</span></span></div>
+      </div>
+    </div>
+
+    <!-- Signup form -->
+    <div class="card hero-anim-card" id="join">
+      <div id="form-state">
+        <h2 class="serif" data-i18n="form_title">Request early access</h2>
+        <p class="sub" data-i18n="form_sub">Closed beta is limited. Tell us a little about you and we'll send your invite.</p>
+
+        <form id="beta-form" novalidate>
+          <div class="field">
+            <label for="full_name" data-i18n="l_name">Full name</label>
+            <input id="full_name" name="full_name" type="text" data-ph="ph_name" placeholder="Your name" required />
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="email" data-i18n="l_email">Email</label>
+              <input id="email" name="email" type="email" data-ph="ph_email" placeholder="name@example.com" required />
+            </div>
+            <div class="field">
+              <label for="country" data-i18n="l_country">Country</label>
+              <input id="country" name="country" type="text" data-ph="ph_country" placeholder="e.g. India" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="google_email"><span data-i18n="l_google">Google Play email</span> <span class="hint" data-i18n="hint_google">— the Gmail on your phone</span></label>
+            <input id="google_email" name="google_email" type="email" data-ph="ph_google" placeholder="yourname@gmail.com" />
+            <div class="note">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 4h14v13H7l-2 3z" stroke="#6f7973" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span data-i18n="android_note">Kasrat-e-Darood is available on Android only for now.</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="how_heard"><span data-i18n="l_how">How did you hear about us?</span> <span class="hint" data-i18n="opt">(optional)</span></label>
+            <input id="how_heard" name="how_heard" type="text" data-ph="ph_how" placeholder="Friend, mosque, social media…" />
+          </div>
+
+          <div class="field">
+            <label for="reason"><span data-i18n="l_reason">Why would you like to join?</span> <span class="hint" data-i18n="opt">(optional)</span></label>
+            <textarea id="reason" name="reason" data-ph="ph_reason" placeholder="Tell us about your community or how you'll use the app."></textarea>
+          </div>
+
+          <div class="hp" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="consent">
+            <input type="checkbox" id="consent" checked />
+            <label for="consent" style="margin:0;font-weight:400;" data-i18n="consent">I agree to be contacted about the beta and understand this is pre-release software.</label>
+          </div>
+
+          <button class="submit" type="submit" id="submit-btn">
+            <span data-i18n="submit">Request invite</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 11h12.2l-4.6-4.6L13 5l7 7-7 7-1.4-1.4 4.6-4.6H4z" fill="#fff"/></svg>
+          </button>
+          <div class="msg" id="form-msg"></div>
+        </form>
+      </div>
+
+      <!-- Success -->
+      <div class="success" id="success-state">
+        <div class="badge">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="#004532" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 class="serif" id="success-title" data-i18n="success_title">You're on the list!</h2>
+        <p id="success-body" data-i18n="success_body">We'll email your closed-beta invite soon, in shaa Allah. Keep an eye on your inbox.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="band">
+    <h3 class="reveal" data-i18n="band_title">How the beta rolls out</h3>
+    <div class="steps">
+      <div class="step reveal"><div class="num serif">1</div><h4 data-i18n="s1h">Closed beta</h4><p data-i18n="s1p">A small group gets early access via Google Play closed testing. We add your Google email to the testers list.</p></div>
+      <div class="step reveal" style="transition-delay:.1s"><div class="num serif">2</div><h4 data-i18n="s2h">Open beta</h4><p data-i18n="s2p">Once stable, we widen access. Anyone who signed up here is first in line for the open beta.</p></div>
+      <div class="step reveal" style="transition-delay:.2s"><div class="num serif">3</div><h4 data-i18n="s3h">Launch</h4><p data-i18n="s3p">The app goes live on the Play Store. Early testers keep their history, streaks, and Hall of Fame badges.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="year"></span> · <span data-i18n="brand">Kasrat-e-Darood</span></span>
+    <span data-i18n="footer_made">Made with intention for the ummah.</span>
+  </footer>
+</div>
+
+<script>
+  const I18N = {
+    en: {
+      brand:"Kasrat-e-Darood", nav_cta:"Join the beta",
+      hero_pill:"Closed beta · Early access",
+      hero_h1:"Mindful progress for your spiritual journey.",
+      hero_lead:"Kasrat-e-Darood replaces scattered WhatsApp tallies with a calm, shared space to track your recitations, celebrate consistency, and grow together as a community.",
+      stat_total:"Testers joined", stat_closed:"Closed beta",
+      f1b:"One tap to log.", f1t:"Submit Surahs, Darood & Dhikr — your totals roll up automatically.",
+      f2b:"Weekly Hall of Fame.", f2t:"Every Friday the week is finalized and celebrated.",
+      f3b:"Prayer times & Hijri date", f3t:"built right into your dashboard.",
+      form_title:"Request early access",
+      form_sub:"Closed beta is limited. Tell us a little about you and we'll send your invite.",
+      l_name:"Full name", ph_name:"Your name",
+      l_email:"Email", ph_email:"name@example.com",
+      l_country:"Country", ph_country:"e.g. India",
+      l_google:"Google Play email", hint_google:"— the Gmail on your phone", ph_google:"yourname@gmail.com",
+      android_note:"Kasrat-e-Darood is available on Android only for now.",
+      l_how:"How did you hear about us?", ph_how:"Friend, mosque, social media…",
+      l_reason:"Why would you like to join?", ph_reason:"Tell us about your community or how you'll use the app.",
+      opt:"(optional)",
+      consent:"I agree to be contacted about the beta and understand this is pre-release software.",
+      submit:"Request invite", submitting:"Submitting…",
+      success_title:"You're on the list!",
+      success_body:"We'll email your closed-beta invite soon, in shaa Allah. Keep an eye on your inbox.",
+      already_title:"You're already on the list!",
+      already_body:"We've already got your details — your invite is on the way, in shaa Allah.",
+      band_title:"How the beta rolls out",
+      s1h:"Closed beta", s1p:"A small group gets early access via Google Play closed testing. We add your Google email to the testers list.",
+      s2h:"Open beta", s2p:"Once stable, we widen access. Anyone who signed up here is first in line for the open beta.",
+      s3h:"Launch", s3p:"The app goes live on the Play Store. Early testers keep their history, streaks, and Hall of Fame badges.",
+      footer_made:"Made with intention for the ummah.",
+      err_name:"Please enter your name.", err_email:"Please enter a valid email.",
+      err_google:"Google email looks invalid.", err_consent:"Please accept to continue.",
+      err_generic:"Something went wrong. Please try again.",
+      err_network:"Network error. Please check your connection and try again."
+    },
+    hi: {
+      brand:"कसरत-ए-दरूद", nav_cta:"बीटा से जुड़ें",
+      hero_pill:"क्लोज़्ड बीटा · जल्दी एक्सेस",
+      hero_h1:"आपकी आध्यात्मिक यात्रा के लिए सजग प्रगति।",
+      hero_lead:"कसरत-ए-दरूद बिखरी हुई WhatsApp गिनती की जगह एक शांत, साझा स्थान देता है — जहाँ आप अपनी तिलावत दर्ज करें, निरंतरता का जश्न मनाएँ और समुदाय के साथ आगे बढ़ें।",
+      stat_total:"जुड़े टेस्टर", stat_closed:"क्लोज़्ड बीटा",
+      f1b:"एक टैप में दर्ज करें।", f1t:"सूरह, दरूद और ज़िक्र भेजें — आपका कुल अपने आप जुड़ता है।",
+      f2b:"साप्ताहिक हॉल ऑफ़ फ़ेम।", f2t:"हर जुमे को सप्ताह पूरा कर जश्न मनाया जाता है।",
+      f3b:"नमाज़ के समय और हिजरी तारीख़", f3t:"सीधे आपके डैशबोर्ड में।",
+      form_title:"जल्दी एक्सेस का अनुरोध करें",
+      form_sub:"क्लोज़्ड बीटा सीमित है। हमें अपने बारे में थोड़ा बताएं और हम आपका निमंत्रण भेजेंगे।",
+      l_name:"पूरा नाम", ph_name:"आपका नाम",
+      l_email:"ईमेल", ph_email:"name@example.com",
+      l_country:"देश", ph_country:"जैसे भारत",
+      l_google:"Google Play ईमेल", hint_google:"— आपके फ़ोन वाला Gmail", ph_google:"yourname@gmail.com",
+      android_note:"कसरत-ए-दरूद फ़िलहाल सिर्फ़ Android पर उपलब्ध है।",
+      l_how:"हमारे बारे में कैसे पता चला?", ph_how:"दोस्त, मस्जिद, सोशल मीडिया…",
+      l_reason:"आप क्यों जुड़ना चाहते हैं?", ph_reason:"अपने समुदाय या ऐप के उपयोग के बारे में बताएं।",
+      opt:"(वैकल्पिक)",
+      consent:"मैं बीटा के बारे में संपर्क किए जाने से सहमत हूँ और समझता हूँ कि यह प्री-रिलीज़ सॉफ़्टवेयर है।",
+      submit:"निमंत्रण का अनुरोध", submitting:"भेजा जा रहा है…",
+      success_title:"आप सूची में हैं!",
+      success_body:"हम जल्द ही आपका क्लोज़्ड-बीटा निमंत्रण ईमेल करेंगे, इन शा अल्लाह। अपना इनबॉक्स देखते रहें।",
+      already_title:"आप पहले से सूची में हैं!",
+      already_body:"हमारे पास आपकी जानकारी पहले से है — आपका निमंत्रण रास्ते में है, इन शा अल्लाह।",
+      band_title:"बीटा कैसे आगे बढ़ेगा",
+      s1h:"क्लोज़्ड बीटा", s1p:"एक छोटे समूह को Google Play क्लोज़्ड टेस्टिंग से जल्दी एक्सेस मिलता है। हम आपका Google ईमेल टेस्टर सूची में जोड़ते हैं।",
+      s2h:"ओपन बीटा", s2p:"स्थिर होने पर हम एक्सेस बढ़ाते हैं। यहाँ साइन अप करने वाले ओपन बीटा में सबसे पहले होंगे।",
+      s3h:"लॉन्च", s3p:"ऐप Play Store पर लाइव होता है। शुरुआती टेस्टर अपना इतिहास, स्ट्रीक और बैज रखते हैं।",
+      footer_made:"उम्मत के लिए नीयत के साथ बनाया गया।",
+      err_name:"कृपया अपना नाम दर्ज करें।", err_email:"कृपया मान्य ईमेल दर्ज करें।",
+      err_google:"Google ईमेल अमान्य लगता है।", err_consent:"जारी रखने के लिए कृपया स्वीकार करें।",
+      err_generic:"कुछ गड़बड़ हुई। कृपया फिर से प्रयास करें।",
+      err_network:"नेटवर्क त्रुटि। कृपया अपना कनेक्शन जांचें और फिर से प्रयास करें।"
+    },
+    ur: {
+      brand:"کثرتِ درود", nav_cta:"بیٹا میں شامل ہوں",
+      hero_pill:"کلوزڈ بیٹا · ابتدائی رسائی",
+      hero_h1:"آپ کے روحانی سفر کے لیے باشعور پیش رفت۔",
+      hero_lead:"کثرتِ درود بکھری ہوئی WhatsApp گنتی کی جگہ ایک پُرسکون، مشترکہ جگہ دیتا ہے — جہاں آپ اپنی تلاوت درج کریں، تسلسل کا جشن منائیں اور کمیونٹی کے ساتھ آگے بڑھیں۔",
+      stat_total:"شامل ٹیسٹرز", stat_closed:"کلوزڈ بیٹا",
+      f1b:"ایک ٹیپ میں درج کریں۔", f1t:"سورتیں، درود اور ذکر بھیجیں — آپ کا کل خود بخود جمع ہوتا ہے۔",
+      f2b:"ہفتہ وار ہال آف فیم۔", f2t:"ہر جمعہ کو ہفتہ مکمل کر کے جشن منایا جاتا ہے۔",
+      f3b:"نماز کے اوقات اور ہجری تاریخ", f3t:"براہِ راست آپ کے ڈیش بورڈ میں۔",
+      form_title:"ابتدائی رسائی کی درخواست",
+      form_sub:"کلوزڈ بیٹا محدود ہے۔ ہمیں اپنے بارے میں کچھ بتائیں اور ہم آپ کی دعوت بھیجیں گے۔",
+      l_name:"پورا نام", ph_name:"آپ کا نام",
+      l_email:"ای میل", ph_email:"name@example.com",
+      l_country:"ملک", ph_country:"مثلاً انڈیا",
+      l_google:"Google Play ای میل", hint_google:"— آپ کے فون والا Gmail", ph_google:"yourname@gmail.com",
+      android_note:"کثرتِ درود فی الحال صرف Android پر دستیاب ہے۔",
+      l_how:"ہمارے بارے میں کیسے معلوم ہوا؟", ph_how:"دوست، مسجد، سوشل میڈیا…",
+      l_reason:"آپ کیوں شامل ہونا چاہتے ہیں؟", ph_reason:"اپنی کمیونٹی یا ایپ کے استعمال کے بارے میں بتائیں۔",
+      opt:"(اختیاری)",
+      consent:"میں بیٹا کے بارے میں رابطہ کیے جانے سے متفق ہوں اور سمجھتا ہوں کہ یہ پری ریلیز سافٹ ویئر ہے۔",
+      submit:"دعوت کی درخواست", submitting:"بھیجا جا رہا ہے…",
+      success_title:"آپ فہرست میں شامل ہیں!",
+      success_body:"ہم جلد ہی آپ کو کلوزڈ بیٹا کی دعوت ای میل کریں گے، ان شاء اللہ۔ اپنا ان باکس دیکھتے رہیں۔",
+      already_title:"آپ پہلے ہی فہرست میں ہیں!",
+      already_body:"ہمارے پاس آپ کی تفصیلات پہلے سے موجود ہیں — آپ کی دعوت راستے میں ہے، ان شاء اللہ۔",
+      band_title:"بیٹا کیسے آگے بڑھے گا",
+      s1h:"کلوزڈ بیٹا", s1p:"ایک چھوٹے گروپ کو Google Play کلوزڈ ٹیسٹنگ سے ابتدائی رسائی ملتی ہے۔ ہم آپ کا Google ای میل ٹیسٹر فہرست میں شامل کرتے ہیں۔",
+      s2h:"اوپن بیٹا", s2p:"مستحکم ہونے پر ہم رسائی بڑھاتے ہیں۔ یہاں سائن اپ کرنے والے اوپن بیٹا میں سب سے پہلے ہوں گے۔",
+      s3h:"لانچ", s3p:"ایپ Play Store پر لائیو ہوتی ہے۔ ابتدائی ٹیسٹرز اپنی تاریخ، اسٹریک اور بیجز برقرار رکھتے ہیں۔",
+      footer_made:"امت کے لیے نیت کے ساتھ بنایا گیا۔",
+      err_name:"براہِ کرم اپنا نام درج کریں۔", err_email:"براہِ کرم درست ای میل درج کریں۔",
+      err_google:"Google ای میل غلط لگتا ہے۔", err_consent:"جاری رکھنے کے لیے براہِ کرم قبول کریں۔",
+      err_generic:"کچھ غلط ہوگیا۔ براہِ کرم دوبارہ کوشش کریں۔",
+      err_network:"نیٹ ورک کی خرابی۔ براہِ کرم اپنا کنکشن چیک کر کے دوبارہ کوشش کریں۔"
+    }
+  };
+
+  // API base URL. Leave "" to call the same origin (local dev with the
+  // bundled backend). Set to your API domain for the Vercel deployment.
+  const API_BASE = "https://api.kasrat-e-darood.mohammadramiz.in";
+
+  let T = I18N.en;
+  const $ = (s) => document.querySelector(s);
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function applyLang(lang) {
+    T = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ur') ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (T[k] != null) el.textContent = T[k];
+    });
+    document.querySelectorAll('[data-ph]').forEach(el => {
+      const k = el.getAttribute('data-ph');
+      if (T[k] != null) el.setAttribute('placeholder', T[k]);
+    });
+    document.querySelectorAll('.lang-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.lang === lang));
+    try { localStorage.setItem('ked_lang', lang); } catch (e) {}
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+  // Initial language: saved → browser → English.
+  (function () {
+    let lang = 'en';
+    try { lang = localStorage.getItem('ked_lang') || ''; } catch (e) {}
+    if (!lang) {
+      const nav = (navigator.language || 'en').slice(0, 2);
+      lang = ['hi', 'ur'].includes(nav) ? nav : 'en';
+    }
+    applyLang(lang);
+  })();
+
+  // ===== Splash screen → language popup =====
+  (function () {
+    const splash = document.getElementById('splash');
+    const modal = document.getElementById('lang-modal');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Stagger the hero entrance children.
+    document.querySelectorAll('.hero-anim > *').forEach((el, i) => {
+      el.style.animationDelay = (0.15 + i * 0.1) + 's';
+    });
+
+    function openModal() {
+      modal.classList.add('show');
+      const first = modal.querySelector('.lang-option');
+      if (first) first.focus();
+    }
+    function closeModal() { modal.classList.remove('show'); }
+
+    function hideSplash() {
+      splash.classList.add('hide');
+      setTimeout(() => { splash.remove(); openModal(); }, 600);
+    }
+
+    // Show splash briefly, then reveal the page and pop the language menu.
+    setTimeout(hideSplash, reduce ? 200 : 1900);
+
+    // Language choice from the popup.
+    modal.querySelectorAll('.lang-option').forEach(btn =>
+      btn.addEventListener('click', () => { applyLang(btn.dataset.lang); closeModal(); }));
+
+    // Dismiss by clicking the backdrop.
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  })();
+
+  // ===== Scroll reveal =====
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+  })();
+
+  // Live tester counter.
+  fetch(API_BASE + '/api/v1/beta/stats').then(r => r.ok ? r.json() : null).then(s => {
+    if (!s) return;
+    ['stat-total', 'stat-closed'].forEach(id => {
+      const el = document.getElementById(id);
+      el.textContent = id === 'stat-total' ? s.total : s.closed;
+      el.classList.add('pop');
+    });
+  }).catch(() => {});
+
+  // Submit.
+  const form = document.getElementById('beta-form');
+  const msg = document.getElementById('form-msg');
+  const btn = document.getElementById('submit-btn');
+  const btnLabel = btn.querySelector('span');
+  const emailRe = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className = 'msg';
+    msg.textContent = '';
+
+    const payload = {
+      full_name: form.full_name.value.trim(),
+      email: form.email.value.trim(),
+      country: form.country.value.trim() || null,
+      device: 'android',
+      google_email: form.google_email.value.trim() || null,
+      how_heard: form.how_heard.value.trim() || null,
+      reason: form.reason.value.trim() || null,
+      track: 'closed',
+      consent: document.getElementById('consent').checked,
+      website: (document.getElementById('website') || {}).value || null
+    };
+
+    if (payload.full_name.length < 2) return fail(T.err_name);
+    if (!emailRe.test(payload.email)) return fail(T.err_email);
+    if (payload.google_email && !emailRe.test(payload.google_email)) return fail(T.err_google);
+    if (!payload.consent) return fail(T.err_consent);
+
+    btn.disabled = true;
+    btnLabel.textContent = T.submitting;
+    try {
+      const res = await fetch(API_BASE + '/api/v1/beta/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const detail = (data && data.error && data.error.message) || T.err_generic;
+        return fail(detail);
+      }
+      document.getElementById('form-state').style.display = 'none';
+      const ok = document.getElementById('success-state');
+      if (data.already_registered) {
+        document.getElementById('success-title').textContent = T.already_title;
+        document.getElementById('success-body').textContent = T.already_body;
+      } else {
+        document.getElementById('success-title').textContent = T.success_title;
+        document.getElementById('success-body').textContent = T.success_body;
+      }
+      ok.style.display = 'block';
+      ok.classList.add('show-anim');
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      fail(T.err_network);
+    } finally {
+      btn.disabled = false;
+      btnLabel.textContent = T.submit;
+    }
+  });
+
+  function fail(text) {
+    msg.className = 'msg err';
+    msg.textContent = text;
+  }
+</script>
+</body>
+</html>
