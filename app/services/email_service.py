@@ -12,6 +12,7 @@ from __future__ import annotations
 import smtplib
 import ssl
 from email.message import EmailMessage
+from email.utils import formataddr, formatdate, make_msgid
 
 from loguru import logger
 
@@ -24,9 +25,37 @@ class EmailService:
     def enabled(self) -> bool:
         return bool(settings.SMTP_USER and settings.SMTP_PASSWORD)
 
+    def _from_addr(self) -> str:
+        return settings.SMTP_FROM_EMAIL or settings.SMTP_USER
+
     def _from_header(self) -> str:
-        addr = settings.SMTP_FROM_EMAIL or settings.SMTP_USER
-        return f"{settings.SMTP_FROM_NAME} <{addr}>"
+        return formataddr((settings.SMTP_FROM_NAME, self._from_addr()))
+
+    def _apply_deliverability_headers(self, msg: EmailMessage) -> None:
+        """Add the standard headers mailbox providers expect.
+
+        Missing Date / Message-ID makes a message look machine-generated and is
+        a common reason for landing in spam. Reply-To and List-Unsubscribe
+        further improve trust (Gmail in particular rewards List-Unsubscribe).
+        """
+        from_addr = self._from_addr()
+        domain = from_addr.split("@")[-1] if "@" in from_addr else "localhost"
+        msg["Date"] = formatdate(localtime=True)
+        msg["Message-ID"] = make_msgid(domain=domain)
+        reply_to = settings.SUPPORT_EMAIL or from_addr
+        msg["Reply-To"] = reply_to
+        msg["List-Unsubscribe"] = f"<mailto:{reply_to}?subject=unsubscribe>"
+        msg["X-Auto-Response-Suppress"] = "OOF, AutoReply"
+
+        # Deliverability note: when sending through Gmail SMTP, the From address
+        # must be the authenticated Gmail account (or a verified "Send mail as"
+        # alias) — otherwise DKIM/DMARC won't align and mail is flagged as spam.
+        if "gmail.com" in settings.SMTP_HOST and not from_addr.endswith("@gmail.com"):
+            logger.warning(
+                "From address {} is not a gmail.com address but SMTP host is "
+                "Gmail — DMARC alignment may fail and mail may be marked spam.",
+                from_addr,
+            )
 
     def _send(self, msg: EmailMessage, to_email: str) -> None:
         """Low-level send via STARTTLS (587) or SSL (465)."""
@@ -60,10 +89,13 @@ class EmailService:
         msg["Subject"] = email_templates.welcome_subject(lang)
         msg["From"] = self._from_header()
         msg["To"] = to_email
+        # Plaintext first, then HTML alternative — a text/plain part also helps
+        # deliverability.
         msg.set_content(email_templates.welcome_text(full_name, lang, support))
         msg.add_alternative(
             email_templates.welcome_html(full_name, lang, support), subtype="html"
         )
+        self._apply_deliverability_headers(msg)
         self._send(msg, to_email)
 
 

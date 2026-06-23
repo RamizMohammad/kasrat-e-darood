@@ -15,7 +15,7 @@ _MUTED = "#3f4944"
 # Per-language copy. {name} is substituted at render time.
 _STRINGS: dict[str, dict[str, str]] = {
     "en": {
-        "subject": "You're on the Kasrat-e-Darood closed-beta list ✦",
+        "subject": "You're on the Kasrat-e-Darood closed-beta list",
         "greeting": "Assalamu Alaikum {name},",
         "intro": ("Thank you for requesting early access to Kasrat-e-Darood — a calm, "
                   "shared space to track your recitations, celebrate consistency, and "
@@ -31,7 +31,7 @@ _STRINGS: dict[str, dict[str, str]] = {
         "made": "Made with intention for the ummah.",
     },
     "hi": {
-        "subject": "आप Kasrat-e-Darood क्लोज़्ड बीटा सूची में हैं ✦",
+        "subject": "आप Kasrat-e-Darood क्लोज़्ड बीटा सूची में हैं",
         "greeting": "अस्सलामु अलैकुम {name},",
         "intro": ("Kasrat-e-Darood में जल्दी एक्सेस का अनुरोध करने के लिए शुक्रिया — एक "
                   "शांत, साझा स्थान जहाँ आप अपनी तिलावत दर्ज करें, निरंतरता का जश्न मनाएँ "
@@ -47,7 +47,7 @@ _STRINGS: dict[str, dict[str, str]] = {
         "made": "उम्मत के लिए नीयत के साथ बनाया गया।",
     },
     "ur": {
-        "subject": "آپ Kasrat-e-Darood کلوزڈ بیٹا فہرست میں شامل ہیں ✦",
+        "subject": "آپ Kasrat-e-Darood کلوزڈ بیٹا فہرست میں شامل ہیں",
         "greeting": "السلام علیکم {name}،",
         "intro": ("Kasrat-e-Darood میں ابتدائی رسائی کی درخواست کرنے کا شکریہ — ایک "
                   "پُرسکون، مشترکہ جگہ جہاں آپ اپنی تلاوت درج کریں، تسلسل کا جشن منائیں "
