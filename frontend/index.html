@@ -649,7 +649,8 @@
       reason: form.reason.value.trim() || null,
       track: 'closed',
       consent: document.getElementById('consent').checked,
-      website: (document.getElementById('website') || {}).value || null
+      website: (document.getElementById('website') || {}).value || null,
+      lang: document.documentElement.lang || 'en'
     };
 
     if (payload.full_name.length < 2) return fail(T.err_name);
