@@ -47,12 +47,9 @@ class Settings(BaseSettings):
     FIREBASE_CREDENTIALS_FILE: str = Field(default="")
     FIREBASE_PROJECT_ID: str = Field(default="")
 
-    # --- CORS ----------------------------------------------------------------
-    CORS_ORIGINS: List[str] = Field(default_factory=lambda: ["*"])
-
     # --- Domain rules --------------------------------------------------------
     SUBMISSION_UNDO_WINDOW_SECONDS: int = 300
-    DEFAULT_TIMEZONE: str = "Asia/Karachi"
+    DEFAULT_TIMEZONE: str = "Asia/Kolkata"
     WEEK_LOCK_WEEKDAY: int = 4  # 0=Mon … 4=Friday
 
     @property

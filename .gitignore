@@ -8,3 +8,6 @@ pytest.ini
 scripts_seed.py
 .pytest
 __pycache__
+conf
+web
+.env.example

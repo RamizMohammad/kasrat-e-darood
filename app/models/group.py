@@ -38,7 +38,7 @@ class Group(BaseDocument):
     privacy: Privacy = Privacy.PRIVATE
     invite_code: Indexed(str, unique=True)  # type: ignore[valid-type]
     owner_id: PydanticObjectId
-    timezone: str = "Asia/Karachi"
+    timezone: str = "Asia/Kolkata"
     hijri_method: str = "umm_al_qura"
     member_count: int = 1
     settings: dict = Field(default_factory=dict)

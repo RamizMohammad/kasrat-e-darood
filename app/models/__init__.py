@@ -6,6 +6,7 @@ from app.models.activity import (
     Notification,
     RefreshToken,
 )
+from app.models.beta import BetaSignup
 from app.models.category import Category, Recitation
 from app.models.group import Group, Membership
 from app.models.submission import Submission
@@ -25,6 +26,7 @@ ALL_DOCUMENT_MODELS = [
     Notification,
     DeviceToken,
     RefreshToken,
+    BetaSignup,
 ]
 
 __all__ = [m.__name__ for m in ALL_DOCUMENT_MODELS] + ["ALL_DOCUMENT_MODELS"]

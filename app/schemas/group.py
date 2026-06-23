@@ -11,7 +11,7 @@ class GroupCreate(BaseModel):
     name: str = Field(min_length=2, max_length=80)
     description: str | None = None
     privacy: str = "private"
-    timezone: str = "Asia/Karachi"
+    timezone: str = "Asia/Kolkata"
 
 
 class GroupUpdate(BaseModel):
