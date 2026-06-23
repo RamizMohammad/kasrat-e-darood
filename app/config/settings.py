@@ -47,6 +47,18 @@ class Settings(BaseSettings):
     FIREBASE_CREDENTIALS_FILE: str = Field(default="")
     FIREBASE_PROJECT_ID: str = Field(default="")
 
+    # --- SMTP / email (Gmail) ------------------------------------------------
+    # Use a Gmail account with 2FA enabled and an App Password (not your normal
+    # password). Leave SMTP_USER/SMTP_PASSWORD empty to disable email sending.
+    SMTP_HOST: str = Field(default="smtp.gmail.com")
+    SMTP_PORT: int = Field(default=587)
+    SMTP_USER: str = Field(default="")          # your Gmail address
+    SMTP_PASSWORD: str = Field(default="")      # Gmail App Password (16 chars)
+    SMTP_USE_SSL: bool = Field(default=False)   # False => STARTTLS on 587; True => SSL on 465
+    SMTP_FROM_NAME: str = Field(default="Kasrat-e-Darood")
+    SMTP_FROM_EMAIL: str = Field(default="")    # defaults to SMTP_USER when empty
+    SUPPORT_EMAIL: str = Field(default="")      # shown in the email footer (optional)
+
     # --- Domain rules --------------------------------------------------------
     SUBMISSION_UNDO_WINDOW_SECONDS: int = 300
     DEFAULT_TIMEZONE: str = "Asia/Kolkata"

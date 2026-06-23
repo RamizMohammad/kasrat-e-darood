@@ -39,6 +39,7 @@ class BetaService:
             reason=data.reason,
             track=BetaTrack(data.track),
             consent=data.consent,
+            lang=data.lang,
         )
         await beta_repository.create(signup)
         return signup, False

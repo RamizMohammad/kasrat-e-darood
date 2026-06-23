@@ -33,6 +33,7 @@ class BetaSignup(BaseDocument):
     track: BetaTrack = BetaTrack.CLOSED
     status: SignupStatus = SignupStatus.PENDING
     consent: bool = True
+    lang: str = "en"                 # preferred language for emails: en | hi | ur
 
     class Settings:
         name = "beta_signups"

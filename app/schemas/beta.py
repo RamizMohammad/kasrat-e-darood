@@ -22,9 +22,16 @@ class BetaSignupCreate(BaseModel):
     reason: str | None = Field(default=None, max_length=500)
     track: str = "closed"
     consent: bool = True
+    # Preferred language for the confirmation email: en | hi | ur.
+    lang: str = "en"
     # Honeypot: a hidden field real users never see. Bots tend to fill every
     # input, so a non-empty value flags the submission as spam.
     website: str | None = Field(default=None, max_length=200)
+
+    @field_validator("lang")
+    @classmethod
+    def _valid_lang(cls, v: str) -> str:
+        return v if v in {"en", "hi", "ur"} else "en"
 
     @field_validator("email", "google_email")
     @classmethod
