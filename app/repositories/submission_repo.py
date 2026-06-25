@@ -13,6 +13,14 @@ class SubmissionRepository(BaseRepository[Submission]):
     def __init__(self) -> None:
         super().__init__(Submission)
 
+    async def recent_for_user(
+        self, user_id: PydanticObjectId, limit: int = 20
+    ) -> list[Submission]:
+        return await Submission.find(
+            Submission.user_id == user_id,
+            Submission.deleted == False,  # noqa: E712
+        ).sort("-created_at").limit(limit).to_list()
+
     async def find_by_client_uuid(
         self, user_id: PydanticObjectId, client_uuid: str
     ) -> Submission | None:

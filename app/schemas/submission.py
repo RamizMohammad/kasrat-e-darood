@@ -1,6 +1,8 @@
 """Submission schemas."""
 from __future__ import annotations
 
+from datetime import datetime
+
 from beanie import PydanticObjectId
 from pydantic import BaseModel, Field
 
@@ -47,3 +49,13 @@ class SubmissionOut(ORMModel):
 class SubmissionResult(BaseModel):
     submission: SubmissionOut
     totals: Totals
+
+
+class MySubmissionOut(BaseModel):
+    """A user's own submission, enriched with the recitation's display names."""
+    id: PydanticObjectId
+    recitation_id: PydanticObjectId
+    recitation_name: str
+    urdu_name: str | None = None
+    count: int
+    created_at: datetime

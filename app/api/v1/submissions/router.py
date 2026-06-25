@@ -2,12 +2,13 @@
 from __future__ import annotations
 
 from beanie import PydanticObjectId
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 
 from app.dependencies.auth import get_current_user
 from app.models.user import User
 from app.schemas.submission import (
     BulkSubmissionCreate,
+    MySubmissionOut,
     SubmissionCreate,
     SubmissionResult,
     Totals,
@@ -15,6 +16,15 @@ from app.schemas.submission import (
 from app.services.submission_service import submission_service
 
 router = APIRouter(prefix="/submissions", tags=["submissions"])
+
+
+@router.get("/me", response_model=list[MySubmissionOut])
+async def my_submissions(
+    limit: int = Query(default=20, le=100),
+    user: User = Depends(get_current_user),
+) -> list[MySubmissionOut]:
+    """Return the authenticated user's most recent submissions."""
+    return await submission_service.recent_for_user(user, limit)
 
 
 @router.post("", response_model=SubmissionResult)

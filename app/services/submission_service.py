@@ -16,6 +16,7 @@ from app.repositories.user_repo import user_repository
 from app.repositories.weekly_repo import weekly_repository
 from app.schemas.submission import (
     BulkSubmissionCreate,
+    MySubmissionOut,
     SubmissionCreate,
     SubmissionResult,
     SubmissionOut,
@@ -87,6 +88,27 @@ class SubmissionService:
             ))
         assert last is not None
         return last.totals
+
+    async def recent_for_user(
+        self, user: User, limit: int = 20
+    ) -> list[MySubmissionOut]:
+        """The user's most recent submissions, enriched with recitation names."""
+        subs = await submission_repository.recent_for_user(user.id, limit)
+        out: list[MySubmissionOut] = []
+        names: dict = {}
+        for s in subs:
+            cached = names.get(s.recitation_id)
+            if cached is None:
+                rec = await recitation_repository.get(s.recitation_id)
+                cached = (rec.english_name if rec else "Recitation",
+                          rec.urdu_name if rec else None)
+                names[s.recitation_id] = cached
+            out.append(MySubmissionOut(
+                id=s.id, recitation_id=s.recitation_id,
+                recitation_name=cached[0], urdu_name=cached[1],
+                count=s.count, created_at=s.created_at,
+            ))
+        return out
 
     async def undo(self, user: User, submission_id: PydanticObjectId) -> Totals:
         submission = await submission_repository.get(submission_id)
