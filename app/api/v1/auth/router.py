@@ -6,16 +6,31 @@ from fastapi import APIRouter, Depends, Response, status
 from app.dependencies.auth import get_current_user
 from app.models.user import User
 from app.schemas.auth import (
+    EmailLoginRequest,
     FirebaseLoginRequest,
     LoginResponse,
     LogoutRequest,
     RefreshRequest,
+    RegisterRequest,
     TokenPair,
 )
 from app.schemas.user import UserOut
 from app.services.auth_service import auth_service
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+
+
+@router.post("/register", response_model=LoginResponse,
+             status_code=status.HTTP_201_CREATED)
+async def register(body: RegisterRequest) -> LoginResponse:
+    """Create an email/password account and return an authenticated session."""
+    return await auth_service.register(body.email, body.password, body.display_name)
+
+
+@router.post("/login", response_model=LoginResponse)
+async def login(body: EmailLoginRequest) -> LoginResponse:
+    """Authenticate with email/password, returning access/refresh tokens."""
+    return await auth_service.login_with_password(body.email, body.password)
 
 
 @router.post("/firebase", response_model=LoginResponse)

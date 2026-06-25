@@ -21,6 +21,7 @@ class User(BaseDocument):
     email: str | None = None
     phone: str | None = None
     photo_url: str | None = None
+    password_hash: str | None = None  # set for email/password accounts
     role: GlobalRole = GlobalRole.MEMBER
     lifetime_total: int = 0
     streak_days: int = 0

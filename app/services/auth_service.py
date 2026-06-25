@@ -1,7 +1,7 @@
 """Authentication use-cases: Firebase exchange, refresh rotation, logout."""
 from __future__ import annotations
 
-from app.core.exceptions import UnauthorizedError
+from app.core.exceptions import ConflictError, UnauthorizedError
 from app.models.activity import RefreshToken
 from app.models.base import utcnow
 from app.models.user import User
@@ -9,6 +9,7 @@ from app.repositories.user_repo import user_repository
 from app.schemas.auth import LoginResponse, TokenPair
 from app.schemas.user import UserOut
 from app.security.firebase import verify_id_token
+from app.security.passwords import hash_password, verify_password
 from app.security.tokens import (
     create_access_token,
     create_refresh_token,
@@ -16,8 +17,50 @@ from app.security.tokens import (
 )
 
 
+def _normalize_email(email: str) -> str:
+    return email.strip().lower()
+
+
 class AuthService:
     """Stateless service handling the auth lifecycle."""
+
+    async def register(
+        self, email: str, password: str, display_name: str
+    ) -> LoginResponse:
+        """Create an email/password account and return an authenticated session."""
+        email = _normalize_email(email)
+        if await user_repository.get_by_email(email):
+            raise ConflictError("An account with this email already exists",
+                                code="email_taken")
+        user = User(
+            # Email/password accounts have no Firebase identity, so a synthetic
+            # uid keeps the unique index satisfied and stable per email.
+            firebase_uid=f"pwd:{email}",
+            display_name=display_name.strip(),
+            email=email,
+            password_hash=hash_password(password),
+        )
+        await user_repository.create(user)
+        pair = await self._issue_tokens(user)
+        return LoginResponse(
+            access_token=pair.access_token,
+            refresh_token=pair.refresh_token,
+            user=UserOut.model_validate(user),
+        )
+
+    async def login_with_password(self, email: str, password: str) -> LoginResponse:
+        """Verify email/password credentials and return an authenticated session."""
+        email = _normalize_email(email)
+        user = await user_repository.get_by_email(email)
+        if user is None or not verify_password(password, user.password_hash):
+            raise UnauthorizedError("Incorrect email or password",
+                                    code="invalid_credentials")
+        pair = await self._issue_tokens(user)
+        return LoginResponse(
+            access_token=pair.access_token,
+            refresh_token=pair.refresh_token,
+            user=UserOut.model_validate(user),
+        )
 
     async def login_with_firebase(self, id_token: str) -> LoginResponse:
         identity = verify_id_token(id_token)
