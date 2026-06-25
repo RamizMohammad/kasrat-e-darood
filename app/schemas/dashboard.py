@@ -1,6 +1,8 @@
 """Dashboard & leaderboard schemas."""
 from __future__ import annotations
 
+from datetime import datetime
+
 from beanie import PydanticObjectId
 from pydantic import BaseModel
 
@@ -28,6 +30,18 @@ class ActivityOut(BaseModel):
     reactions: dict = {}
 
 
+class FeedItemOut(BaseModel):
+    """An activity-feed entry enriched with the actor's display info."""
+    id: PydanticObjectId
+    actor_id: PydanticObjectId
+    actor_name: str
+    initial: str
+    type: str
+    text: str
+    reactions: dict = {}
+    created_at: datetime
+
+
 class ChartPoint(BaseModel):
     day: str
     value: int
@@ -45,7 +59,7 @@ class DashboardResponse(BaseModel):
     streak: int
     goal: GoalProgress
     top_contributors: list[Contributor]
-    recent_activity: list[ActivityOut]
+    recent_activity: list[FeedItemOut]
     weekly_chart: list[ChartPoint]
 
 

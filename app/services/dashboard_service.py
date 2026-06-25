@@ -12,10 +12,10 @@ from app.repositories.submission_repo import submission_repository
 from app.repositories.user_repo import user_repository
 from app.repositories.weekly_repo import weekly_repository
 from app.schemas.dashboard import (
-    ActivityOut,
     ChartPoint,
     Contributor,
     DashboardResponse,
+    FeedItemOut,
     GoalProgress,
 )
 from app.schemas.user import UserOut
@@ -62,10 +62,8 @@ class DashboardService:
         weekly_chart = [ChartPoint(day=d, value=chart_map[d])
                         for d in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]]
 
-        # Recent activity.
-        activity = await activity_repository.recent(group_id, limit=10)
-        recent = [ActivityOut(id=a.id, actor_id=a.actor_id, type=a.type,
-                              text=a.text, reactions=a.reactions) for a in activity]
+        # Recent activity (enriched with actor display info).
+        recent = await self.feed(group_id, limit=10)
 
         remaining = self._remaining_days(week.end_date if week else None)
         goal_target = int(user.preferences.get("weekly_goal", 7))
@@ -90,6 +88,27 @@ class DashboardService:
             recent_activity=recent,
             weekly_chart=weekly_chart,
         )
+
+    async def feed(
+        self, group_id: PydanticObjectId, limit: int = 20
+    ) -> list[FeedItemOut]:
+        """Recent group activity, each enriched with the actor's name/initial."""
+        activities = await activity_repository.recent(group_id, limit=limit)
+        items: list[FeedItemOut] = []
+        cache_names: dict = {}
+        for a in activities:
+            name = cache_names.get(a.actor_id)
+            if name is None:
+                actor = await user_repository.get(a.actor_id)
+                name = actor.display_name if actor else "Member"
+                cache_names[a.actor_id] = name
+            initial = (name.strip()[:1] or "•").upper()
+            items.append(FeedItemOut(
+                id=a.id, actor_id=a.actor_id, actor_name=name, initial=initial,
+                type=a.type, text=a.text, reactions=a.reactions,
+                created_at=a.created_at,
+            ))
+        return items
 
     @staticmethod
     def _remaining_days(end: datetime | None) -> int:

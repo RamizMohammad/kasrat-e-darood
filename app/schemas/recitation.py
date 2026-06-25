@@ -49,6 +49,7 @@ class RecitationOut(ORMModel):
     translation: str | None = None
     category_id: PydanticObjectId | None = None
     description: str | None = None
+    reference: str | None = None
     color: str
     icon: str | None = None
     sort_order: int
