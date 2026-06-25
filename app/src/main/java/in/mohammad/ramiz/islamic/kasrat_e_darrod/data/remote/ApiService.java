@@ -36,6 +36,9 @@ public interface ApiService {
     @POST("api/v1/submissions/bulk")
     Call<dto.Totals> submitBulk(@Body dto.BulkSubmitRequest body);
 
+    @GET("api/v1/submissions/me")
+    Call<List<dto.MySubmissionDto>> mySubmissions();
+
     @GET("api/v1/dashboard")
     Call<dto.DashboardResponse> dashboard(@Query("group_id") String groupId);
 

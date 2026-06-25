@@ -62,6 +62,11 @@
     <string name="submitting">Submitting…</string>
     <string name="submit_success">Submitted! Your recitations were added to the community.</string>
 
+    <!-- Profile -->
+    <string name="your_submissions">YOUR SUBMISSIONS</string>
+    <string name="no_submissions">No submissions yet. Head to the Library to log your recitations.</string>
+    <string name="streak_days_label">%1$d day streak</string>
+
     <string name="log_progress">Log Progress</string>
     <string name="quick_add">Quick Add</string>
     <string name="manage_favorites">Manage Favorites</string>

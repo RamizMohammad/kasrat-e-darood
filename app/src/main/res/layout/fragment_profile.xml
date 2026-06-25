@@ -8,17 +8,18 @@
     android:fillViewport="true">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:gravity="center_horizontal"
-        android:paddingHorizontal="24dp" android:paddingTop="40dp">
+        android:paddingHorizontal="24dp" android:paddingTop="40dp" android:paddingBottom="32dp">
 
         <View android:layout_width="96dp" android:layout_height="96dp"
             android:background="@drawable/bg_avatar_green" />
         <TextView android:id="@+id/profile_name" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="14dp" android:text="Omar K." android:textSize="24sp"
+            android:layout_marginTop="14dp" android:text="Member" android:textSize="24sp"
             android:textStyle="bold" android:fontFamily="serif" android:textColor="@color/primary" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Member since Ramadan 1445" android:textColor="@color/on_surface_variant"
+        <TextView android:id="@+id/profile_streak" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="" android:textColor="@color/on_surface_variant"
             android:textSize="13sp" />
 
+        <!-- Submission stats -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="24dp" android:orientation="horizontal" android:baselineAligned="false">
             <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
@@ -26,8 +27,8 @@
                 android:layout_marginEnd="6dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:gravity="center">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="584" android:textSize="26sp" android:textStyle="bold"
+                    <TextView android:id="@+id/stat_week" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="—" android:textSize="26sp" android:textStyle="bold"
                         android:fontFamily="serif" android:textColor="@color/primary" />
                     <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="THIS WEEK" />
@@ -35,17 +36,54 @@
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:gravity="center">
+                    <TextView android:id="@+id/stat_today" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="—" android:textSize="26sp" android:textStyle="bold"
+                        android:fontFamily="serif" android:textColor="@color/primary" />
+                    <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="TODAY" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
                 android:layout_marginStart="6dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:gravity="center">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="12,480" android:textSize="26sp" android:textStyle="bold"
+                    <TextView android:id="@+id/stat_lifetime" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="—" android:textSize="26sp" android:textStyle="bold"
                         android:fontFamily="serif" android:textColor="@color/primary" />
                     <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="LIFETIME" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+
+        <!-- Recent submissions -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginTop="28dp">
+            <TextView style="@style/Text.Overline" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:text="@string/your_submissions" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_submissions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:nestedScrollingEnabled="false" />
+
+        <TextView
+            android:id="@+id/submissions_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:gravity="center"
+            android:text="@string/no_submissions"
+            android:textColor="@color/on_surface_variant"
+            android:visibility="gone" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_logout"

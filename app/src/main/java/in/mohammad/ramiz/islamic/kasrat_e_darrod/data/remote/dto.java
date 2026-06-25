@@ -136,6 +136,15 @@ public final class dto {
         public int today;
     }
 
+    /** One of the current user's own submissions (for the profile screen). */
+    public static class MySubmissionDto {
+        public String id;
+        @SerializedName("recitation_name") public String recitationName;
+        @SerializedName("urdu_name") public String urduName;
+        public int count;
+        @SerializedName("created_at") public String createdAt;
+    }
+
     public static class SubmissionResult {
         public Totals totals;
     }
