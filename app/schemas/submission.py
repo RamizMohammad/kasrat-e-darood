@@ -22,7 +22,8 @@ class BulkItem(BaseModel):
 
 
 class BulkSubmissionCreate(BaseModel):
-    group_id: PydanticObjectId
+    # Optional: when omitted, the shared community group is used.
+    group_id: PydanticObjectId | None = None
     items: list[BulkItem] = Field(min_length=1, max_length=200)
 
 

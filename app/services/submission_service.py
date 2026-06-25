@@ -75,10 +75,14 @@ class SubmissionService:
         return await self._result(user, week.id, data.group_id, submission)
 
     async def submit_bulk(self, user: User, data: BulkSubmissionCreate) -> Totals:
+        # Default to the shared community group when no group is specified.
+        from app.services.community_service import community_service
+        group_id = await community_service.resolve_group(user, data.group_id)
+
         last: SubmissionResult | None = None
         for item in data.items:
             last = await self.submit(user, SubmissionCreate(
-                group_id=data.group_id, recitation_id=item.recitation_id,
+                group_id=group_id, recitation_id=item.recitation_id,
                 count=item.count, client_uuid=item.client_uuid,
             ))
         assert last is not None

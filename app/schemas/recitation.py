@@ -46,6 +46,9 @@ class RecitationOut(ORMModel):
     group_id: PydanticObjectId | None = None
     arabic_name: str
     english_name: str
+    urdu_name: str | None = None
+    transliteration: str | None = None
+    category: str | None = None
     translation: str | None = None
     category_id: PydanticObjectId | None = None
     description: str | None = None

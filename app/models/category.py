@@ -22,6 +22,9 @@ class Recitation(BaseDocument):
     group_id: PydanticObjectId | None = None  # None => global library
     arabic_name: str
     english_name: str
+    urdu_name: str | None = None
+    transliteration: str | None = None
+    category: str | None = None  # denormalized label for grouping (Surah, Zikr, …)
     translation: str | None = None
     category_id: PydanticObjectId | None = None
     description: str | None = None
