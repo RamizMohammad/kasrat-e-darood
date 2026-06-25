@@ -32,6 +32,17 @@ public final class dto {
         }
     }
 
+    public static class RefreshRequest {
+        @SerializedName("refresh_token") public String refreshToken;
+        public RefreshRequest(String refreshToken) { this.refreshToken = refreshToken; }
+    }
+
+    /** Token-pair returned by /auth/refresh (rotation: both values are new). */
+    public static class TokenPair {
+        @SerializedName("access_token") public String accessToken;
+        @SerializedName("refresh_token") public String refreshToken;
+    }
+
     /** Server error envelope: { "error": { "code": "...", "message": "..." } }. */
     public static class ErrorEnvelope {
         public ErrorBody error;
@@ -61,10 +72,31 @@ public final class dto {
         public String id;
         @SerializedName("arabic_name") public String arabicName;
         @SerializedName("english_name") public String englishName;
+        @SerializedName("urdu_name") public String urduName;
+        public String transliteration;
+        public String category;
         public String translation;
         public String reference;
         public String icon;
+        @SerializedName("default_increment") public int defaultIncrement;
         @SerializedName("category_id") public String categoryId;
+    }
+
+    public static class BulkItem {
+        @SerializedName("recitation_id") public String recitationId;
+        public int count;
+        @SerializedName("client_uuid") public String clientUuid;
+        public BulkItem(String recitationId, int count, String clientUuid) {
+            this.recitationId = recitationId;
+            this.count = count;
+            this.clientUuid = clientUuid;
+        }
+    }
+
+    /** Bulk submission. group_id omitted => server uses the community group. */
+    public static class BulkSubmitRequest {
+        public List<BulkItem> items;
+        public BulkSubmitRequest(List<BulkItem> items) { this.items = items; }
     }
 
     /** A community activity-feed entry (also used for the home activity list). */

@@ -31,6 +31,7 @@ public final class ApiClient {
 
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new AuthInterceptor(tokenStore))
+                    .authenticator(new TokenAuthenticator(context, BASE_URL))
                     .addInterceptor(logging)
                     .build();
 

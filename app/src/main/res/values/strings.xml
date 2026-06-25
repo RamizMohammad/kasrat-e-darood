@@ -44,6 +44,24 @@
     <string name="empty_feed">No activity yet. Be the first to log a recitation.</string>
     <string name="empty_leaderboard">No rankings yet this week.</string>
 
+    <!-- Library catalog + cart -->
+    <string name="library_subtitle">Select what you\'ve recited</string>
+    <string name="search_hint">Search Surah, Dua, or Dhikr…</string>
+    <string name="times_recited">Times recited</string>
+    <string name="enter_times_recited">Enter how many times you recited this</string>
+    <string name="decrease">Decrease</string>
+    <string name="increase">Increase</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="review_submit">Review</string>
+    <string name="your_recitations">Your recitations</string>
+    <string name="cart_summary">%1$d recitations · %2$d total</string>
+    <string name="cart_empty">Your cart is empty.</string>
+    <string name="submit_to_community">Submit to community</string>
+    <string name="submitting">Submitting…</string>
+    <string name="submit_success">Submitted! Your recitations were added to the community.</string>
+
     <string name="log_progress">Log Progress</string>
     <string name="quick_add">Quick Add</string>
     <string name="manage_favorites">Manage Favorites</string>

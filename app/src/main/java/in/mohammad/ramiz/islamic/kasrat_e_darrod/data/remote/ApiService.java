@@ -20,6 +20,9 @@ public interface ApiService {
     @POST("api/v1/auth/firebase")
     Call<dto.LoginResponse> loginWithFirebase(@Body dto.FirebaseLoginRequest body);
 
+    @POST("api/v1/auth/refresh")
+    Call<dto.TokenPair> refresh(@Body dto.RefreshRequest body);
+
     @GET("api/v1/auth/me")
     Call<dto.UserDto> me();
 
@@ -29,6 +32,9 @@ public interface ApiService {
 
     @POST("api/v1/submissions")
     Call<dto.SubmissionResult> submit(@Body dto.SubmissionRequest body);
+
+    @POST("api/v1/submissions/bulk")
+    Call<dto.Totals> submitBulk(@Body dto.BulkSubmitRequest body);
 
     @GET("api/v1/dashboard")
     Call<dto.DashboardResponse> dashboard(@Query("group_id") String groupId);
