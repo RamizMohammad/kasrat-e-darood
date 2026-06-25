@@ -24,12 +24,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.R;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.SampleData;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.model.ActivityItem;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.aladhan.AlAdhanClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.aladhan.AlAdhanDto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.ActivityAdapter;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.SkeletonAdapter;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.LocationHelper;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.RelativeTime;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Skeleton;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +52,7 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "NoorPrayer";
     private View root;
     private boolean loaded = false;
+    private RecyclerView activityRecycler;
 
     private final ActivityResultLauncher<String[]> locationPermission =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
@@ -64,9 +72,9 @@ public class HomeFragment extends Fragment {
         bindQuickAdd(view, R.id.quick_yaseen, "Surah Yaseen", "Favorite Recitation", R.drawable.ic_book_open);
         bindQuickAdd(view, R.id.quick_astagh, "Astaghfirullah", "Daily Dhikr", R.drawable.ic_leaf);
 
-        RecyclerView recycler = view.findViewById(R.id.recycler_activity);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(new ActivityAdapter(SampleData.activity()));
+        activityRecycler = view.findViewById(R.id.recycler_activity);
+        activityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        activityRecycler.setAdapter(new SkeletonAdapter(3));   // shimmer while loading
 
         MaterialButton log = view.findViewById(R.id.btn_log_progress);
         log.setOnClickListener(v ->
@@ -74,6 +82,9 @@ public class HomeFragment extends Fragment {
 
         // Local, instant: days/hours until next Jumu'ah (Friday).
         bindJumuahCountdown();
+
+        // Live dashboard: personal goal + recent group activity.
+        loadDashboard();
 
         // Start the skeleton shimmer, then fetch.
         Skeleton.shimmer(view.findViewById(R.id.date_skeleton));
@@ -168,6 +179,53 @@ public class HomeFragment extends Fragment {
                 fasting.setVisibility(View.GONE);
             }
         }
+    }
+
+    /** Loads the dashboard (community group) for the goal ring + recent activity. */
+    private void loadDashboard() {
+        ApiClient.get(requireContext()).dashboard(null)
+                .enqueue(new Callback<dto.DashboardResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<dto.DashboardResponse> call,
+                                           @NonNull Response<dto.DashboardResponse> response) {
+                        if (!isAdded()) return;
+                        if (response.isSuccessful() && response.body() != null) {
+                            bindDashboard(response.body());
+                        } else {
+                            activityRecycler.setAdapter(
+                                    new ActivityAdapter(new ArrayList<>()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<dto.DashboardResponse> call,
+                                          @NonNull Throwable t) {
+                        if (!isAdded()) return;
+                        activityRecycler.setAdapter(new ActivityAdapter(new ArrayList<>()));
+                    }
+                });
+    }
+
+    private void bindDashboard(dto.DashboardResponse d) {
+        if (d.goal != null) {
+            text(R.id.goal_percent, d.goal.percent + "%");
+            text(R.id.goal_subtitle, d.goal.progress + " of " + d.goal.target + " this week");
+        }
+
+        List<ActivityItem> items = new ArrayList<>();
+        if (d.recentActivity != null) {
+            int i = 0;
+            for (dto.ActivityDto a : d.recentActivity) {
+                String meta = a.type != null ? a.type.replace('_', ' ') : "";
+                items.add(new ActivityItem(
+                        a.initial != null ? a.initial : "•",
+                        a.text,
+                        meta,
+                        RelativeTime.from(a.createdAt),
+                        (i++ % 2) == 1));   // alternate gold/green avatars
+            }
+        }
+        activityRecycler.setAdapter(new ActivityAdapter(items));
     }
 
     /** Days and hours remaining until the next Friday (Jumu'ah). */

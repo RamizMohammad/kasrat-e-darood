@@ -12,6 +12,35 @@ public final class dto {
         public FirebaseLoginRequest(String idToken) { this.idToken = idToken; }
     }
 
+    public static class RegisterRequest {
+        public String email;
+        public String password;
+        @SerializedName("display_name") public String displayName;
+        public RegisterRequest(String email, String password, String displayName) {
+            this.email = email;
+            this.password = password;
+            this.displayName = displayName;
+        }
+    }
+
+    public static class EmailLoginRequest {
+        public String email;
+        public String password;
+        public EmailLoginRequest(String email, String password) {
+            this.email = email;
+            this.password = password;
+        }
+    }
+
+    /** Server error envelope: { "error": { "code": "...", "message": "..." } }. */
+    public static class ErrorEnvelope {
+        public ErrorBody error;
+        public static class ErrorBody {
+            public String code;
+            public String message;
+        }
+    }
+
     public static class UserDto {
         public String id;
         @SerializedName("display_name") public String displayName;
@@ -33,7 +62,32 @@ public final class dto {
         @SerializedName("arabic_name") public String arabicName;
         @SerializedName("english_name") public String englishName;
         public String translation;
+        public String reference;
+        public String icon;
         @SerializedName("category_id") public String categoryId;
+    }
+
+    /** A community activity-feed entry (also used for the home activity list). */
+    public static class ActivityDto {
+        public String id;
+        @SerializedName("actor_name") public String actorName;
+        public String initial;
+        public String type;
+        public String text;
+        public java.util.Map<String, Double> reactions;
+        @SerializedName("created_at") public String createdAt;
+
+        public int reaction(String key) {
+            if (reactions == null) return 0;
+            Double v = reactions.get(key);
+            return v == null ? 0 : (int) Math.round(v);
+        }
+    }
+
+    public static class GoalDto {
+        public int target;
+        public int progress;
+        public int percent;
     }
 
     public static class SubmissionRequest {
@@ -64,11 +118,14 @@ public final class dto {
         @SerializedName("user_total") public int userTotal;
         @SerializedName("today_total") public int todayTotal;
         @SerializedName("weekly_total") public int weeklyTotal;
+        @SerializedName("monthly_total") public int monthlyTotal;
         @SerializedName("lifetime_total") public int lifetimeTotal;
         @SerializedName("group_total") public int groupTotal;
         @SerializedName("remaining_days") public int remainingDays;
         public int streak;
+        public GoalDto goal;
         @SerializedName("top_contributors") public List<ContributorDto> topContributors;
+        @SerializedName("recent_activity") public List<ActivityDto> recentActivity;
     }
 
     public static class LeaderboardEntryDto {

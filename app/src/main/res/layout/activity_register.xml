@@ -117,6 +117,21 @@
                     android:textColorHint="@color/outline"
                     android:textColor="@color/on_surface" />
 
+                <TextView style="@style/Text.Title"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" android:text="@string/password" />
+                <EditText
+                    android:id="@+id/input_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingHorizontal="16dp"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/outline"
+                    android:textColor="@color/on_surface" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_continue"
                     style="@style/Widget.Noor.Button"

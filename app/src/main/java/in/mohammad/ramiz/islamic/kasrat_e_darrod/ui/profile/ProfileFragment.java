@@ -2,9 +2,11 @@ package in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,8 +28,15 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        TokenStore store = new TokenStore(requireContext());
+
+        TextView name = view.findViewById(R.id.profile_name);
+        if (name != null && !TextUtils.isEmpty(store.userName())) {
+            name.setText(store.userName());
+        }
+
         view.findViewById(R.id.btn_logout).setOnClickListener(v -> {
-            new TokenStore(requireContext()).clear();
+            store.clear();
             Intent intent = new Intent(requireContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

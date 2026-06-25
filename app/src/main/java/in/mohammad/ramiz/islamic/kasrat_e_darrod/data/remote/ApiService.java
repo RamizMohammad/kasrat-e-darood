@@ -11,6 +11,12 @@ import retrofit2.http.Query;
 /** Retrofit interface mapping 1:1 to the Noor REST API contract. */
 public interface ApiService {
 
+    @POST("api/v1/auth/register")
+    Call<dto.LoginResponse> register(@Body dto.RegisterRequest body);
+
+    @POST("api/v1/auth/login")
+    Call<dto.LoginResponse> login(@Body dto.EmailLoginRequest body);
+
     @POST("api/v1/auth/firebase")
     Call<dto.LoginResponse> loginWithFirebase(@Body dto.FirebaseLoginRequest body);
 
@@ -26,6 +32,9 @@ public interface ApiService {
 
     @GET("api/v1/dashboard")
     Call<dto.DashboardResponse> dashboard(@Query("group_id") String groupId);
+
+    @GET("api/v1/feed")
+    Call<List<dto.ActivityDto>> feed(@Query("group_id") String groupId);
 
     @GET("api/v1/leaderboards")
     Call<dto.LeaderboardResponse> leaderboard(@Query("group_id") String groupId,

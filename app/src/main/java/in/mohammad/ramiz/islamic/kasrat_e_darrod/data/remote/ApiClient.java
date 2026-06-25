@@ -11,13 +11,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Singleton Retrofit factory for the Noor API.
  *
- * Point {@link #BASE_URL} at your backend:
- *   - Android emulator -> http://10.0.2.2:8000/
- *   - Physical device  -> http://<your-machine-ip>:8000/
+ * The app talks to the live production backend over HTTPS. For local backend
+ * development, point {@link #BASE_URL} at http://10.0.2.2:8000/ (emulator) and
+ * temporarily re-enable cleartext traffic in AndroidManifest.xml.
  */
 public final class ApiClient {
-    // 10.0.2.2 is the host machine as seen from the Android emulator.
-    public static final String BASE_URL = "http://10.0.2.2:8000/";
+    /** Live production API. */
+    public static final String BASE_URL = "https://kasrat.darood.mohammadramiz.in/";
 
     private static ApiService service;
 

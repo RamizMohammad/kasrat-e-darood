@@ -28,6 +28,21 @@
     <string name="email_or_phone">Email or Phone Number</string>
     <string name="cont">Continue</string>
     <string name="step_1_of_3">Step 1 of 3</string>
+    <string name="hint_password">Enter a password</string>
+    <string name="create_account">Create Account</string>
+
+    <!-- Auth flow feedback -->
+    <string name="signing_in">Signing in…</string>
+    <string name="creating_account">Creating account…</string>
+    <string name="google_not_available">Google sign-in isn\'t available yet. Please use email and password.</string>
+    <string name="error_invalid_email">Enter a valid email address</string>
+    <string name="error_password_required">Enter your password</string>
+    <string name="error_password_short">Password must be at least 8 characters</string>
+    <string name="error_name_required">Enter your name</string>
+    <string name="error_network">Couldn\'t reach the server. Check your connection and try again.</string>
+    <string name="error_load_failed">Couldn\'t load this right now. Pull to refresh.</string>
+    <string name="empty_feed">No activity yet. Be the first to log a recitation.</string>
+    <string name="empty_leaderboard">No rankings yet this week.</string>
 
     <string name="log_progress">Log Progress</string>
     <string name="quick_add">Quick Add</string>
