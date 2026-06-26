@@ -25,3 +25,9 @@ class UserUpdate(BaseModel):
 
 class RoleUpdate(BaseModel):
     role: str  # member | super_member | super_admin
+
+
+class UserListResponse(BaseModel):
+    items: list[UserOut]
+    next_cursor: str | None = None
+    total: int

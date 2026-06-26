@@ -15,6 +15,9 @@ class UserRepository(BaseRepository[User]):
     async def get_by_email(self, email: str) -> User | None:
         return await User.find_one(User.email == email, User.deleted == False)  # noqa: E712
 
+    async def count_all(self) -> int:
+        return await User.find(User.deleted == False).count()  # noqa: E712
+
     async def search(self, q: str, limit: int = 20) -> list[User]:
         return await User.find(
             {"$text": {"$search": q}, "deleted": False}

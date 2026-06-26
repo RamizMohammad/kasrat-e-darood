@@ -2,15 +2,37 @@
 from __future__ import annotations
 
 from beanie import PydanticObjectId
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 
 from app.core.exceptions import NotFoundError, PermissionDeniedError, ValidationAppError
 from app.dependencies.auth import get_current_user
 from app.models.user import GlobalRole, User
 from app.repositories.user_repo import user_repository
-from app.schemas.user import RoleUpdate, UserOut, UserUpdate
+from app.schemas.user import RoleUpdate, UserListResponse, UserOut, UserUpdate
 
 router = APIRouter(prefix="/users", tags=["users"])
+
+
+def _require_super_admin(actor: User) -> None:
+    if actor.role != GlobalRole.SUPER_ADMIN:
+        raise PermissionDeniedError("Super admin access required")
+
+
+@router.get("", response_model=UserListResponse)
+async def list_users(
+    cursor: PydanticObjectId | None = None,
+    limit: int = Query(default=50, le=200),
+    actor: User = Depends(get_current_user),
+) -> UserListResponse:
+    """List all users (super admin only), cursor-paginated, for the admin panel."""
+    _require_super_admin(actor)
+    items, next_cursor = await user_repository.list_paginated(cursor=cursor, limit=limit)
+    total = await user_repository.count_all()
+    return UserListResponse(
+        items=[UserOut.model_validate(u) for u in items],
+        next_cursor=next_cursor,
+        total=total,
+    )
 
 
 @router.patch("/{user_id}/role", response_model=UserOut)
