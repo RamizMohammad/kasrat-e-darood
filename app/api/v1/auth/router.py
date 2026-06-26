@@ -7,6 +7,7 @@ from app.config.settings import settings
 from app.dependencies.auth import get_current_user
 from app.models.user import User
 from app.schemas.auth import (
+    DeleteAccountConfirm,
     EmailLoginRequest,
     FirebaseLoginRequest,
     ForgotPasswordRequest,
@@ -30,7 +31,8 @@ router = APIRouter(prefix="/auth", tags=["auth"])
              status_code=status.HTTP_201_CREATED)
 async def register(body: RegisterRequest) -> LoginResponse:
     """Create an email/password account and return an authenticated session."""
-    return await auth_service.register(body.email, body.password, body.display_name)
+    return await auth_service.register(
+        body.email, body.password, body.display_name, body.lang)
 
 
 @router.post("/login", response_model=LoginResponse)
@@ -67,6 +69,36 @@ async def forgot_password(
 async def reset_password(body: ResetPasswordRequest) -> OkResponse:
     """Verify the OTP and set a new password."""
     await auth_service.reset_password(body.email, body.code, body.new_password)
+    return OkResponse()
+
+
+@router.post("/delete-account/request", response_model=OkResponse)
+async def request_account_deletion(
+    background: BackgroundTasks, user: User = Depends(get_current_user)
+) -> OkResponse:
+    """Email a one-time code to confirm account deletion."""
+    result = await auth_service.create_deletion_code(user)
+    if result is not None:
+        code, lang = result
+        background.add_task(
+            email_service.send_account_deletion_otp,
+            to_email=user.email, code=code,
+            minutes=settings.PASSWORD_RESET_CODE_TTL_MINUTES, lang=lang,
+        )
+    return OkResponse()
+
+
+@router.post("/delete-account/confirm", response_model=OkResponse)
+async def confirm_account_deletion(
+    body: DeleteAccountConfirm,
+    background: BackgroundTasks,
+    user: User = Depends(get_current_user),
+) -> OkResponse:
+    """Verify the OTP, delete the account, and email a confirmation."""
+    email, lang = await auth_service.confirm_account_deletion(user, body.code)
+    background.add_task(
+        email_service.send_account_deletion_confirmation, to_email=email, lang=lang
+    )
     return OkResponse()
 
 

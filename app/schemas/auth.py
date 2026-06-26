@@ -24,6 +24,10 @@ class ResetPasswordRequest(BaseModel):
     new_password: str = Field(min_length=8, max_length=128)
 
 
+class DeleteAccountConfirm(BaseModel):
+    code: str = Field(min_length=4, max_length=10)
+
+
 class OkResponse(BaseModel):
     ok: bool = True
 
@@ -32,6 +36,7 @@ class RegisterRequest(BaseModel):
     email: str = Field(min_length=3, max_length=254)
     password: str = Field(min_length=8, max_length=128)
     display_name: str = Field(min_length=1, max_length=80)
+    lang: str = Field(default="en", pattern="^(en|hi|ur)$")
 
 
 class EmailLoginRequest(BaseModel):

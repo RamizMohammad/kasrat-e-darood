@@ -44,7 +44,7 @@ class AuthService:
     """Stateless service handling the auth lifecycle."""
 
     async def register(
-        self, email: str, password: str, display_name: str
+        self, email: str, password: str, display_name: str, lang: str = "en"
     ) -> LoginResponse:
         """Create an email/password account and return an authenticated session."""
         email = _normalize_email(email)
@@ -58,6 +58,7 @@ class AuthService:
             display_name=display_name.strip(),
             email=email,
             password_hash=hash_password(password),
+            lang=lang if lang in ("en", "hi", "ur") else "en",
         )
         await user_repository.create(user)
         pair = await self._issue_tokens(user)
@@ -113,33 +114,24 @@ class AuthService:
             user=UserOut.model_validate(user),
         )
 
-    # --- Password reset (OTP) -------------------------------------------------
-    async def create_reset_code(self, email: str) -> tuple[str, str] | None:
-        """Generate + store a reset OTP for `email`. Returns (code, lang).
-
-        Returns None when no matching account exists (caller should still respond
-        with success to avoid leaking which emails are registered).
-        """
-        email = _normalize_email(email)
-        user = await user_repository.get_by_email(email)
-        if user is None:
-            return None
+    # --- One-time codes (OTP) -------------------------------------------------
+    async def _create_code(self, user: User, purpose: str) -> str:
         code = f"{secrets.randbelow(1_000_000):06d}"
         expires = utcnow() + timedelta(
             minutes=settings.PASSWORD_RESET_CODE_TTL_MINUTES
         )
         await PasswordResetCode(
-            user_id=user.id, email=email, code_hash=_hash_code(code),
-            expires_at=expires,
+            user_id=user.id, email=user.email or "", code_hash=_hash_code(code),
+            purpose=purpose, expires_at=expires,
         ).insert()
-        lang = str(user.preferences.get("lang", "en"))
-        return code, lang
+        return code
 
-    async def reset_password(self, email: str, code: str, new_password: str) -> None:
-        """Verify the OTP and set a new password."""
+    async def _consume_code(self, email: str, code: str, purpose: str) -> User:
+        """Validate the latest OTP for (email, purpose); mark used; return user."""
         email = _normalize_email(email)
         record = await PasswordResetCode.find(
             PasswordResetCode.email == email,
+            PasswordResetCode.purpose == purpose,
             PasswordResetCode.used == False,  # noqa: E712
         ).sort("-created_at").first_or_none()
 
@@ -158,10 +150,52 @@ class AuthService:
         user = await user_repository.get(record.user_id)
         if user is None:
             raise ValidationAppError("Account not found", code="not_found")
-        user.password_hash = hash_password(new_password)
-        await user_repository.save(user)
         record.used = True
         await record.save()
+        return user
+
+    async def create_reset_code(self, email: str) -> tuple[str, str] | None:
+        """Generate + store a password-reset OTP. Returns (code, lang) or None.
+
+        Returns None when no matching account exists (caller should still respond
+        with success to avoid leaking which emails are registered).
+        """
+        user = await user_repository.get_by_email(_normalize_email(email))
+        if user is None:
+            return None
+        code = await self._create_code(user, "password_reset")
+        return code, user.lang
+
+    async def reset_password(self, email: str, code: str, new_password: str) -> None:
+        """Verify the OTP and set a new password."""
+        user = await self._consume_code(email, code, "password_reset")
+        user.password_hash = hash_password(new_password)
+        await user_repository.save(user)
+
+    # --- Account deletion (OTP) ----------------------------------------------
+    async def create_deletion_code(self, user: User) -> tuple[str, str] | None:
+        """Generate + store an account-deletion OTP. Returns (code, lang)."""
+        if not user.email:
+            return None
+        code = await self._create_code(user, "account_deletion")
+        return code, user.lang
+
+    async def confirm_account_deletion(
+        self, user: User, code: str
+    ) -> tuple[str, str]:
+        """Verify the OTP and soft-delete the account. Returns (email, lang)."""
+        if not user.email:
+            raise ValidationAppError("This account has no email on file",
+                                     code="no_email")
+        await self._consume_code(user.email, code, "account_deletion")
+        email, lang = user.email, user.lang
+        # Soft-delete and sign out everywhere.
+        user.deleted = True
+        await user_repository.save(user)
+        await RefreshToken.find(RefreshToken.user_id == user.id).update(
+            {"$set": {"revoked": True}}
+        )
+        return email, lang
 
     async def login_with_firebase(self, id_token: str) -> LoginResponse:
         identity = verify_id_token(id_token)

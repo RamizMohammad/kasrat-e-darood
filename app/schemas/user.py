@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from beanie import PydanticObjectId
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.schemas.common import ORMModel
 
@@ -13,6 +13,7 @@ class UserOut(ORMModel):
     email: str | None = None
     photo_url: str | None = None
     role: str
+    lang: str = "en"
     lifetime_total: int = 0
     streak_days: int = 0
 
@@ -20,6 +21,7 @@ class UserOut(ORMModel):
 class UserUpdate(BaseModel):
     display_name: str | None = None
     photo_url: str | None = None
+    lang: str | None = Field(default=None, pattern="^(en|hi|ur)$")
     preferences: dict | None = None
 
 

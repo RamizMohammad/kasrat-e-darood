@@ -83,10 +83,14 @@ class RefreshToken(BaseDocument):
 
 
 class PasswordResetCode(BaseDocument):
-    """A one-time password-reset OTP. Only the hash of the code is stored."""
+    """A one-time OTP for a sensitive action. Only the code hash is stored.
+
+    ``purpose`` distinguishes password resets from account deletions.
+    """
     user_id: PydanticObjectId
     email: str
     code_hash: str
+    purpose: str = "password_reset"  # password_reset | account_deletion
     expires_at: datetime
     used: bool = False
     attempts: int = 0

@@ -228,3 +228,143 @@ def otp_html(code: str, minutes: int, lang: str = "en") -> str:
   </div>
 </body>
 </html>"""
+
+
+# --- Account-deletion OTP ------------------------------------------------------
+_DEL_OTP_STRINGS: dict[str, dict[str, str]] = {
+    "en": {
+        "subject": "Confirm your Kasrat-e-Darood account deletion",
+        "greeting": "Assalamu Alaikum,",
+        "intro": "Use the code below to confirm deleting your Kasrat-e-Darood "
+                 "account. This cannot be undone.",
+        "expires": "This code expires in {minutes} minutes. If you didn't request "
+                   "this, ignore this email and your account stays safe.",
+        "signoff": "The Kasrat-e-Darood team",
+    },
+    "hi": {
+        "subject": "अपने Kasrat-e-Darood अकाउंट को हटाने की पुष्टि करें",
+        "greeting": "अस्सलामु अलैकुम,",
+        "intro": "अपना Kasrat-e-Darood अकाउंट हटाने की पुष्टि के लिए नीचे दिया कोड "
+                 "इस्तेमाल करें। यह वापस नहीं किया जा सकता।",
+        "expires": "यह कोड {minutes} मिनट में समाप्त हो जाएगा। यदि आपने अनुरोध नहीं "
+                   "किया तो इस ईमेल को अनदेखा करें।",
+        "signoff": "Kasrat-e-Darood टीम",
+    },
+    "ur": {
+        "subject": "اپنے Kasrat-e-Darood اکاؤنٹ کے حذف کی تصدیق کریں",
+        "greeting": "السلام علیکم،",
+        "intro": "اپنا Kasrat-e-Darood اکاؤنٹ حذف کرنے کی تصدیق کے لیے نیچے دیا گیا "
+                 "کوڈ استعمال کریں۔ یہ واپس نہیں ہو سکتا۔",
+        "expires": "یہ کوڈ {minutes} منٹ میں ختم ہو جائے گا۔ اگر آپ نے درخواست نہیں "
+                   "کی تو اس ای میل کو نظر انداز کر دیں۔",
+        "signoff": "Kasrat-e-Darood ٹیم",
+    },
+}
+
+_DEL_DONE_STRINGS: dict[str, dict[str, str]] = {
+    "en": {
+        "subject": "Your Kasrat-e-Darood account has been deleted",
+        "greeting": "Assalamu Alaikum,",
+        "body": "Your Kasrat-e-Darood account and personal data have been deleted. "
+                "We're sorry to see you go — you're always welcome back, insha'Allah.",
+        "signoff": "The Kasrat-e-Darood team",
+    },
+    "hi": {
+        "subject": "आपका Kasrat-e-Darood अकाउंट हटा दिया गया है",
+        "greeting": "अस्सलामु अलैकुम,",
+        "body": "आपका Kasrat-e-Darood अकाउंट और निजी डेटा हटा दिया गया है। "
+                "आपका जाना हमें अच्छा नहीं लगा — आप कभी भी वापस आ सकते हैं, इंशाअल्लाह।",
+        "signoff": "Kasrat-e-Darood टीम",
+    },
+    "ur": {
+        "subject": "آپ کا Kasrat-e-Darood اکاؤنٹ حذف کر دیا گیا ہے",
+        "greeting": "السلام علیکم،",
+        "body": "آپ کا Kasrat-e-Darood اکاؤنٹ اور ذاتی ڈیٹا حذف کر دیا گیا ہے۔ "
+                "آپ کا جانا ہمیں اچھا نہیں لگا — آپ کبھی بھی واپس آ سکتے ہیں، ان شاء اللہ۔",
+        "signoff": "Kasrat-e-Darood ٹیم",
+    },
+}
+
+
+def _font_for(lang: str) -> tuple[str, str, str]:
+    rtl = lang == "ur"
+    if lang == "ur":
+        font = "'Noto Nastaliq Urdu', 'Segoe UI', Arial, sans-serif"
+    elif lang == "hi":
+        font = "'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif"
+    else:
+        font = "Arial, Helvetica, sans-serif"
+    return font, ("rtl" if rtl else "ltr"), ("right" if rtl else "left")
+
+
+def deletion_otp_subject(lang: str = "en") -> str:
+    return _DEL_OTP_STRINGS.get(lang, _DEL_OTP_STRINGS["en"])["subject"]
+
+
+def deletion_otp_text(code: str, minutes: int, lang: str = "en") -> str:
+    s = _DEL_OTP_STRINGS.get(lang, _DEL_OTP_STRINGS["en"])
+    return (f"{s['greeting']}\n\n{s['intro']}\n\n    {code}\n\n"
+            f"{s['expires'].format(minutes=minutes)}\n\n{s['signoff']}")
+
+
+def deletion_otp_html(code: str, minutes: int, lang: str = "en") -> str:
+    s = _DEL_OTP_STRINGS.get(lang, _DEL_OTP_STRINGS["en"])
+    font, direction, align = _font_for(lang)
+    return f"""\
+<!DOCTYPE html>
+<html lang="{lang}" dir="{direction}">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head>
+<body style="margin:0;padding:0;background:{_SURFACE};font-family:{font};color:{_INK};direction:{direction};text-align:{align};">
+  <div style="max-width:520px;margin:0 auto;padding:32px 20px;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="display:inline-block;width:56px;height:56px;line-height:56px;border-radius:16px;background:{_PRIMARY};color:{_GOLD};font-size:26px;text-align:center;">&#10022;</div>
+      <div style="margin-top:12px;font-size:22px;font-weight:bold;color:{_PRIMARY};">Kasrat-e-Darood</div>
+    </div>
+    <div style="background:#ffffff;border-radius:20px;padding:32px;border:1px solid #e3e3de;">
+      <p style="margin:0 0 6px;color:{_PRIMARY};font-size:18px;font-weight:bold;">{s['greeting']}</p>
+      <p style="margin:0 0 22px;color:{_MUTED};font-size:15px;line-height:1.7;">{s['intro']}</p>
+      <div style="text-align:center;background:{_SURFACE};border-radius:14px;padding:22px;margin:0 0 22px;">
+        <div style="font-size:36px;font-weight:bold;letter-spacing:10px;color:{_PRIMARY};font-family:Arial,Helvetica,sans-serif;">{code}</div>
+      </div>
+      <p style="margin:0;color:{_MUTED};font-size:13px;line-height:1.7;">{s['expires'].format(minutes=minutes)}</p>
+    </div>
+    <div style="text-align:center;margin-top:22px;">
+      <p style="margin:0;color:#6f7973;font-size:12px;">{s['signoff']}</p>
+    </div>
+  </div>
+</body>
+</html>"""
+
+
+def deletion_done_subject(lang: str = "en") -> str:
+    return _DEL_DONE_STRINGS.get(lang, _DEL_DONE_STRINGS["en"])["subject"]
+
+
+def deletion_done_text(lang: str = "en") -> str:
+    s = _DEL_DONE_STRINGS.get(lang, _DEL_DONE_STRINGS["en"])
+    return f"{s['greeting']}\n\n{s['body']}\n\n{s['signoff']}"
+
+
+def deletion_done_html(lang: str = "en") -> str:
+    s = _DEL_DONE_STRINGS.get(lang, _DEL_DONE_STRINGS["en"])
+    font, direction, align = _font_for(lang)
+    return f"""\
+<!DOCTYPE html>
+<html lang="{lang}" dir="{direction}">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head>
+<body style="margin:0;padding:0;background:{_SURFACE};font-family:{font};color:{_INK};direction:{direction};text-align:{align};">
+  <div style="max-width:520px;margin:0 auto;padding:32px 20px;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="display:inline-block;width:56px;height:56px;line-height:56px;border-radius:16px;background:{_PRIMARY};color:{_GOLD};font-size:26px;text-align:center;">&#10022;</div>
+      <div style="margin-top:12px;font-size:22px;font-weight:bold;color:{_PRIMARY};">Kasrat-e-Darood</div>
+    </div>
+    <div style="background:#ffffff;border-radius:20px;padding:32px;border:1px solid #e3e3de;">
+      <p style="margin:0 0 6px;color:{_PRIMARY};font-size:18px;font-weight:bold;">{s['greeting']}</p>
+      <p style="margin:0;color:{_MUTED};font-size:15px;line-height:1.7;">{s['body']}</p>
+    </div>
+    <div style="text-align:center;margin-top:22px;">
+      <p style="margin:0;color:#6f7973;font-size:12px;">{s['signoff']}</p>
+    </div>
+  </div>
+</body>
+</html>"""

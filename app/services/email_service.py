@@ -118,5 +118,40 @@ class EmailService:
         self._apply_deliverability_headers(msg)
         self._send(msg, to_email)
 
+    def send_account_deletion_otp(
+        self, *, to_email: str, code: str, minutes: int, lang: str = "en"
+    ) -> None:
+        """Send the account-deletion OTP email. No-op if SMTP disabled."""
+        if not self.enabled:
+            logger.warning("SMTP not configured; skipping deletion OTP to {}", to_email)
+            return
+        msg = EmailMessage()
+        msg["Subject"] = email_templates.deletion_otp_subject(lang)
+        msg["From"] = self._from_header()
+        msg["To"] = to_email
+        msg.set_content(email_templates.deletion_otp_text(code, minutes, lang))
+        msg.add_alternative(
+            email_templates.deletion_otp_html(code, minutes, lang), subtype="html"
+        )
+        self._apply_deliverability_headers(msg)
+        self._send(msg, to_email)
+
+    def send_account_deletion_confirmation(
+        self, *, to_email: str, lang: str = "en"
+    ) -> None:
+        """Confirm the account was deleted. No-op if SMTP disabled."""
+        if not self.enabled:
+            logger.warning("SMTP not configured; skipping deletion confirm to {}",
+                           to_email)
+            return
+        msg = EmailMessage()
+        msg["Subject"] = email_templates.deletion_done_subject(lang)
+        msg["From"] = self._from_header()
+        msg["To"] = to_email
+        msg.set_content(email_templates.deletion_done_text(lang))
+        msg.add_alternative(email_templates.deletion_done_html(lang), subtype="html")
+        self._apply_deliverability_headers(msg)
+        self._send(msg, to_email)
+
 
 email_service = EmailService()

@@ -23,6 +23,7 @@ class User(BaseDocument):
     phone: str | None = None
     photo_url: str | None = None
     password_hash: str | None = None  # set for email/password accounts
+    lang: str = "en"  # preferred language: en | hi | ur (used for emails + UI)
     role: GlobalRole = GlobalRole.MEMBER
     lifetime_total: int = 0
     streak_days: int = 0
