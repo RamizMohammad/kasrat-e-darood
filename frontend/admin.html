@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin · Kasrat-e-Darood</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --surface:#fafaf5; --surface-low:#f4f4ef; --surface-high:#e8e8e3;
+    --container-lowest:#ffffff;
+    --on-surface:#1a1c19; --on-surface-variant:#3f4944; --outline:#6f7973; --outline-variant:#bec9c2;
+    --primary:#004532; --primary-container:#065f46; --gold:#e9c349; --error:#ba1a1a;
+    --shadow:0 2px 14px rgba(0,69,50,0.06);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Plus Jakarta Sans', system-ui, sans-serif; color:var(--on-surface);
+    background:radial-gradient(1000px 500px at 90% -10%, #eef3ee 0%, transparent 60%), var(--surface);
+    line-height:1.5; -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  .serif { font-family:'Source Serif 4', Georgia, serif; }
+  .wrap { max-width:980px; margin:0 auto; padding:0 clamp(16px,4vw,24px); }
+
+  nav { display:flex; align-items:center; justify-content:space-between; padding:18px 0; gap:12px; flex-wrap:wrap; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .logo { width:40px; height:40px; border-radius:12px; background:var(--primary); display:grid; place-items:center; box-shadow:var(--shadow); flex:none; }
+  .logo svg { width:21px; height:21px; }
+  .brand b { font-size:19px; color:var(--primary); }
+  .brand .tag { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--outline); font-weight:600; }
+  .who { display:flex; align-items:center; gap:12px; font-size:13px; color:var(--on-surface-variant); }
+  .btn { border:none; cursor:pointer; font-family:inherit; font-weight:600; border-radius:50px; padding:10px 18px; font-size:14px; }
+  .btn-primary { background:var(--primary); color:#fff; }
+  .btn-primary:hover { background:var(--primary-container); }
+  .btn-primary:disabled { opacity:.55; cursor:not-allowed; }
+  .btn-ghost { background:var(--surface-high); color:var(--on-surface-variant); }
+
+  .card { background:var(--container-lowest); border:1px solid var(--outline-variant); border-radius:22px; box-shadow:var(--shadow); }
+
+  /* Login */
+  #login-view { max-width:420px; margin:8vh auto 0; }
+  #login-view .card { padding:32px; }
+  #login-view h1 { font-size:24px; color:var(--primary); margin-bottom:4px; }
+  #login-view p.sub { color:var(--on-surface-variant); font-size:14px; margin-bottom:22px; }
+  label { display:block; font-size:13px; font-weight:600; margin:0 0 7px; }
+  input, select { width:100%; font-family:inherit; font-size:16px; color:var(--on-surface);
+    background:var(--surface-low); border:1px solid var(--outline-variant); border-radius:12px; padding:12px 14px; outline:none; }
+  input:focus, select:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(0,69,50,.12); }
+  .field { margin-bottom:14px; }
+  .msg { font-size:14px; margin-top:12px; min-height:18px; }
+  .msg.err { color:var(--error); }
+  .msg.ok { color:var(--primary); font-weight:600; }
+
+  /* Panel */
+  #panel-view { display:none; padding-bottom:60px; }
+  .toolbar { display:flex; gap:12px; align-items:center; margin:14px 0 18px; flex-wrap:wrap; }
+  .search { flex:1; min-width:200px; }
+  .count { font-size:13px; color:var(--outline); }
+
+  table { width:100%; border-collapse:collapse; }
+  thead th { text-align:left; font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--outline);
+    padding:12px 14px; border-bottom:1px solid var(--outline-variant); }
+  tbody td { padding:12px 14px; border-bottom:1px solid var(--surface-high); vertical-align:middle; font-size:14px; }
+  tbody tr:last-child td { border-bottom:none; }
+  .person { display:flex; align-items:center; gap:12px; }
+  .avatar { width:38px; height:38px; border-radius:50%; background:var(--primary-container); color:#fff;
+    display:grid; place-items:center; font-weight:700; flex:none; }
+  .name { font-weight:600; }
+  .email { color:var(--on-surface-variant); font-size:12.5px; }
+  .role-cell { display:flex; gap:8px; align-items:center; }
+  select.role { width:auto; min-width:140px; padding:9px 12px; font-size:14px; }
+  .save { padding:9px 14px; font-size:13px; }
+  .badge { font-size:11px; font-weight:700; padding:3px 9px; border-radius:50px; }
+  .badge.super_admin { background:#fff3cd; color:#735c00; }
+  .badge.super_member { background:#d7efe3; color:#004532; }
+  .badge.member { background:var(--surface-high); color:var(--on-surface-variant); }
+  .row-msg { font-size:12px; margin-top:4px; }
+  .row-msg.ok { color:var(--primary); }
+  .row-msg.err { color:var(--error); }
+  .self-tag { font-size:11px; color:var(--outline); }
+  .center { text-align:center; padding:28px; color:var(--outline); }
+
+  @media (max-width:620px){
+    thead { display:none; }
+    tbody td { display:block; border:none; padding:6px 14px; }
+    tbody tr { display:block; border-bottom:1px solid var(--outline-variant); padding:10px 0; }
+    .role-cell { margin-top:6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">
+      <span class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z" fill="#a6f2d1"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z" fill="#e9c349"/></svg>
+      </span>
+      <div>
+        <b class="serif">Kasrat-e-Darood</b>
+        <div class="tag">Admin · Roles</div>
+      </div>
+    </div>
+    <div class="who" id="who" style="display:none;">
+      <span id="who-name"></span>
+      <button class="btn btn-ghost" id="logout-btn" type="button">Log out</button>
+    </div>
+  </nav>
+
+  <!-- Login -->
+  <section id="login-view">
+    <div class="card">
+      <h1 class="serif">Admin sign in</h1>
+      <p class="sub">Sign in with a super-admin account to manage member roles.</p>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="••••••••" required />
+        </div>
+        <button class="btn btn-primary" id="login-btn" type="submit" style="width:100%;">Sign in</button>
+        <div class="msg" id="login-msg"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Panel -->
+  <section id="panel-view">
+    <div class="toolbar">
+      <input class="search" id="search" type="text" placeholder="Search by name or email…" />
+      <span class="count" id="count"></span>
+    </div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>Member</th><th>Lifetime</th><th>Role</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="center" id="empty" style="display:none;">No members found.</div>
+    </div>
+    <div style="text-align:center;margin-top:18px;">
+      <button class="btn btn-ghost" id="more-btn" type="button" style="display:none;">Load more</button>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Backend API base — must match the frontend's configured API.
+  const API_BASE = "https://kasrat.darood.mohammadramiz.in";
+  const ROLES = [
+    { value: "member", label: "Member" },
+    { value: "super_member", label: "Super Member" },
+    { value: "super_admin", label: "Super Admin" }
+  ];
+  const TOKEN_KEY = "ked_admin_token";
+
+  let token = null;
+  let me = null;
+  let allUsers = [];
+  let nextCursor = null;
+
+  const $ = (s) => document.querySelector(s);
+  const loginView = $("#login-view"), panelView = $("#panel-view");
+
+  function getToken() { try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; } }
+  function setToken(t) { try { t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY); } catch (e) {} token = t; }
+
+  async function api(path, opts = {}) {
+    const headers = Object.assign(
+      { "Content-Type": "application/json" },
+      token ? { "Authorization": "Bearer " + token } : {},
+      opts.headers || {}
+    );
+    const res = await fetch(API_BASE + path, Object.assign({}, opts, { headers }));
+    let data = null;
+    try { data = await res.json(); } catch (e) {}
+    if (!res.ok) {
+      const msg = (data && data.error && data.error.message) || ("Request failed (" + res.status + ")");
+      const err = new Error(msg); err.status = res.status; throw err;
+    }
+    return data;
+  }
+
+  function initial(name) { return (name || "?").trim().charAt(0).toUpperCase(); }
+
+  // --- Login ---
+  $("#login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = $("#login-msg"); msg.className = "msg"; msg.textContent = "";
+    const btn = $("#login-btn"); btn.disabled = true; btn.textContent = "Signing in…";
+    try {
+      const data = await api("/api/v1/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email: $("#email").value.trim(), password: $("#password").value })
+      });
+      if (!data.user || data.user.role !== "super_admin") {
+        msg.className = "msg err"; msg.textContent = "This account is not a super admin.";
+        return;
+      }
+      setToken(data.access_token);
+      me = data.user;
+      enterPanel();
+    } catch (err) {
+      msg.className = "msg err"; msg.textContent = err.message;
+    } finally {
+      btn.disabled = false; btn.textContent = "Sign in";
+    }
+  });
+
+  $("#logout-btn").addEventListener("click", () => {
+    setToken(null); me = null; allUsers = []; nextCursor = null;
+    panelView.style.display = "none"; loginView.style.display = "block"; $("#who").style.display = "none";
+  });
+
+  function enterPanel() {
+    loginView.style.display = "none";
+    panelView.style.display = "block";
+    $("#who").style.display = "flex";
+    $("#who-name").textContent = me ? (me.display_name + " · super admin") : "";
+    allUsers = []; nextCursor = null;
+    loadUsers(true);
+  }
+
+  // --- Load + render users ---
+  async function loadUsers(reset) {
+    try {
+      const q = nextCursor && !reset ? ("?cursor=" + nextCursor + "&limit=50") : "?limit=50";
+      const data = await api("/api/v1/users" + q);
+      allUsers = reset ? data.items : allUsers.concat(data.items);
+      nextCursor = data.next_cursor;
+      $("#count").textContent = allUsers.length + " of " + data.total + " members";
+      $("#more-btn").style.display = nextCursor ? "inline-block" : "none";
+      render();
+    } catch (err) {
+      if (err.status === 401) { $("#logout-btn").click(); return; }
+      $("#count").textContent = err.message;
+    }
+  }
+
+  $("#more-btn").addEventListener("click", () => loadUsers(false));
+  $("#search").addEventListener("input", render);
+
+  function render() {
+    const term = $("#search").value.trim().toLowerCase();
+    const rows = $("#rows");
+    rows.innerHTML = "";
+    const list = allUsers.filter(u =>
+      !term ||
+      (u.display_name || "").toLowerCase().includes(term) ||
+      (u.email || "").toLowerCase().includes(term)
+    );
+    $("#empty").style.display = list.length ? "none" : "block";
+
+    for (const u of list) {
+      const tr = document.createElement("tr");
+
+      const isSelf = me && u.id === me.id;
+      const options = ROLES.map(r =>
+        `<option value="${r.value}" ${r.value === u.role ? "selected" : ""}>${r.label}</option>`
+      ).join("");
+
+      tr.innerHTML = `
+        <td>
+          <div class="person">
+            <div class="avatar">${initial(u.display_name)}</div>
+            <div>
+              <div class="name">${escapeHtml(u.display_name || "Unnamed")} ${isSelf ? '<span class="self-tag">(you)</span>' : ""}</div>
+              <div class="email">${escapeHtml(u.email || "—")}</div>
+            </div>
+          </div>
+        </td>
+        <td>${u.lifetime_total || 0}</td>
+        <td>
+          <div class="role-cell">
+            <span class="badge ${u.role}" data-badge>${roleLabel(u.role)}</span>
+            <select class="role" ${isSelf ? "disabled title='You cannot change your own role'" : ""}>${options}</select>
+            <button class="btn btn-primary save" type="button" disabled>Save</button>
+          </div>
+          <div class="row-msg" style="display:none;"></div>
+        </td>`;
+
+      const select = tr.querySelector("select");
+      const saveBtn = tr.querySelector(".save");
+      const badge = tr.querySelector("[data-badge]");
+      const rowMsg = tr.querySelector(".row-msg");
+
+      select.addEventListener("change", () => { saveBtn.disabled = (select.value === u.role); });
+
+      saveBtn.addEventListener("click", async () => {
+        const newRole = select.value;
+        saveBtn.disabled = true; saveBtn.textContent = "Saving…";
+        rowMsg.style.display = "none";
+        try {
+          const updated = await api("/api/v1/users/" + u.id + "/role", {
+            method: "PATCH",
+            body: JSON.stringify({ role: newRole })
+          });
+          u.role = updated.role;
+          badge.className = "badge " + u.role;
+          badge.textContent = roleLabel(u.role);
+          rowMsg.className = "row-msg ok"; rowMsg.textContent = "Role updated.";
+          rowMsg.style.display = "block";
+        } catch (err) {
+          if (err.status === 401) { $("#logout-btn").click(); return; }
+          rowMsg.className = "row-msg err"; rowMsg.textContent = err.message;
+          rowMsg.style.display = "block";
+          saveBtn.disabled = false;
+        } finally {
+          saveBtn.textContent = "Save";
+        }
+      });
+
+      rows.appendChild(tr);
+    }
+  }
+
+  function roleLabel(v) { const r = ROLES.find(x => x.value === v); return r ? r.label : v; }
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  // Resume session if a token is stored.
+  (async function () {
+    token = getToken();
+    if (!token) return;
+    try {
+      me = await api("/api/v1/auth/me");
+      if (me && me.role === "super_admin") { enterPanel(); }
+      else { setToken(null); }
+    } catch (e) { setToken(null); }
+  })();
+</script>
+</body>
+</html>
