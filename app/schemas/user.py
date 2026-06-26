@@ -21,3 +21,7 @@ class UserUpdate(BaseModel):
     display_name: str | None = None
     photo_url: str | None = None
     preferences: dict | None = None
+
+
+class RoleUpdate(BaseModel):
+    role: str  # member | super_member | super_admin

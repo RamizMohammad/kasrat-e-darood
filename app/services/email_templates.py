@@ -145,3 +145,86 @@ def welcome_html(full_name: str, lang: str = "en", support_email: str | None = N
   </div>
 </body>
 </html>"""
+
+
+# --- Password-reset OTP --------------------------------------------------------
+_OTP_STRINGS: dict[str, dict[str, str]] = {
+    "en": {
+        "subject": "Your Kasrat-e-Darood password reset code",
+        "greeting": "Assalamu Alaikum,",
+        "intro": "Use the code below to reset your Kasrat-e-Darood password.",
+        "expires": "This code expires in {minutes} minutes. If you didn't request "
+                   "a reset, you can safely ignore this email.",
+        "signoff": "JazakAllah khair — The Kasrat-e-Darood team",
+    },
+    "hi": {
+        "subject": "आपका Kasrat-e-Darood पासवर्ड रीसेट कोड",
+        "greeting": "अस्सलामु अलैकुम,",
+        "intro": "अपना Kasrat-e-Darood पासवर्ड रीसेट करने के लिए नीचे दिया कोड इस्तेमाल करें।",
+        "expires": "यह कोड {minutes} मिनट में समाप्त हो जाएगा। यदि आपने रीसेट का अनुरोध "
+                   "नहीं किया, तो इस ईमेल को अनदेखा करें।",
+        "signoff": "JazakAllah khair — Kasrat-e-Darood टीम",
+    },
+    "ur": {
+        "subject": "آپ کا Kasrat-e-Darood پاس ورڈ ری سیٹ کوڈ",
+        "greeting": "السلام علیکم،",
+        "intro": "اپنا Kasrat-e-Darood پاس ورڈ ری سیٹ کرنے کے لیے نیچے دیا گیا کوڈ استعمال کریں۔",
+        "expires": "یہ کوڈ {minutes} منٹ میں ختم ہو جائے گا۔ اگر آپ نے ری سیٹ کی درخواست نہیں "
+                   "کی تو اس ای میل کو نظر انداز کر دیں۔",
+        "signoff": "جزاک اللہ خیر — Kasrat-e-Darood ٹیم",
+    },
+}
+
+
+def _ot(lang: str) -> dict[str, str]:
+    return _OTP_STRINGS.get(lang, _OTP_STRINGS["en"])
+
+
+def otp_subject(lang: str = "en") -> str:
+    return _ot(lang)["subject"]
+
+
+def otp_text(code: str, minutes: int, lang: str = "en") -> str:
+    s = _ot(lang)
+    return (
+        f"{s['greeting']}\n\n{s['intro']}\n\n"
+        f"    {code}\n\n"
+        f"{s['expires'].format(minutes=minutes)}\n\n{s['signoff']}"
+    )
+
+
+def otp_html(code: str, minutes: int, lang: str = "en") -> str:
+    s = _ot(lang)
+    rtl = lang == "ur"
+    direction = "rtl" if rtl else "ltr"
+    align = "right" if rtl else "left"
+    if lang == "ur":
+        font = "'Noto Nastaliq Urdu', 'Segoe UI', Arial, sans-serif"
+    elif lang == "hi":
+        font = "'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif"
+    else:
+        font = "Arial, Helvetica, sans-serif"
+    return f"""\
+<!DOCTYPE html>
+<html lang="{lang}" dir="{direction}">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head>
+<body style="margin:0;padding:0;background:{_SURFACE};font-family:{font};color:{_INK};direction:{direction};text-align:{align};">
+  <div style="max-width:520px;margin:0 auto;padding:32px 20px;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="display:inline-block;width:56px;height:56px;line-height:56px;border-radius:16px;background:{_PRIMARY};color:{_GOLD};font-size:26px;text-align:center;">&#10022;</div>
+      <div style="margin-top:12px;font-size:22px;font-weight:bold;color:{_PRIMARY};">Kasrat-e-Darood</div>
+    </div>
+    <div style="background:#ffffff;border-radius:20px;padding:32px;border:1px solid #e3e3de;">
+      <p style="margin:0 0 6px;color:{_PRIMARY};font-size:18px;font-weight:bold;">{s['greeting']}</p>
+      <p style="margin:0 0 22px;color:{_MUTED};font-size:15px;line-height:1.7;">{s['intro']}</p>
+      <div style="text-align:center;background:{_SURFACE};border-radius:14px;padding:22px;margin:0 0 22px;">
+        <div style="font-size:36px;font-weight:bold;letter-spacing:10px;color:{_PRIMARY};font-family:Arial,Helvetica,sans-serif;">{code}</div>
+      </div>
+      <p style="margin:0;color:{_MUTED};font-size:13px;line-height:1.7;">{s['expires'].format(minutes=minutes)}</p>
+    </div>
+    <div style="text-align:center;margin-top:22px;">
+      <p style="margin:0;color:#6f7973;font-size:12px;">{s['signoff']}</p>
+    </div>
+  </div>
+</body>
+</html>"""

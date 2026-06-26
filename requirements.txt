@@ -13,6 +13,9 @@ celery==5.4.0
 # --- Auth ---
 PyJWT==2.10.1
 firebase-admin==6.6.0
+# --- Google Sign-In (verify Google ID tokens) ---
+google-auth==2.38.0
+requests==2.32.3
 # --- Logging / utils ---
 loguru==0.7.3
 python-multipart==0.0.20

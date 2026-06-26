@@ -4,6 +4,7 @@ from app.models.activity import (
     DeviceToken,
     LeaderboardSnapshot,
     Notification,
+    PasswordResetCode,
     RefreshToken,
 )
 from app.models.beta import BetaSignup
@@ -26,6 +27,7 @@ ALL_DOCUMENT_MODELS = [
     Notification,
     DeviceToken,
     RefreshToken,
+    PasswordResetCode,
     BetaSignup,
 ]
 

@@ -41,11 +41,22 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
 
+    # --- Password reset (OTP) ------------------------------------------------
+    PASSWORD_RESET_CODE_TTL_MINUTES: int = 10
+    PASSWORD_RESET_MAX_ATTEMPTS: int = 5
+
     # --- Firebase ------------------------------------------------------------
     # Path to the Firebase service-account JSON. When empty, Firebase token
     # verification is bypassed in development (a stub identity is used).
     FIREBASE_CREDENTIALS_FILE: str = Field(default="")
     FIREBASE_PROJECT_ID: str = Field(default="")
+
+    # --- Google Sign-In ------------------------------------------------------
+    # The OAuth *web* client ID (audience of the Google ID token the Android
+    # app sends). Taken from google-services.json (oauth_client type 3).
+    GOOGLE_CLIENT_ID: str = Field(
+        default="571474681893-2tl01abvbecpp764fjil2bkjse1dssj5.apps.googleusercontent.com"
+    )
 
     # --- SMTP / email (Gmail) ------------------------------------------------
     # Use a Gmail account with 2FA enabled and an App Password (not your normal

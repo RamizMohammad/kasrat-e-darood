@@ -12,6 +12,7 @@ from app.models.base import BaseDocument
 
 class GlobalRole(str, Enum):
     SUPER_ADMIN = "super_admin"
+    SUPER_MEMBER = "super_member"
     MEMBER = "member"
 
 

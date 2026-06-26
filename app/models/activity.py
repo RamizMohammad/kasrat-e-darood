@@ -80,3 +80,21 @@ class RefreshToken(BaseDocument):
             pymongo.IndexModel([("expires_at", pymongo.ASCENDING)],
                                expireAfterSeconds=0, name="ttl_refresh"),
         ]
+
+
+class PasswordResetCode(BaseDocument):
+    """A one-time password-reset OTP. Only the hash of the code is stored."""
+    user_id: PydanticObjectId
+    email: str
+    code_hash: str
+    expires_at: datetime
+    used: bool = False
+    attempts: int = 0
+
+    class Settings:
+        name = "password_reset_codes"
+        indexes = [
+            [("email", pymongo.ASCENDING), ("created_at", pymongo.DESCENDING)],
+            pymongo.IndexModel([("expires_at", pymongo.ASCENDING)],
+                               expireAfterSeconds=0, name="ttl_reset_code"),
+        ]

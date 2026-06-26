@@ -98,5 +98,25 @@ class EmailService:
         self._apply_deliverability_headers(msg)
         self._send(msg, to_email)
 
+    def send_password_reset(
+        self, *, to_email: str, code: str, minutes: int, lang: str = "en"
+    ) -> None:
+        """Send a password-reset OTP email in `lang`. No-op if SMTP disabled."""
+        if not self.enabled:
+            logger.warning(
+                "SMTP not configured; skipping password-reset email to {}", to_email
+            )
+            return
+        msg = EmailMessage()
+        msg["Subject"] = email_templates.otp_subject(lang)
+        msg["From"] = self._from_header()
+        msg["To"] = to_email
+        msg.set_content(email_templates.otp_text(code, minutes, lang))
+        msg.add_alternative(
+            email_templates.otp_html(code, minutes, lang), subtype="html"
+        )
+        self._apply_deliverability_headers(msg)
+        self._send(msg, to_email)
+
 
 email_service = EmailService()
