@@ -1,0 +1,65 @@
+<resources>
+    <string name="greeting">अस्सलामु अलैकुम</string>
+    <string name="tagline">आपकी आध्यात्मिक यात्रा के लिए सजग प्रगति।</string>
+    <string name="welcome_back">वापसी पर स्वागत है, %1$s</string>
+    <string name="sign_in">साइन इन</string>
+    <string name="email_address">ईमेल पता</string>
+    <string name="password">पासवर्ड</string>
+    <string name="forgot">भूल गए?</string>
+    <string name="or_continue_with">या जारी रखें</string>
+    <string name="continue_google">Google से जारी रखें</string>
+    <string name="no_account">खाता नहीं है? </string>
+    <string name="register">रजिस्टर</string>
+    <string name="have_account">पहले से खाता है? </string>
+    <string name="login">लॉगिन</string>
+
+    <string name="join_noor">Noor से जुड़ें और सजग आध्यात्मिक प्रगति की यात्रा शुरू करें।</string>
+    <string name="personal_details">व्यक्तिगत विवरण</string>
+    <string name="full_name">पूरा नाम</string>
+    <string name="enter_name">अपना नाम लिखें</string>
+    <string name="email_or_phone">ईमेल या फ़ोन नंबर</string>
+    <string name="cont">जारी रखें</string>
+    <string name="create_account">खाता बनाएं</string>
+    <string name="signing_in">साइन इन हो रहा है…</string>
+    <string name="creating_account">खाता बन रहा है…</string>
+
+    <string name="log_progress">प्रगति दर्ज करें</string>
+    <string name="quick_add">त्वरित जोड़ें</string>
+    <string name="library">लाइब्रेरी</string>
+    <string name="weekly_insights">साप्ताहिक जानकारी</string>
+    <string name="view_full_leaderboard">पूरी लीडरबोर्ड देखें</string>
+    <string name="get_started">शुरू करें</string>
+
+    <string name="library_subtitle">आपने जो पढ़ा वह चुनें</string>
+    <string name="search_hint">सूरह, दुआ या ज़िक्र खोजें…</string>
+    <string name="times_recited">कितनी बार पढ़ा</string>
+    <string name="enter_times_recited">आपने इसे कितनी बार पढ़ा, दर्ज करें</string>
+    <string name="set">सेट करें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="review_submit">समीक्षा</string>
+    <string name="your_recitations">आपकी तिलावत</string>
+    <string name="submit_to_community">समुदाय को भेजें</string>
+    <string name="submitting">भेजा जा रहा है…</string>
+
+    <!-- Profile + settings -->
+    <string name="log_out">लॉग आउट</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="language">भाषा</string>
+    <string name="appearance">रूप</string>
+    <string name="dark_mode">डार्क मोड</string>
+    <string name="account">खाता</string>
+    <string name="developer_info">डेवलपर जानकारी</string>
+    <string name="developed_by">द्वारा विकसित</string>
+    <string name="contact">संपर्क</string>
+    <string name="your_submissions">आपकी सबमिशन</string>
+
+    <!-- Password reset + deletion -->
+    <string name="reset_password">पासवर्ड रीसेट</string>
+    <string name="send_code">कोड भेजें</string>
+    <string name="reset_code">रीसेट कोड</string>
+    <string name="new_password">नया पासवर्ड</string>
+    <string name="back_to_login">लॉगिन पर वापस</string>
+    <string name="delete_account">खाता हटाएं</string>
+    <string name="confirm_delete">मेरा खाता हटाएं</string>
+    <string name="deleting">हटाया जा रहा है…</string>
+</resources>

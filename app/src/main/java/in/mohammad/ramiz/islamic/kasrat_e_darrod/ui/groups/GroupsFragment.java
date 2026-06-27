@@ -20,7 +20,8 @@ import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.model.FeedPost;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.FeedAdapter;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.SkeletonAdapter;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.LoaderAdapter;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Anims;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.RelativeTime;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +43,7 @@ public class GroupsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recycler = view.findViewById(R.id.recycler_feed);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(new SkeletonAdapter(5));   // shimmer while loading
+        recycler.setAdapter(new LoaderAdapter());   // branded GIF while loading
         load();
     }
 
@@ -83,6 +84,7 @@ public class GroupsFragment extends Fragment {
                     a.reaction("heart")));
         }
         recycler.setAdapter(new FeedAdapter(items));
+        Anims.fallDown(recycler);
     }
 
     private void toast(String msg) {

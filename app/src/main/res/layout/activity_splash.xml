@@ -17,8 +17,9 @@
             android:background="@drawable/bg_logo_circle"
             android:elevation="4dp">
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:id="@+id/splash_gif"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_star"
                 app:tint="@color/secondary"

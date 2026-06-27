@@ -16,8 +16,7 @@
             android:layout_marginTop="14dp" android:text="Member" android:textSize="24sp"
             android:textStyle="bold" android:fontFamily="serif" android:textColor="@color/primary" />
         <TextView android:id="@+id/profile_streak" android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="" android:textColor="@color/on_surface_variant"
-            android:textSize="13sp" />
+            android:text="" android:textColor="@color/on_surface_variant" android:textSize="13sp" />
 
         <!-- Submission stats -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -28,7 +27,7 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:gravity="center">
                     <TextView android:id="@+id/stat_week" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="—" android:textSize="26sp" android:textStyle="bold"
+                        android:text="—" android:textSize="24sp" android:textStyle="bold"
                         android:fontFamily="serif" android:textColor="@color/primary" />
                     <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="THIS WEEK" />
@@ -40,7 +39,7 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:gravity="center">
                     <TextView android:id="@+id/stat_today" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="—" android:textSize="26sp" android:textStyle="bold"
+                        android:text="—" android:textSize="24sp" android:textStyle="bold"
                         android:fontFamily="serif" android:textColor="@color/primary" />
                     <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="TODAY" />
@@ -52,7 +51,7 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:gravity="center">
                     <TextView android:id="@+id/stat_lifetime" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="—" android:textSize="26sp" android:textStyle="bold"
+                        android:text="—" android:textSize="24sp" android:textStyle="bold"
                         android:fontFamily="serif" android:textColor="@color/primary" />
                     <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="LIFETIME" />
@@ -60,35 +59,37 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- Recent submissions -->
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center_vertical"
-            android:layout_marginTop="28dp">
-            <TextView style="@style/Text.Overline" android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content" android:text="@string/your_submissions" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_submissions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:nestedScrollingEnabled="false" />
-
-        <TextView
-            android:id="@+id/submissions_empty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
-            android:gravity="center"
-            android:text="@string/no_submissions"
-            android:textColor="@color/on_surface_variant"
-            android:visibility="gone" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_logout"
-            style="@style/Widget.Noor.Button.Outlined"
+        <!-- Menu -->
+        <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="24dp" android:text="Log Out" />
+            android:layout_marginTop="24dp" app:contentPadding="4dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout android:id="@+id/row_settings" style="@style/Noor.ProfileRow">
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_qibla" />
+                    <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/settings" />
+                    <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/row_submissions" style="@style/Noor.ProfileRow">
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_stats" />
+                    <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/your_submissions" />
+                    <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/row_developer" style="@style/Noor.ProfileRow">
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_sparkle" />
+                    <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/developer_info" />
+                    <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/row_logout" style="@style/Noor.ProfileRow">
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_lock" app:tint="@color/error" />
+                    <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/log_out" android:textColor="@color/error" />
+                    <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -11,30 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.R;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.local.TokenStore;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.SkeletonAdapter;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.SubmissionAdapter;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.auth.LoginActivity;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.settings.SettingsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/** Profile screen: identity, submission stats and the user's recent submissions. */
+/** Profile: identity, submission stats, and a menu (Settings, Submissions, Dev, Logout). */
 public class ProfileFragment extends Fragment {
 
     private TextView statWeek, statToday, statLifetime, streak;
-    private RecyclerView submissions;
-    private TextView submissionsEmpty;
 
     @Nullable
     @Override
@@ -48,39 +41,31 @@ public class ProfileFragment extends Fragment {
         TokenStore store = new TokenStore(requireContext());
 
         TextView name = view.findViewById(R.id.profile_name);
-        if (name != null && !TextUtils.isEmpty(store.userName())) {
-            name.setText(store.userName());
-        }
+        if (!TextUtils.isEmpty(store.userName())) name.setText(store.userName());
 
         statWeek = view.findViewById(R.id.stat_week);
         statToday = view.findViewById(R.id.stat_today);
         statLifetime = view.findViewById(R.id.stat_lifetime);
         streak = view.findViewById(R.id.profile_streak);
-        submissionsEmpty = view.findViewById(R.id.submissions_empty);
 
-        submissions = view.findViewById(R.id.recycler_submissions);
-        submissions.setLayoutManager(new LinearLayoutManager(getContext()));
-        submissions.setAdapter(new SkeletonAdapter(4));
-
-        view.findViewById(R.id.btn_logout).setOnClickListener(v -> {
+        view.findViewById(R.id.row_settings).setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), SettingsActivity.class)));
+        view.findViewById(R.id.row_submissions).setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), SubmissionsActivity.class)));
+        view.findViewById(R.id.row_developer).setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), DeveloperInfoActivity.class)));
+        view.findViewById(R.id.row_logout).setOnClickListener(v -> {
             store.clear();
             Intent intent = new Intent(requireContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
-
-        loadStats();
-        loadSubmissions();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Refresh after the user may have submitted from the Library.
-        if (statWeek != null) {
-            loadStats();
-            loadSubmissions();
-        }
+        if (statWeek != null) loadStats();
     }
 
     private void loadStats() {
@@ -99,30 +84,7 @@ public class ProfileFragment extends Fragment {
 
                     @Override
                     public void onFailure(@NonNull Call<dto.DashboardResponse> call,
-                                          @NonNull Throwable t) { /* leave placeholders */ }
-                });
-    }
-
-    private void loadSubmissions() {
-        ApiClient.get(requireContext()).mySubmissions()
-                .enqueue(new Callback<List<dto.MySubmissionDto>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<dto.MySubmissionDto>> call,
-                                           @NonNull Response<List<dto.MySubmissionDto>> response) {
-                        if (!isAdded()) return;
-                        List<dto.MySubmissionDto> list = response.isSuccessful() && response.body() != null
-                                ? response.body() : new ArrayList<>();
-                        submissions.setAdapter(new SubmissionAdapter(list));
-                        submissionsEmpty.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<dto.MySubmissionDto>> call,
-                                          @NonNull Throwable t) {
-                        if (!isAdded()) return;
-                        submissions.setAdapter(new SubmissionAdapter(new ArrayList<>()));
-                        submissionsEmpty.setVisibility(View.VISIBLE);
-                    }
+                                          @NonNull Throwable t) { /* keep placeholders */ }
                 });
     }
 

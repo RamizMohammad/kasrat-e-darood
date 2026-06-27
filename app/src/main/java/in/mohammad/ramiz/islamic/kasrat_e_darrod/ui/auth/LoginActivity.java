@@ -2,14 +2,23 @@ package in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.MainActivity;
@@ -32,6 +41,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputPassword;
     private MaterialButton signIn;
     private MaterialButton google;
+    private GoogleSignInClient googleClient;
+
+    private final ActivityResultLauncher<Intent> googleLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    result -> handleGoogleResult(
+                            GoogleSignIn.getSignedInAccountFromIntent(result.getData())));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +58,86 @@ public class LoginActivity extends AppCompatActivity {
         signIn = findViewById(R.id.btn_sign_in);
         google = findViewById(R.id.btn_google);
 
-        signIn.setOnClickListener(v -> attemptLogin());
+        GoogleSignInOptions options = new GoogleSignInOptions.Builder(
+                GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        googleClient = GoogleSignIn.getClient(this, options);
 
-        // Google/Firebase sign-in is not configured on the server yet.
-        google.setOnClickListener(v ->
-                Toast.makeText(this, R.string.google_not_available, Toast.LENGTH_SHORT).show());
+        setupPasswordToggle();
+
+        signIn.setOnClickListener(v -> attemptLogin());
+        google.setOnClickListener(v -> startGoogleSignIn());
 
         findViewById(R.id.link_register).setOnClickListener(v ->
                 startActivity(new Intent(this, RegisterActivity.class)));
+
+        findViewById(R.id.link_forgot).setOnClickListener(v -> {
+            Intent i = new Intent(this, ForgotPasswordActivity.class);
+            i.putExtra(ForgotPasswordActivity.EXTRA_EMAIL,
+                    inputEmail.getText().toString().trim());
+            startActivity(i);
+        });
+    }
+
+    private void setupPasswordToggle() {
+        ImageView toggle = findViewById(R.id.btn_toggle_password);
+        toggle.setOnClickListener(v -> {
+            boolean hidden = (inputPassword.getInputType()
+                    & InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0;
+            if (hidden) {
+                inputPassword.setInputType(InputType.TYPE_CLASS_TEXT
+                        | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                toggle.setImageResource(R.drawable.ic_eye_off);
+            } else {
+                inputPassword.setInputType(InputType.TYPE_CLASS_TEXT
+                        | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                toggle.setImageResource(R.drawable.ic_eye);
+            }
+            inputPassword.setSelection(inputPassword.getText().length());
+        });
+    }
+
+    private void startGoogleSignIn() {
+        // Sign out first so the account chooser always shows.
+        googleClient.signOut().addOnCompleteListener(this,
+                t -> googleLauncher.launch(googleClient.getSignInIntent()));
+    }
+
+    private void handleGoogleResult(Task<com.google.android.gms.auth.api.signin.GoogleSignInAccount> task) {
+        try {
+            String idToken = task.getResult(ApiException.class).getIdToken();
+            if (idToken == null) {
+                Toast.makeText(this, R.string.error_google, Toast.LENGTH_LONG).show();
+                return;
+            }
+            setLoading(true);
+            ApiClient.get(this).loginWithGoogle(new dto.GoogleLoginRequest(idToken))
+                    .enqueue(new Callback<dto.LoginResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<dto.LoginResponse> call,
+                                               @NonNull Response<dto.LoginResponse> response) {
+                            setLoading(false);
+                            if (response.isSuccessful() && response.body() != null) {
+                                onAuthSuccess(response.body());
+                            } else {
+                                Toast.makeText(LoginActivity.this,
+                                        ApiErrors.messageFrom(response), Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<dto.LoginResponse> call,
+                                              @NonNull Throwable t) {
+                            setLoading(false);
+                            Toast.makeText(LoginActivity.this,
+                                    R.string.error_network, Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } catch (ApiException e) {
+            Toast.makeText(this, R.string.error_google, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void attemptLogin() {

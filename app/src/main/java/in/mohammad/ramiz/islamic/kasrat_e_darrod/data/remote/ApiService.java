@@ -5,6 +5,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -23,8 +24,26 @@ public interface ApiService {
     @POST("api/v1/auth/refresh")
     Call<dto.TokenPair> refresh(@Body dto.RefreshRequest body);
 
+    @POST("api/v1/auth/google")
+    Call<dto.LoginResponse> loginWithGoogle(@Body dto.GoogleLoginRequest body);
+
+    @POST("api/v1/auth/forgot-password")
+    Call<dto.OkResponse> forgotPassword(@Body dto.ForgotPasswordRequest body);
+
+    @POST("api/v1/auth/reset-password")
+    Call<dto.OkResponse> resetPassword(@Body dto.ResetPasswordRequest body);
+
     @GET("api/v1/auth/me")
     Call<dto.UserDto> me();
+
+    @PATCH("api/v1/users/me")
+    Call<dto.UserDto> updateMe(@Body dto.UserUpdateRequest body);
+
+    @POST("api/v1/auth/delete-account/request")
+    Call<dto.OkResponse> requestAccountDeletion();
+
+    @POST("api/v1/auth/delete-account/confirm")
+    Call<dto.OkResponse> confirmAccountDeletion(@Body dto.DeleteAccountConfirmRequest body);
 
     @GET("api/v1/recitations")
     Call<List<dto.RecitationDto>> recitations(@Query("group_id") String groupId,

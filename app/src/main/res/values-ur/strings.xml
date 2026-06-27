@@ -1,0 +1,65 @@
+<resources>
+    <string name="greeting">السلام علیکم</string>
+    <string name="tagline">آپ کے روحانی سفر کے لیے باشعور پیش رفت۔</string>
+    <string name="welcome_back">واپسی پر خوش آمدید، %1$s</string>
+    <string name="sign_in">سائن اِن</string>
+    <string name="email_address">ای میل پتہ</string>
+    <string name="password">پاس ورڈ</string>
+    <string name="forgot">بھول گئے؟</string>
+    <string name="or_continue_with">یا جاری رکھیں</string>
+    <string name="continue_google">گوگل سے جاری رکھیں</string>
+    <string name="no_account">اکاؤنٹ نہیں ہے؟ </string>
+    <string name="register">رجسٹر</string>
+    <string name="have_account">پہلے سے اکاؤنٹ ہے؟ </string>
+    <string name="login">لاگ اِن</string>
+
+    <string name="join_noor">Noor سے جڑیں اور باشعور روحانی پیش رفت کا سفر شروع کریں۔</string>
+    <string name="personal_details">ذاتی تفصیلات</string>
+    <string name="full_name">پورا نام</string>
+    <string name="enter_name">اپنا نام لکھیں</string>
+    <string name="email_or_phone">ای میل یا فون نمبر</string>
+    <string name="cont">جاری رکھیں</string>
+    <string name="create_account">اکاؤنٹ بنائیں</string>
+    <string name="signing_in">سائن اِن ہو رہا ہے…</string>
+    <string name="creating_account">اکاؤنٹ بن رہا ہے…</string>
+
+    <string name="log_progress">پیش رفت درج کریں</string>
+    <string name="quick_add">فوری شامل کریں</string>
+    <string name="library">لائبریری</string>
+    <string name="weekly_insights">ہفتہ وار جھلکیاں</string>
+    <string name="view_full_leaderboard">مکمل لیڈر بورڈ دیکھیں</string>
+    <string name="get_started">شروع کریں</string>
+
+    <string name="library_subtitle">جو آپ نے پڑھا اسے منتخب کریں</string>
+    <string name="search_hint">سورہ، دعا یا ذکر تلاش کریں…</string>
+    <string name="times_recited">کتنی بار پڑھا</string>
+    <string name="enter_times_recited">آپ نے یہ کتنی بار پڑھا، درج کریں</string>
+    <string name="set">سیٹ کریں</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="review_submit">جائزہ</string>
+    <string name="your_recitations">آپ کی تلاوت</string>
+    <string name="submit_to_community">کمیونٹی کو بھیجیں</string>
+    <string name="submitting">بھیجا جا رہا ہے…</string>
+
+    <!-- Profile + settings -->
+    <string name="log_out">لاگ آؤٹ</string>
+    <string name="settings">ترتیبات</string>
+    <string name="language">زبان</string>
+    <string name="appearance">ظاہری شکل</string>
+    <string name="dark_mode">ڈارک موڈ</string>
+    <string name="account">اکاؤنٹ</string>
+    <string name="developer_info">ڈویلپر معلومات</string>
+    <string name="developed_by">تیار کردہ</string>
+    <string name="contact">رابطہ</string>
+    <string name="your_submissions">آپ کی سبمیشنز</string>
+
+    <!-- Password reset + deletion -->
+    <string name="reset_password">پاس ورڈ ری سیٹ</string>
+    <string name="send_code">کوڈ بھیجیں</string>
+    <string name="reset_code">ری سیٹ کوڈ</string>
+    <string name="new_password">نیا پاس ورڈ</string>
+    <string name="back_to_login">لاگ اِن پر واپس</string>
+    <string name="delete_account">اکاؤنٹ حذف کریں</string>
+    <string name="confirm_delete">میرا اکاؤنٹ حذف کریں</string>
+    <string name="deleting">حذف ہو رہا ہے…</string>
+</resources>

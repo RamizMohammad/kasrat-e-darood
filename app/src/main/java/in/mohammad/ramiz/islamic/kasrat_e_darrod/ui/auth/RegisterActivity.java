@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.local.TokenStore;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiErrors;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.AppPrefs;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText inputName;
     private EditText inputContact;
     private EditText inputPassword;
+    private RadioGroup langGroup;
     private MaterialButton cont;
 
     @Override
@@ -41,10 +44,18 @@ public class RegisterActivity extends AppCompatActivity {
         inputName = findViewById(R.id.input_name);
         inputContact = findViewById(R.id.input_contact);
         inputPassword = findViewById(R.id.input_password);
+        langGroup = findViewById(R.id.reg_lang_group);
         cont = findViewById(R.id.btn_continue);
 
         cont.setOnClickListener(v -> attemptRegister());
         findViewById(R.id.link_login).setOnClickListener(v -> finish());
+    }
+
+    private String selectedLang() {
+        int id = langGroup.getCheckedRadioButtonId();
+        if (id == R.id.reg_lang_hi) return "hi";
+        if (id == R.id.reg_lang_ur) return "ur";
+        return "en";
     }
 
     private void attemptRegister() {
@@ -68,8 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        String lang = selectedLang();
+        // Apply the chosen language to the app immediately.
+        new AppPrefs(this).setLang(lang);
+
         setLoading(true);
-        ApiClient.get(this).register(new dto.RegisterRequest(email, password, name))
+        ApiClient.get(this).register(new dto.RegisterRequest(email, password, name, lang))
                 .enqueue(new Callback<dto.LoginResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<dto.LoginResponse> call,

@@ -28,7 +28,8 @@ import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.Cart;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.CatalogAdapter;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.SkeletonAdapter;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.LoaderAdapter;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Anims;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.RecitationIcons;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +58,7 @@ public class LibraryFragment extends Fragment implements Cart.Listener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recycler = view.findViewById(R.id.recycler_library);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(new SkeletonAdapter(7));
+        recycler.setAdapter(new LoaderAdapter());
 
         cartBar = view.findViewById(R.id.cart_bar);
         cartBarText = view.findViewById(R.id.cart_bar_text);
@@ -95,6 +96,7 @@ public class LibraryFragment extends Fragment implements Cart.Listener {
                             catalog = new CatalogAdapter();
                             recycler.setAdapter(catalog);
                             rebuild();
+                            Anims.fallDown(recycler);
                         } else {
                             recycler.setAdapter(new CatalogAdapter());
                             toast(getString(R.string.error_load_failed));

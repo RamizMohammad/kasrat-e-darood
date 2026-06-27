@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="in.mohammad.ramiz.islamic.kasrat_e_darrod" />
+                  <option name="mobileSdkAppId" value="1:571474681893:android:f01687f793935792a15fcc" />
+                  <option name="projectId" value="kasrat-e-darood" />
+                  <option name="projectNumber" value="571474681893" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

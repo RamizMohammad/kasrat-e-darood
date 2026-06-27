@@ -34,7 +34,7 @@ import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.aladhan.AlAdhanClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.aladhan.AlAdhanDto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.ActivityAdapter;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.SkeletonAdapter;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.LoaderAdapter;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.LocationHelper;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.RelativeTime;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Skeleton;
@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
 
         activityRecycler = view.findViewById(R.id.recycler_activity);
         activityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        activityRecycler.setAdapter(new SkeletonAdapter(3));   // shimmer while loading
+        activityRecycler.setAdapter(new LoaderAdapter());   // branded GIF while loading
 
         MaterialButton log = view.findViewById(R.id.btn_log_progress);
         log.setOnClickListener(v ->

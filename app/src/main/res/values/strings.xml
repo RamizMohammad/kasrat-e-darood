@@ -63,9 +63,50 @@
     <string name="submit_success">Submitted! Your recitations were added to the community.</string>
 
     <!-- Profile -->
-    <string name="your_submissions">YOUR SUBMISSIONS</string>
+    <string name="your_submissions">Your Submissions</string>
     <string name="no_submissions">No submissions yet. Head to the Library to log your recitations.</string>
     <string name="streak_days_label">%1$d day streak</string>
+
+    <!-- Forgot / reset password -->
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_intro">We\'ll email you a one-time code to reset your password.</string>
+    <string name="send_code">Send Code</string>
+    <string name="sending">Sending…</string>
+    <string name="code_sent">If that email is registered, a reset code is on its way.</string>
+    <string name="reset_code">Reset Code</string>
+    <string name="hint_code">6-digit code</string>
+    <string name="new_password">New Password</string>
+    <string name="resetting">Resetting…</string>
+    <string name="password_reset_done">Password reset. Please sign in with your new password.</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="error_code_required">Enter the code from your email</string>
+
+    <!-- Google sign-in -->
+    <string name="error_google">Google sign-in failed. Please try again.</string>
+    <string name="show_password">Show password</string>
+    <string name="loading">Loading…</string>
+
+    <!-- Profile menu + settings -->
+    <string name="log_out">Log Out</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="appearance">Appearance</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="dark_mode_subtitle">Easier on the eyes at night</string>
+    <string name="account">Account</string>
+    <string name="language_updated">Language updated</string>
+    <string name="developer_info">Developer Info</string>
+    <string name="developed_by">Developed by</string>
+    <string name="contact">Contact</string>
+    <string name="about_app">Kasrat-e-Darood is a calm, shared space to track your recitations, celebrate consistency, and grow together as a community.</string>
+
+    <!-- Account deletion -->
+    <string name="delete_account">Delete Account</string>
+    <string name="delete_account_warning">This permanently deletes your account and data. We\'ll email a code to confirm.</string>
+    <string name="send_deletion_code">Send confirmation code</string>
+    <string name="confirm_delete">Delete my account</string>
+    <string name="deleting">Deleting…</string>
+    <string name="account_deleted">Your account has been deleted.</string>
 
     <string name="log_progress">Log Progress</string>
     <string name="quick_add">Quick Add</string>

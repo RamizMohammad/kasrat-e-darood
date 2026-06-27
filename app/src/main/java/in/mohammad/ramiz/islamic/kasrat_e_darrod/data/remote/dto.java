@@ -16,10 +16,12 @@ public final class dto {
         public String email;
         public String password;
         @SerializedName("display_name") public String displayName;
-        public RegisterRequest(String email, String password, String displayName) {
+        public String lang;
+        public RegisterRequest(String email, String password, String displayName, String lang) {
             this.email = email;
             this.password = password;
             this.displayName = displayName;
+            this.lang = lang;
         }
     }
 
@@ -35,6 +37,42 @@ public final class dto {
     public static class RefreshRequest {
         @SerializedName("refresh_token") public String refreshToken;
         public RefreshRequest(String refreshToken) { this.refreshToken = refreshToken; }
+    }
+
+    public static class GoogleLoginRequest {
+        @SerializedName("id_token") public String idToken;
+        public GoogleLoginRequest(String idToken) { this.idToken = idToken; }
+    }
+
+    public static class ForgotPasswordRequest {
+        public String email;
+        public ForgotPasswordRequest(String email) { this.email = email; }
+    }
+
+    public static class ResetPasswordRequest {
+        public String email;
+        public String code;
+        @SerializedName("new_password") public String newPassword;
+        public ResetPasswordRequest(String email, String code, String newPassword) {
+            this.email = email;
+            this.code = code;
+            this.newPassword = newPassword;
+        }
+    }
+
+    public static class OkResponse {
+        public boolean ok;
+    }
+
+    public static class UserUpdateRequest {
+        public String lang;
+        @SerializedName("display_name") public String displayName;
+        public UserUpdateRequest(String lang) { this.lang = lang; }
+    }
+
+    public static class DeleteAccountConfirmRequest {
+        public String code;
+        public DeleteAccountConfirmRequest(String code) { this.code = code; }
     }
 
     /** Token-pair returned by /auth/refresh (rotation: both values are new). */
@@ -58,6 +96,7 @@ public final class dto {
         public String email;
         @SerializedName("photo_url") public String photoUrl;
         public String role;
+        public String lang;
         @SerializedName("lifetime_total") public int lifetimeTotal;
         @SerializedName("streak_days") public int streakDays;
     }

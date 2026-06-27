@@ -20,7 +20,7 @@
         <item name="colorOutline">@color/outline</item>
         <item name="colorOutlineVariant">@color/outline_variant</item>
         <item name="android:statusBarColor">@color/surface</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="shapeAppearanceCornerSmall">@style/Shape.Noor.Small</item>
         <item name="shapeAppearanceCornerMedium">@style/Shape.Noor.Medium</item>
         <item name="shapeAppearanceCornerLarge">@style/Shape.Noor.Large</item>
