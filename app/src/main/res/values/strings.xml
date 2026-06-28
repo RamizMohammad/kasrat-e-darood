@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Kasrat-e-Darrod</string>
-    <string name="brand">Noor</string>
+    <string name="brand">kasrat-e-darood</string>
     <string name="tagline">Mindful progress for your spiritual journey.</string>
     <string name="greeting">Assalamu Alaikum</string>
+    <string name="developer_sign">Made with ♥ by Mohammad Ramiz</string>
 
     <string name="welcome_back">Welcome back, %1$s</string>
     <string name="sign_in">Sign In</string>
@@ -85,6 +86,10 @@
     <string name="error_google">Google sign-in failed. Please try again.</string>
     <string name="show_password">Show password</string>
     <string name="loading">Loading…</string>
+    <string name="profile_photo">Profile photo</string>
+    <string name="uploading_photo">Uploading photo…</string>
+    <string name="photo_updated">Profile photo updated</string>
+    <string name="photo_failed">Couldn\'t upload photo. Try again.</string>
 
     <!-- Profile menu + settings -->
     <string name="log_out">Log Out</string>
@@ -118,4 +123,63 @@
     <string name="view_full_leaderboard">View Full Leaderboard</string>
     <string name="get_started">Get Started</string>
     <string name="spiritual_consistency">SPIRITUAL CONSISTENCY</string>
+
+    <!-- Notifications screen + push -->
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_empty">Nothing here yet.</string>
+    <string name="tab_activity">Activity</string>
+    <string name="tab_notifications">Notifications</string>
+    <string name="tab_considerations">Considerations</string>
+    <string name="notif_channel_name">Community updates</string>
+    <string name="notif_channel_desc">Submissions, considerations and reminders</string>
+
+    <!-- Add surah (super members / admins) -->
+    <string name="add_surah">Add Surah</string>
+    <string name="english_name">English name</string>
+    <string name="english_name_hint">e.g. Surah Ya-Sin</string>
+    <string name="arabic_name">Arabic name</string>
+    <string name="arabic_name_hint">e.g. يس</string>
+    <string name="urdu_name">Urdu name</string>
+    <string name="optional">Optional</string>
+    <string name="category">Category</string>
+    <string name="default_count">Default count</string>
+    <string name="save_surah">Save to Library</string>
+    <string name="add_surah_required">English and Arabic names are required.</string>
+    <string name="add_surah_success">Surah added to the library.</string>
+    <string name="add_surah_failed">Couldn\'t add the surah. Please try again.</string>
+    <string name="add_surah_forbidden">Only super members or admins can add a surah.</string>
+
+    <!-- Stats: community total + breakdown -->
+    <string name="stats_subtitle">Celebrating collective growth and individual consistency in our spiritual journey.</string>
+    <string name="total_submissions_week">Total submissions this week</string>
+    <string name="by_recitation">By Recitation</string>
+    <string name="by_category">By Category</string>
+    <string name="total_this_week">Total This Week</string>
+    <string name="no_submissions_week">No submissions yet this week.</string>
+    <string name="community_standings">Community Standings</string>
+    <string name="leaderboard_subtitle">This week\'s top reciters across the community.</string>
+    <string name="top_reciters">TOP RECITERS</string>
+    <string name="everyone_else">EVERYONE ELSE</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="by_category_overline">BY CATEGORY</string>
+
+    <!-- Stats: close the week (super member / super admin) -->
+    <string name="file_consideration">File Consideration &amp; Start New Week</string>
+    <string name="close_week_title">Close this week?</string>
+    <string name="close_week_message">All submissions so far will be finalized and moved to the archive, and a fresh week will begin. This can\'t be undone.</string>
+    <string name="close_week_confirm">Yes, close the week</string>
+    <string name="close_week_success">Week closed. A new week has begun.</string>
+    <string name="close_week_failed">Couldn\'t close the week. Please try again.</string>
+
+    <!-- Profile: archived week report (PDF) -->
+    <string name="week_report">Download Week Report</string>
+    <string name="week_report_subtitle">Tap any archived week to download its PDF report.</string>
+    <string name="total_submissions_overline">TOTAL</string>
+    <string name="closed_on_fmt">Closed %1$s</string>
+    <string name="choose_week">Choose a week</string>
+    <string name="no_archived_weeks">No archived weeks yet.</string>
+    <string name="generating_report">Generating report…</string>
+    <string name="report_saved">Report saved to Downloads</string>
+    <string name="report_failed">Couldn\'t create the report.</string>
+    <string name="week_label_fmt">Week %1$d</string>
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Total -->
+    <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:contentPadding="22dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="center">
+            <TextView android:id="@+id/stats_total"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="0" android:textSize="40sp" android:textStyle="bold"
+                android:fontFamily="serif" android:textColor="@color/primary" />
+            <TextView android:id="@+id/stats_total_label" style="@style/Text.Overline"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/total_this_week" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- By category (pie) -->
+    <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginTop="22dp"
+        android:layout_marginStart="4dp" android:text="@string/by_category" />
+
+    <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" app:contentPadding="18dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:orientation="horizontal">
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.widget.PieChartView
+                android:id="@+id/stats_pie"
+                android:layout_width="140dp"
+                android:layout_height="140dp" />
+            <LinearLayout android:id="@+id/stats_legend"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- By recitation (bars) -->
+    <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginTop="22dp"
+        android:layout_marginStart="4dp" android:text="@string/by_recitation" />
+
+    <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" app:contentPadding="16dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stats_bars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+            <TextView android:id="@+id/stats_empty"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center" android:padding="16dp"
+                android:text="@string/no_submissions_week"
+                android:textColor="@color/on_surface_variant" android:visibility="gone" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</merge>

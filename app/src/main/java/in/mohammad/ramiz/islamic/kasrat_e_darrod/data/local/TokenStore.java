@@ -11,6 +11,7 @@ public class TokenStore {
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_USER_NAME = "user_name";
     private static final String KEY_USER_EMAIL = "user_email";
+    private static final String KEY_USER_PHOTO = "user_photo";
 
     private final SharedPreferences prefs;
 
@@ -35,11 +36,16 @@ public class TokenStore {
                 .apply();
     }
 
+    public void setPhotoUrl(String url) {
+        prefs.edit().putString(KEY_USER_PHOTO, url).apply();
+    }
+
     public String accessToken() { return prefs.getString(KEY_ACCESS, null); }
     public String refreshToken() { return prefs.getString(KEY_REFRESH, null); }
     public String userId() { return prefs.getString(KEY_USER_ID, null); }
     public String userName() { return prefs.getString(KEY_USER_NAME, null); }
     public String userEmail() { return prefs.getString(KEY_USER_EMAIL, null); }
+    public String photoUrl() { return prefs.getString(KEY_USER_PHOTO, null); }
     public boolean isLoggedIn() { return accessToken() != null; }
     public void clear() { prefs.edit().clear().apply(); }
 }

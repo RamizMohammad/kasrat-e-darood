@@ -2,11 +2,24 @@ package in.mohammad.ramiz.islamic.kasrat_e_darrod.util;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /** Formats an ISO-8601 timestamp into a short relative label like "2m ago". */
 public final class RelativeTime {
     private RelativeTime() {}
+
+    private static final DateTimeFormatter DATE_FMT =
+            DateTimeFormatter.ofPattern("d MMM yyyy", Locale.getDefault());
+
+    /** Formats an ISO-8601 timestamp into an absolute date like "12 Jan 2026". */
+    public static String asDate(String iso) {
+        if (iso == null || iso.isEmpty()) return "";
+        Instant then = parse(iso);
+        if (then == null) return "";
+        return DATE_FMT.withZone(ZoneId.systemDefault()).format(then);
+    }
 
     public static String from(String iso) {
         if (iso == null || iso.isEmpty()) return "";

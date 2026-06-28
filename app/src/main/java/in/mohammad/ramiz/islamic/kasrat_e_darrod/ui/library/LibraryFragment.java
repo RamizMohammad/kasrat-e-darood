@@ -56,6 +56,8 @@ public class LibraryFragment extends Fragment implements Cart.Listener {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Avatars.load(view.findViewById(R.id.library_avatar));
+
         recycler = view.findViewById(R.id.recycler_library);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(new LoaderAdapter());

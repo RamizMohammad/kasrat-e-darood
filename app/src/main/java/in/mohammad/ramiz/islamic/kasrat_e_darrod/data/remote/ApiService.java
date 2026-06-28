@@ -49,6 +49,12 @@ public interface ApiService {
     Call<List<dto.RecitationDto>> recitations(@Query("group_id") String groupId,
                                               @Query("q") String query);
 
+    @GET("api/v1/categories")
+    Call<List<dto.CategoryDto>> categories();
+
+    @POST("api/v1/recitations")
+    Call<dto.RecitationDto> createRecitation(@Body dto.RecitationCreateRequest body);
+
     @POST("api/v1/submissions")
     Call<dto.SubmissionResult> submit(@Body dto.SubmissionRequest body);
 
@@ -61,10 +67,19 @@ public interface ApiService {
     @GET("api/v1/dashboard")
     Call<dto.DashboardResponse> dashboard(@Query("group_id") String groupId);
 
-    @GET("api/v1/feed")
-    Call<List<dto.ActivityDto>> feed(@Query("group_id") String groupId);
-
     @GET("api/v1/leaderboards")
     Call<dto.LeaderboardResponse> leaderboard(@Query("group_id") String groupId,
                                              @Query("scope") String scope);
+
+    @GET("api/v1/statistics/community")
+    Call<dto.CommunityStats> communityStats(@Query("week_id") String weekId);
+
+    @GET("api/v1/statistics/weeks")
+    Call<List<dto.WeekSummary>> weekHistory();
+
+    @GET("api/v1/notifications")
+    Call<List<dto.ActivityDto>> notifications(@Query("category") String category);
+
+    @POST("api/v1/statistics/close-week")
+    Call<dto.OkResponse> closeWeek();
 }

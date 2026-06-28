@@ -10,8 +10,37 @@
         android:orientation="vertical" android:gravity="center_horizontal"
         android:paddingHorizontal="24dp" android:paddingTop="40dp" android:paddingBottom="32dp">
 
-        <View android:layout_width="96dp" android:layout_height="96dp"
-            android:background="@drawable/bg_avatar_green" />
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/avatar_container">
+            <ImageView
+                android:id="@+id/profile_avatar"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_avatar_green"
+                android:src="@drawable/ic_profile"
+                app:tint="@color/on_primary_container"
+                android:contentDescription="@string/profile_photo" />
+            <FrameLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_logo_circle"
+                android:elevation="3dp">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_add"
+                    app:tint="@color/primary" />
+            </FrameLayout>
+        </FrameLayout>
+
         <TextView android:id="@+id/profile_name" android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginTop="14dp" android:text="Member" android:textSize="24sp"
             android:textStyle="bold" android:fontFamily="serif" android:textColor="@color/primary" />
@@ -30,7 +59,7 @@
                         android:text="—" android:textSize="24sp" android:textStyle="bold"
                         android:fontFamily="serif" android:textColor="@color/primary" />
                     <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="THIS WEEK" />
+                        android:layout_height="wrap_content" android:text="Weekly" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
@@ -67,19 +96,32 @@
                 android:orientation="vertical">
 
                 <LinearLayout android:id="@+id/row_settings" style="@style/Noor.ProfileRow">
-                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_qibla" />
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/settings" />
                     <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/settings" />
                     <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/row_submissions" style="@style/Noor.ProfileRow">
-                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_stats" />
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/submissions" />
                     <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/your_submissions" />
                     <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
                 </LinearLayout>
 
+                <LinearLayout android:id="@+id/row_week_report" style="@style/Noor.ProfileRow">
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_book_open" />
+                    <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/week_report" />
+                    <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/row_add_surah" style="@style/Noor.ProfileRow"
+                    android:visibility="gone">
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_add" />
+                    <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/add_surah" />
+                    <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
                 <LinearLayout android:id="@+id/row_developer" style="@style/Noor.ProfileRow">
-                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_sparkle" />
+                    <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/developer" />
                     <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/developer_info" />
                     <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
                 </LinearLayout>
@@ -91,5 +133,11 @@
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/developer_sign"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

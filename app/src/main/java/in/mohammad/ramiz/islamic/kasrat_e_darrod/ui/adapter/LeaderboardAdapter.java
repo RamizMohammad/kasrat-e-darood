@@ -3,6 +3,7 @@ package in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.R;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.model.LeaderboardEntry;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Avatars;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.VH> {
     private final List<LeaderboardEntry> items;
@@ -33,8 +35,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         h.name.setText(e.name);
         h.streak.setText(e.streak);
         h.total.setText(String.valueOf(e.total));
-        h.avatar.setBackgroundResource(e.goldAvatar
-                ? R.drawable.bg_avatar_gold : R.drawable.bg_avatar_green);
+        Avatars.loadUrl(h.avatar, e.photoUrl);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     static class VH extends RecyclerView.ViewHolder {
         TextView rank, name, streak, total;
-        View avatar;
+        ImageView avatar;
         VH(@NonNull View v) {
             super(v);
             rank = v.findViewById(R.id.lb_rank);

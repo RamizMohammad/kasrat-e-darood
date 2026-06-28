@@ -1,11 +1,11 @@
 package in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,29 +14,17 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.R;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.model.ActivityItem;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.aladhan.AlAdhanClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.aladhan.AlAdhanDto;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.ActivityAdapter;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.adapter.LoaderAdapter;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.notifications.NotificationsActivity;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.LocationHelper;
-import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.RelativeTime;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Skeleton;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,14 +33,13 @@ import retrofit2.Response;
 /**
  * Home dashboard. The "Today's Date" and "Prayer Times" cards show a shimmering
  * skeleton while their data loads from the AlAdhan API, then swap to real
- * content. No static template values are displayed.
+ * content, plus a local Jumu'ah countdown. The bell opens the Notifications screen.
  */
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "NoorPrayer";
     private View root;
     private boolean loaded = false;
-    private RecyclerView activityRecycler;
 
     private final ActivityResultLauncher<String[]> locationPermission =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
@@ -69,22 +56,21 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         this.root = view;
 
-        bindQuickAdd(view, R.id.quick_yaseen, "Surah Yaseen", "Favorite Recitation", R.drawable.ic_book_open);
-        bindQuickAdd(view, R.id.quick_astagh, "Astaghfirullah", "Daily Dhikr", R.drawable.ic_leaf);
+        // Real user name + avatar in the header.
+        in.mohammad.ramiz.islamic.kasrat_e_darrod.data.local.TokenStore store =
+                new in.mohammad.ramiz.islamic.kasrat_e_darrod.data.local.TokenStore(requireContext());
+        String name = store.userName();
+        TextView welcome = view.findViewById(R.id.txt_welcome);
+        if (name != null && !name.isEmpty()) {
+            welcome.setText(getString(R.string.welcome_back, name));
+        }
+        in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Avatars.load(view.findViewById(R.id.home_avatar));
 
-        activityRecycler = view.findViewById(R.id.recycler_activity);
-        activityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        activityRecycler.setAdapter(new LoaderAdapter());   // branded GIF while loading
-
-        MaterialButton log = view.findViewById(R.id.btn_log_progress);
-        log.setOnClickListener(v ->
-                Toast.makeText(getContext(), "Log a recitation", Toast.LENGTH_SHORT).show());
+        view.findViewById(R.id.home_bell).setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), NotificationsActivity.class)));
 
         // Local, instant: days/hours until next Jumu'ah (Friday).
         bindJumuahCountdown();
-
-        // Live dashboard: personal goal + recent group activity.
-        loadDashboard();
 
         // Start the skeleton shimmer, then fetch.
         Skeleton.shimmer(view.findViewById(R.id.date_skeleton));
@@ -181,53 +167,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    /** Loads the dashboard (community group) for the goal ring + recent activity. */
-    private void loadDashboard() {
-        ApiClient.get(requireContext()).dashboard(null)
-                .enqueue(new Callback<dto.DashboardResponse>() {
-                    @Override
-                    public void onResponse(@NonNull Call<dto.DashboardResponse> call,
-                                           @NonNull Response<dto.DashboardResponse> response) {
-                        if (!isAdded()) return;
-                        if (response.isSuccessful() && response.body() != null) {
-                            bindDashboard(response.body());
-                        } else {
-                            activityRecycler.setAdapter(
-                                    new ActivityAdapter(new ArrayList<>()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<dto.DashboardResponse> call,
-                                          @NonNull Throwable t) {
-                        if (!isAdded()) return;
-                        activityRecycler.setAdapter(new ActivityAdapter(new ArrayList<>()));
-                    }
-                });
-    }
-
-    private void bindDashboard(dto.DashboardResponse d) {
-        if (d.goal != null) {
-            text(R.id.goal_percent, d.goal.percent + "%");
-            text(R.id.goal_subtitle, d.goal.progress + " of " + d.goal.target + " this week");
-        }
-
-        List<ActivityItem> items = new ArrayList<>();
-        if (d.recentActivity != null) {
-            int i = 0;
-            for (dto.ActivityDto a : d.recentActivity) {
-                String meta = a.type != null ? a.type.replace('_', ' ') : "";
-                items.add(new ActivityItem(
-                        a.initial != null ? a.initial : "•",
-                        a.text,
-                        meta,
-                        RelativeTime.from(a.createdAt),
-                        (i++ % 2) == 1));   // alternate gold/green avatars
-            }
-        }
-        activityRecycler.setAdapter(new ActivityAdapter(items));
-    }
-
     /** Days and hours remaining until the next Friday (Jumu'ah). */
     private void bindJumuahCountdown() {
         Calendar now = Calendar.getInstance();
@@ -265,12 +204,5 @@ public class HomeFragment extends Fragment {
 
     private void toast(String msg) {
         if (getContext() != null) Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
-    private void bindQuickAdd(View parent, int includeId, String title, String subtitle, int icon) {
-        View card = parent.findViewById(includeId);
-        ((TextView) card.findViewById(R.id.quick_title)).setText(title);
-        ((TextView) card.findViewById(R.id.quick_subtitle)).setText(subtitle);
-        ((ImageView) card.findViewById(R.id.quick_icon)).setImageResource(icon);
     }
 }

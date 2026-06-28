@@ -59,6 +59,13 @@ dependencies {
     // Google Sign-In
     implementation(libs.play.services.auth)
 
+    // Firebase Cloud Messaging (push notifications)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
+
+    // Image cropping (profile photo)
+    implementation(libs.image.cropper)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

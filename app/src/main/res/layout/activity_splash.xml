@@ -47,8 +47,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="70dp"
         android:text="@string/spiritual_consistency"
+        android:textColor="@color/outline"
+        android:textSize="12sp"
+        android:letterSpacing="0.2"
+        android:fontFamily="sans-serif-medium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="48dp"
+        android:text="@string/developer_sign"
         android:textColor="@color/outline"
         android:textSize="12sp"
         android:letterSpacing="0.2"

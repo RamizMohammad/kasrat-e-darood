@@ -67,7 +67,14 @@ public final class dto {
     public static class UserUpdateRequest {
         public String lang;
         @SerializedName("display_name") public String displayName;
+        @SerializedName("photo_url") public String photoUrl;
+        public UserUpdateRequest() {}
         public UserUpdateRequest(String lang) { this.lang = lang; }
+        public static UserUpdateRequest photo(String url) {
+            UserUpdateRequest r = new UserUpdateRequest();
+            r.photoUrl = url;
+            return r;
+        }
     }
 
     public static class DeleteAccountConfirmRequest {
@@ -119,6 +126,23 @@ public final class dto {
         public String icon;
         @SerializedName("default_increment") public int defaultIncrement;
         @SerializedName("category_id") public String categoryId;
+    }
+
+    public static class CategoryDto {
+        public String id;
+        public String name;
+        public String slug;
+        public String color;
+        public String icon;
+    }
+
+    /** Body for creating a recitation (super members / admins). */
+    public static class RecitationCreateRequest {
+        @SerializedName("arabic_name") public String arabicName;
+        @SerializedName("english_name") public String englishName;
+        @SerializedName("urdu_name") public String urduName;
+        @SerializedName("category_id") public String categoryId;
+        @SerializedName("default_increment") public int defaultIncrement = 1;
     }
 
     public static class BulkItem {
@@ -218,5 +242,38 @@ public final class dto {
     public static class LeaderboardResponse {
         public String scope;
         public List<LeaderboardEntryDto> entries;
+    }
+
+    // --- Community statistics (Stats page) ---
+    public static class RecitationStat {
+        @SerializedName("recitation_id") public String recitationId;
+        public String name;
+        @SerializedName("urdu_name") public String urduName;
+        public String category;
+        public int count;
+    }
+
+    public static class CategoryStat {
+        public String category;
+        public int count;
+    }
+
+    public static class CommunityStats {
+        @SerializedName("week_id") public String weekId;
+        @SerializedName("week_number") public Integer weekNumber;
+        public String label;
+        public String status;
+        public int total;
+        @SerializedName("by_recitation") public List<RecitationStat> byRecitation;
+        @SerializedName("by_category") public List<CategoryStat> byCategory;
+        @SerializedName("can_manage") public boolean canManage;
+    }
+
+    public static class WeekSummary {
+        @SerializedName("week_id") public String weekId;
+        @SerializedName("week_number") public int weekNumber;
+        public String label;
+        public int total;
+        @SerializedName("closed_at") public String closedAt;
     }
 }

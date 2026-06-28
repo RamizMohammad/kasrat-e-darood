@@ -186,6 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = body.user != null ? body.user.email : null;
         String id = body.user != null ? body.user.id : null;
         store.saveSession(body.accessToken, body.refreshToken, id, name, email);
+        store.setPhotoUrl(body.user != null ? body.user.photoUrl : null);
 
         startActivity(new Intent(this, MainActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
