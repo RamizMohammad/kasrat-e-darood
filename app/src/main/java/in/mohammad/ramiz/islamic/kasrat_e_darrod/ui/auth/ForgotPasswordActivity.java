@@ -2,8 +2,11 @@ package in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.auth;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,7 +50,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         sendCode.setOnClickListener(v -> requestCode());
         reset.setOnClickListener(v -> doReset());
         findViewById(R.id.link_back_login).setOnClickListener(v -> finish());
+
+        ImageView toggle = findViewById(R.id.btn_toggle_password);
+        toggle.setOnClickListener(v -> {
+            passwordVisible = !passwordVisible;
+            password.setTransformationMethod(passwordVisible
+                    ? HideReturnsTransformationMethod.getInstance()
+                    : PasswordTransformationMethod.getInstance());
+            toggle.setImageResource(passwordVisible ? R.drawable.ic_eye_off : R.drawable.ic_eye);
+            password.setSelection(password.getText().length());
+        });
     }
+
+    private boolean passwordVisible = false;
 
     private boolean validEmail(String e) {
         return !TextUtils.isEmpty(e) && Patterns.EMAIL_ADDRESS.matcher(e).matches();

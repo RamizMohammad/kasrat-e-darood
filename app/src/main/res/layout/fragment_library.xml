@@ -25,8 +25,11 @@
                     android:text="@string/library_subtitle" android:textSize="12sp"
                     android:textColor="@color/on_surface_variant" />
             </LinearLayout>
-            <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                android:src="@drawable/ic_bell" app:tint="@color/on_surface_variant" />
+            <ImageView android:id="@+id/library_bell"
+                android:layout_width="24dp" android:layout_height="24dp"
+                android:src="@drawable/ic_bell" app:tint="@color/on_surface_variant"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true" android:focusable="true" />
         </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"

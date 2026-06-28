@@ -58,6 +58,10 @@ public class LibraryFragment extends Fragment implements Cart.Listener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Avatars.load(view.findViewById(R.id.library_avatar));
 
+        view.findViewById(R.id.library_bell).setOnClickListener(v -> startActivity(new android.content.Intent(
+                requireContext(),
+                in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.notifications.NotificationsActivity.class)));
+
         recycler = view.findViewById(R.id.recycler_library);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(new LoaderAdapter());

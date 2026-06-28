@@ -2,8 +2,9 @@ package in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -81,20 +82,16 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private boolean passwordVisible = false;
+
     private void setupPasswordToggle() {
         ImageView toggle = findViewById(R.id.btn_toggle_password);
         toggle.setOnClickListener(v -> {
-            boolean hidden = (inputPassword.getInputType()
-                    & InputType.TYPE_TEXT_VARIATION_PASSWORD) != 0;
-            if (hidden) {
-                inputPassword.setInputType(InputType.TYPE_CLASS_TEXT
-                        | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                toggle.setImageResource(R.drawable.ic_eye_off);
-            } else {
-                inputPassword.setInputType(InputType.TYPE_CLASS_TEXT
-                        | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                toggle.setImageResource(R.drawable.ic_eye);
-            }
+            passwordVisible = !passwordVisible;
+            inputPassword.setTransformationMethod(passwordVisible
+                    ? HideReturnsTransformationMethod.getInstance()
+                    : PasswordTransformationMethod.getInstance());
+            toggle.setImageResource(passwordVisible ? R.drawable.ic_eye_off : R.drawable.ic_eye);
             inputPassword.setSelection(inputPassword.getText().length());
         });
     }

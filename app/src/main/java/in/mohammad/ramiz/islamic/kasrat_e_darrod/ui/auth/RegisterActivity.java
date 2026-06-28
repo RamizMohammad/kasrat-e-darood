@@ -3,8 +3,11 @@ package in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -49,6 +52,21 @@ public class RegisterActivity extends AppCompatActivity {
 
         cont.setOnClickListener(v -> attemptRegister());
         findViewById(R.id.link_login).setOnClickListener(v -> finish());
+        setupPasswordToggle();
+    }
+
+    private boolean passwordVisible = false;
+
+    private void setupPasswordToggle() {
+        ImageView toggle = findViewById(R.id.btn_toggle_password);
+        toggle.setOnClickListener(v -> {
+            passwordVisible = !passwordVisible;
+            inputPassword.setTransformationMethod(passwordVisible
+                    ? HideReturnsTransformationMethod.getInstance()
+                    : PasswordTransformationMethod.getInstance());
+            toggle.setImageResource(passwordVisible ? R.drawable.ic_eye_off : R.drawable.ic_eye);
+            inputPassword.setSelection(inputPassword.getText().length());
+        });
     }
 
     private String selectedLang() {

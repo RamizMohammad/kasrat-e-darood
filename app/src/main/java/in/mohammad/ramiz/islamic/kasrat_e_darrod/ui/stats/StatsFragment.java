@@ -54,6 +54,10 @@ public class StatsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         in.mohammad.ramiz.islamic.kasrat_e_darrod.util.Avatars.load(view.findViewById(R.id.stats_avatar));
 
+        view.findViewById(R.id.stats_bell).setOnClickListener(v -> startActivity(new Intent(
+                requireContext(),
+                in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.notifications.NotificationsActivity.class)));
+
         total = view.findViewById(R.id.stats_total);
         weekLabel = view.findViewById(R.id.stats_week_label);
         empty = view.findViewById(R.id.stats_empty);
