@@ -18,6 +18,8 @@ class CategoryOut(ORMModel):
 class RecitationCreate(BaseModel):
     arabic_name: str
     english_name: str
+    urdu_name: str | None = None
+    transliteration: str | None = None
     translation: str | None = None
     category_id: PydanticObjectId | None = None
     group_id: PydanticObjectId | None = None

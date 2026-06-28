@@ -29,7 +29,13 @@ class RecitationService:
         return rec
 
     async def create(self, data: RecitationCreate, by: User) -> Recitation:
-        rec = Recitation(**data.model_dump(), created_by=by.id)
+        payload = data.model_dump()
+        # Denormalize the category label so the library/stats can group by it.
+        if data.category_id:
+            category = await category_repository.get(data.category_id)
+            if category:
+                payload["category"] = category.name
+        rec = Recitation(**payload, created_by=by.id)
         return await recitation_repository.create(rec)
 
     async def update(

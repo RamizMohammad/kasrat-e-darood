@@ -4,14 +4,17 @@ from __future__ import annotations
 from beanie import PydanticObjectId
 from fastapi import APIRouter, Depends, Query, status
 
+from app.core.exceptions import PermissionDeniedError
 from app.dependencies.auth import get_current_user
-from app.models.user import User
+from app.models.user import GlobalRole, User
 from app.schemas.recitation import (
     CategoryOut,
     RecitationCreate,
     RecitationOut,
     RecitationUpdate,
 )
+
+_LIBRARY_MANAGER_ROLES = {GlobalRole.SUPER_MEMBER, GlobalRole.SUPER_ADMIN}
 from app.services.recitation_service import recitation_service
 
 router = APIRouter(tags=["recitations"])
@@ -45,6 +48,8 @@ async def get_recitation(
 async def create_recitation(
     body: RecitationCreate, user: User = Depends(get_current_user)
 ) -> RecitationOut:
+    if user.role not in _LIBRARY_MANAGER_ROLES:
+        raise PermissionDeniedError("Only super members or admins can add recitations")
     return RecitationOut.model_validate(await recitation_service.create(body, user))
 
 
