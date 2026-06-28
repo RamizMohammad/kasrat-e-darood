@@ -6,12 +6,14 @@ from datetime import datetime, timedelta, timezone
 from beanie import PydanticObjectId
 
 from app.core.exceptions import ConflictError, NotFoundError
+from app.models.activity import ActivityItem
 from app.models.group import Group
 from app.models.weekly_session import WeeklySession, WeekStatus
 from app.repositories.submission_repo import submission_repository
 from app.repositories.user_repo import user_repository
 from app.repositories.weekly_repo import weekly_repository
 from app.schemas.weekly import HallOfFameEntry
+from app.services.push_service import send_to_community
 
 
 def _week_bounds(now: datetime) -> tuple[datetime, datetime, str]:
@@ -99,6 +101,19 @@ class WeeklyService:
         await weekly_repository.save(active)
 
         new_week = await self._open_week(group_id, active.week_number + 1)
+
+        # Record + broadcast the consideration to everyone.
+        text = (f"Week {active.week_number} has been finalized and archived. "
+                f"A new week has begun.")
+        try:
+            await ActivityItem(
+                group_id=group_id, actor_id=locked_by, type="week.locked",
+                text=text, created_by=locked_by,
+            ).insert()
+            await send_to_community("Consideration filed", text)
+        except Exception:  # pragma: no cover - notification must not block the lock
+            pass
+
         return active, hall, new_week
 
 

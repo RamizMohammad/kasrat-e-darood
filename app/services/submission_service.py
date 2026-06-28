@@ -23,6 +23,7 @@ from app.schemas.submission import (
     Totals,
 )
 from app.config.settings import settings
+from app.services.push_service import send_to_community
 
 
 def _start_of_today() -> datetime:
@@ -31,7 +32,8 @@ def _start_of_today() -> datetime:
 
 
 class SubmissionService:
-    async def submit(self, user: User, data: SubmissionCreate) -> SubmissionResult:
+    async def submit(self, user: User, data: SubmissionCreate,
+                     notify: bool = True) -> SubmissionResult:
         week = await weekly_repository.get_active(data.group_id)
         if week is None:
             raise NotFoundError("No active week for this group")
@@ -73,6 +75,17 @@ class SubmissionService:
         await cache.delete_prefix(f"dashboard:{data.group_id}")
         await cache.delete_prefix(f"leaderboard:{data.group_id}")
 
+        # Notify the whole community (single submissions only; bulk sends one
+        # summary push from submit_bulk to avoid spamming).
+        if notify:
+            try:
+                await send_to_community(
+                    "New recitation logged",
+                    f"{user.display_name} completed {recitation.english_name} ×{data.count}",
+                )
+            except Exception:  # pragma: no cover - push must never break a submit
+                pass
+
         return await self._result(user, week.id, data.group_id, submission)
 
     async def submit_bulk(self, user: User, data: BulkSubmissionCreate) -> Totals:
@@ -81,12 +94,26 @@ class SubmissionService:
         group_id = await community_service.resolve_group(user, data.group_id)
 
         last: SubmissionResult | None = None
+        total_count = 0
         for item in data.items:
             last = await self.submit(user, SubmissionCreate(
                 group_id=group_id, recitation_id=item.recitation_id,
                 count=item.count, client_uuid=item.client_uuid,
-            ))
+            ), notify=False)
+            total_count += item.count
         assert last is not None
+
+        # One summary push for the whole batch.
+        try:
+            n = len(data.items)
+            await send_to_community(
+                "New recitations logged",
+                f"{user.display_name} logged {n} "
+                f"{'recitation' if n == 1 else 'recitations'} (×{total_count}).",
+            )
+        except Exception:  # pragma: no cover
+            pass
+
         return last.totals
 
     async def recent_for_user(

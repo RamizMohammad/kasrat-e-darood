@@ -42,3 +42,23 @@ def generate_report(report_id: str) -> str:
     """Generate a PDF/Excel/CSV report asynchronously."""
     logger.info("[job] generate_report {}", report_id)
     return report_id
+
+
+@celery_app.task(name="app.tasks.jobs.broadcast_islamic_quote")
+def broadcast_islamic_quote() -> str:
+    """Push an Islamic quote / motivation to the whole community."""
+    logger.info("[job] broadcast_islamic_quote")
+    from app.database.mongo import connect_to_mongo
+    from app.security.firebase import init_firebase
+    from app.services.notification_service import notification_service
+
+    async def _do() -> None:
+        init_firebase()
+        try:
+            await connect_to_mongo()
+        except Exception:  # already initialized in this worker
+            pass
+        await notification_service.broadcast_quote()
+
+    _run(_do())
+    return "ok"

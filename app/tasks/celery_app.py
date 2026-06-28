@@ -39,4 +39,9 @@ celery_app.conf.beat_schedule = {
         "task": "app.tasks.jobs.recompute_leaderboards",
         "schedule": crontab(minute="*/15"),
     },
+    # Islamic quote / motivation push to the whole community, every 4 hours.
+    "islamic-quotes": {
+        "task": "app.tasks.jobs.broadcast_islamic_quote",
+        "schedule": crontab(minute=0, hour="*/4"),
+    },
 }
