@@ -51,6 +51,15 @@ class SubmissionRepository(BaseRepository[Submission]):
         res = await Submission.aggregate(pipeline).to_list()
         return int(res[0]["total"]) if res else 0
 
+    async def totals_by_recitation(self, week_id: PydanticObjectId) -> list[dict]:
+        """Return [{_id: recitation_id, total: n}] for a week, sorted desc."""
+        pipeline = [
+            {"$match": {"week_id": week_id, "deleted": False}},
+            {"$group": {"_id": "$recitation_id", "total": {"$sum": "$count"}}},
+            {"$sort": {"total": -1}},
+        ]
+        return await Submission.aggregate(pipeline).to_list()
+
     async def leaderboard_for_week(self, week_id: PydanticObjectId) -> list[dict]:
         """Return [{_id: user_id, total: n}] sorted desc."""
         pipeline = [
