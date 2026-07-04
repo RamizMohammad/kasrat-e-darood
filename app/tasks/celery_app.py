@@ -16,6 +16,10 @@ celery_app = Celery(
     "noor",
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
+    # Import the task module at startup so the worker registers every task in
+    # `jobs.py`. Without this the worker only loads the app object and rejects
+    # beat-scheduled tasks as "unregistered".
+    include=["app.tasks.jobs"],
 )
 celery_app.conf.update(
     task_serializer="json",
@@ -23,6 +27,8 @@ celery_app.conf.update(
     accept_content=["json"],
     timezone="UTC",
     enable_utc=True,
+    # Silence the Celery 6 startup-retry deprecation warning by opting in.
+    broker_connection_retry_on_startup=True,
 )
 
 # Periodic schedule (extend as features land).
