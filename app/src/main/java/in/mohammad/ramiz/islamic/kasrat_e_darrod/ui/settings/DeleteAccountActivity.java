@@ -17,6 +17,7 @@ import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiErrors;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.auth.LoginActivity;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.KeyboardInsets;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +32,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_account);
+        KeyboardInsets.attach(this);
 
         code = findViewById(R.id.input_code);
         sendCode = findViewById(R.id.btn_send_code);

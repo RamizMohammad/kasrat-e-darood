@@ -129,6 +129,10 @@ public class ProfileFragment extends Fragment {
         opts.fixAspectRatio = true;
         opts.outputRequestWidth = 600;
         opts.outputRequestHeight = 600;
+        // Make the toolbar actions explicit: a readable "Save" text button
+        // instead of a tinted icon that can disappear on light toolbars.
+        opts.activityTitle = getString(R.string.crop_photo);
+        opts.cropMenuCropButtonTitle = getString(R.string.action_save);
         cropper.launch(new CropImageContractOptions(null, opts));
     }
 

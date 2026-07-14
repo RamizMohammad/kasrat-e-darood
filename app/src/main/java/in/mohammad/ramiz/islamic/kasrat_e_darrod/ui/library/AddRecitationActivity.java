@@ -19,6 +19,7 @@ import java.util.List;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.R;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.KeyboardInsets;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +38,7 @@ public class AddRecitationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recitation);
+        KeyboardInsets.attach(this);
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
         etEnglish = findViewById(R.id.et_english);

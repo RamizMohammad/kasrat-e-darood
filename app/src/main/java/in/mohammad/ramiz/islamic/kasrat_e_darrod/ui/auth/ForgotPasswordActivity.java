@@ -18,6 +18,7 @@ import in.mohammad.ramiz.islamic.kasrat_e_darrod.R;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiErrors;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.KeyboardInsets;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +38,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+        KeyboardInsets.attach(this);
 
         email = findViewById(R.id.input_fp_email);
         code = findViewById(R.id.input_fp_code);

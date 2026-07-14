@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.local.TokenStore;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiClient;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.ApiErrors;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.dto;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.util.KeyboardInsets;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        KeyboardInsets.attach(this);
 
         inputEmail = findViewById(R.id.input_email);
         inputPassword = findViewById(R.id.input_password);
@@ -133,6 +136,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         } catch (ApiException e) {
+            Log.e("GoogleSignIn", "Sign-in failed: statusCode=" + e.getStatusCode()
+                    + " (10=DEVELOPER_ERROR/cert mismatch, 7=NETWORK, 12501=CANCELLED)", e);
             Toast.makeText(this, R.string.error_google, Toast.LENGTH_LONG).show();
         }
     }

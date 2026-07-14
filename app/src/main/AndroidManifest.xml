@@ -42,12 +42,22 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="noor_default" />
 
+        <!-- Image cropper: override the library theme so the ActionBar with
+             the Crop/Save action is visible (app base theme is NoActionBar). -->
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.KasrateDarrod.Crop"
+            tools:replace="android:theme" />
+
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.settings.DeleteAccountActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.profile.SubmissionsActivity"
             android:exported="false" />
@@ -62,7 +72,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.library.AddRecitationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.auth.SplashActivity"
@@ -76,13 +87,16 @@
 
         <activity
             android:name=".ui.auth.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.auth.RegisterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.auth.ForgotPasswordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MainActivity"
             android:exported="false"

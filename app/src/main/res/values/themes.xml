@@ -50,6 +50,17 @@
         <item name="android:windowBackground">@drawable/bg_gradient_noor</item>
     </style>
 
+    <!-- Photo crop screen: needs an ActionBar so the library's Crop/Save
+         menu actions are visible (the base app theme is NoActionBar). -->
+    <style name="Theme.KasrateDarrod.Crop" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
     <!-- ==== Shapes ==== -->
     <style name="Shape.Noor.Small" parent="">
         <item name="cornerFamily">rounded</item>

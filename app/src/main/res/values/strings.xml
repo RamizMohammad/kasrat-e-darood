@@ -90,6 +90,8 @@
     <string name="uploading_photo">Uploading photo…</string>
     <string name="photo_updated">Profile photo updated</string>
     <string name="photo_failed">Couldn\'t upload photo. Try again.</string>
+    <string name="crop_photo">Crop photo</string>
+    <string name="action_save">Save</string>
 
     <!-- Profile menu + settings -->
     <string name="log_out">Log Out</string>

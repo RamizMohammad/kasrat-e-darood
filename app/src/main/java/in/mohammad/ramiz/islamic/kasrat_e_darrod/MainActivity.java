@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(0, bars.top, 0, 0);
+            Insets ime = insets.getInsets(WindowInsetsCompat.Type.ime());
+            // Bottom: keep content above the keyboard when it is open.
+            v.setPadding(0, bars.top, 0, ime.bottom);
             return insets;
         });
 
