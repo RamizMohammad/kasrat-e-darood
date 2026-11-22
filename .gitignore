@@ -1,13 +1,19 @@
-tests/
+# Secrets — never commit
+.env
 *.env
-.env.example
-.dockerignore
-docker-compose.yml
+conf/
+!conf/kasrat-darood.conf
+
+# Deploy files: the VPS keeps its own copies. Copy the VPS versions into this
+# repo first, then remove these two lines so they become tracked. Tracking the
+# local copies as they are would overwrite the server's on the next deploy
+# (deploy.yml runs `git reset --hard`).
 Dockerfile
-pytest.ini
-scripts_seed.py
-.pytest
-__pycache__
-conf
-web
-.env.example
+docker-compose.yml
+
+# Python / tooling
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/

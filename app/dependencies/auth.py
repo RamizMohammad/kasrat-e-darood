@@ -19,7 +19,11 @@ async def get_current_user(
         raise UnauthorizedError("Missing bearer token")
     token = authorization.split(" ", 1)[1].strip()
     payload = decode_access_token(token)
-    user = await User.get(PydanticObjectId(payload["sub"]))
+    try:
+        user_id = PydanticObjectId(payload.get("sub"))
+    except Exception as exc:  # malformed subject in an otherwise valid token
+        raise UnauthorizedError("Invalid access token") from exc
+    user = await User.get(user_id)
     if user is None or user.deleted:
         raise UnauthorizedError("User not found")
     return user

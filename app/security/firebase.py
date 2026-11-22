@@ -38,7 +38,10 @@ def verify_id_token(id_token: str) -> dict:
     Output: {uid, name, email, phone, picture}.
     """
     if not settings.FIREBASE_CREDENTIALS_FILE:
-        # Development stub: treat the token text as the uid.
+        # Development stub: treat the token text as the uid. Never in
+        # production, where it would let anyone sign in as anyone.
+        if settings.is_production:
+            raise UnauthorizedError("Firebase sign-in is not configured")
         if not id_token:
             raise UnauthorizedError("Missing id_token")
         return {

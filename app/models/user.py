@@ -22,6 +22,9 @@ class User(BaseDocument):
     email: str | None = None
     phone: str | None = None
     photo_url: str | None = None
+    # Illustrated avatar from the avatar studio ("av1:k2.h3…") or a preset
+    # ("aura_01"…"aura_12"). Replaces photo uploads from v3 on.
+    avatar: str | None = None
     password_hash: str | None = None  # set for email/password accounts
     lang: str = "en"  # preferred language: en | hi | ur (used for emails + UI)
     role: GlobalRole = GlobalRole.MEMBER

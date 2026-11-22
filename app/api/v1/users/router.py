@@ -8,7 +8,9 @@ from app.core.exceptions import NotFoundError, PermissionDeniedError, Validation
 from app.dependencies.auth import get_current_user
 from app.models.user import GlobalRole, User
 from app.repositories.user_repo import user_repository
-from app.schemas.user import RoleUpdate, UserListResponse, UserOut, UserUpdate
+from app.schemas.user import (
+    PublicUserOut, RoleUpdate, UserListResponse, UserOut, UserUpdate,
+)
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -53,8 +55,7 @@ async def set_user_role(
     target = await user_repository.get(user_id)
     if target is None:
         raise NotFoundError("User not found")
-    target.role = new_role
-    await user_repository.save(target)
+    await target.set({User.role: new_role})
     return UserOut.model_validate(target)
 
 
@@ -67,25 +68,31 @@ async def get_me(user: User = Depends(get_current_user)) -> UserOut:
 async def update_me(
     body: UserUpdate, user: User = Depends(get_current_user)
 ) -> UserOut:
-    for key, value in body.model_dump(exclude_unset=True).items():
-        setattr(user, key, value)
-    await user_repository.save(user)
+    changes = body.model_dump(exclude_unset=True)
+    if changes:
+        # $set only the changed fields: a full save would overwrite totals
+        # that a concurrent submission just incremented.
+        await user.set(changes)
     return UserOut.model_validate(user)
 
 
-@router.get("/search", response_model=list[UserOut])
+@router.get("/search", response_model=list[PublicUserOut])
 async def search_users(
     q: str, _: User = Depends(get_current_user)
-) -> list[UserOut]:
+) -> list[PublicUserOut]:
     users = await user_repository.search(q)
-    return [UserOut.model_validate(u) for u in users]
+    return [PublicUserOut.model_validate(u) for u in users]
 
 
 @router.get("/{user_id}", response_model=UserOut)
 async def get_user(
-    user_id: PydanticObjectId, _: User = Depends(get_current_user)
+    user_id: PydanticObjectId, actor: User = Depends(get_current_user)
 ) -> UserOut:
     target = await user_repository.get(user_id)
     if target is None:
         raise NotFoundError("User not found")
-    return UserOut.model_validate(target)
+    out = UserOut.model_validate(target)
+    # Only the user themselves and super admins see the email address.
+    if actor.id != target.id and actor.role != GlobalRole.SUPER_ADMIN:
+        out = out.model_copy(update={"email": None})
+    return out

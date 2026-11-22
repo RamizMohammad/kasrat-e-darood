@@ -90,14 +90,26 @@ class AuthService:
         """
         identity = verify_google_id_token(id_token)
         uid = f"google:{identity['uid']}"
-        email = _normalize_email(identity["email"]) if identity.get("email") else None
+        # Only trust an address Google has verified; an unverified one could
+        # belong to someone else and must never unlock their account.
+        verified = bool(identity.get("email_verified"))
+        email = (_normalize_email(identity["email"])
+                 if identity.get("email") and verified else None)
 
         user = await user_repository.get_by_firebase_uid(uid)
+        if user is None and identity.get("email") and not verified:
+            existing = await user_repository.get_by_email(
+                _normalize_email(identity["email"]))
+            if existing is not None:
+                raise ConflictError(
+                    "An account with this email already exists. "
+                    "Sign in with your password instead.",
+                    code="email_unverified",
+                )
         if user is None and email:
             user = await user_repository.get_by_email(email)
             if user is not None:
-                user.firebase_uid = uid  # link existing account to Google
-                await user_repository.save(user)
+                await user.set({User.firebase_uid: uid})  # link to Google
         if user is None:
             user = User(
                 firebase_uid=uid,
@@ -169,8 +181,10 @@ class AuthService:
     async def reset_password(self, email: str, code: str, new_password: str) -> None:
         """Verify the OTP and set a new password."""
         user = await self._consume_code(email, code, "password_reset")
-        user.password_hash = hash_password(new_password)
-        await user_repository.save(user)
+        await user.set({User.password_hash: hash_password(new_password)})
+        # A reset means the old password may be known to someone else:
+        # sign every existing session out.
+        await self._revoke_all_sessions(user)
 
     # --- Account deletion (OTP) ----------------------------------------------
     async def create_deletion_code(self, user: User) -> tuple[str, str] | None:
@@ -189,13 +203,26 @@ class AuthService:
                                      code="no_email")
         await self._consume_code(user.email, code, "account_deletion")
         email, lang = user.email, user.lang
-        # Soft-delete and sign out everywhere.
-        user.deleted = True
-        await user_repository.save(user)
-        await RefreshToken.find(RefreshToken.user_id == user.id).update(
-            {"$set": {"revoked": True}}
-        )
+        # Soft-delete, strip personal data, and sign out everywhere. Freeing
+        # the email and sign-in identity lets the person register again later
+        # (the unique firebase_uid index would otherwise block a new account).
+        await user.set({
+            User.deleted: True,
+            User.email: None,
+            User.phone: None,
+            User.photo_url: None,
+            User.password_hash: None,
+            User.display_name: "Deleted user",
+            User.firebase_uid: f"deleted:{user.id}",
+        })
+        await self._revoke_all_sessions(user)
         return email, lang
+
+    async def _revoke_all_sessions(self, user: User) -> None:
+        await RefreshToken.find(
+            RefreshToken.user_id == user.id,
+            RefreshToken.revoked == False,  # noqa: E712
+        ).update({"$set": {"revoked": True}})
 
     async def login_with_firebase(self, id_token: str) -> LoginResponse:
         identity = verify_id_token(id_token)

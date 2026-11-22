@@ -45,6 +45,9 @@ _CORS_ORIGIN_REGEX = os.getenv("CORS_ALLOW_ORIGIN_REGEX", "") or None
 async def lifespan(_: FastAPI):
     """Manage startup/shutdown of external resources."""
     configure_logging()
+    problems = settings.production_problems()
+    if problems:
+        raise RuntimeError("Unsafe production config: " + "; ".join(problems))
     init_firebase()
     await connect_to_mongo()
     await cache.connect()

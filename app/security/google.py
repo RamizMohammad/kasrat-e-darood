@@ -43,4 +43,6 @@ def verify_google_id_token(id_token: str) -> dict:
         "email": info.get("email"),
         "name": info.get("name") or info.get("email") or "User",
         "picture": info.get("picture"),
+        # Google sends a bool, but older tokens used the string "true".
+        "email_verified": info.get("email_verified") in (True, "true"),
     }

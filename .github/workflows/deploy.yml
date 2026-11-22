@@ -3,7 +3,7 @@ name: Sync web to VPS
 on:
   push:
     branches:
-      - server
+      - qa
 
 jobs:
   deploy:

@@ -8,7 +8,7 @@ from app.repositories.submission_repo import submission_repository
 from app.repositories.user_repo import user_repository
 from app.repositories.weekly_repo import weekly_repository
 from app.schemas.dashboard import LeaderboardEntry, LeaderboardResponse
-from app.schemas.user import UserOut
+from app.schemas.user import PublicUserOut
 
 
 class LeaderboardService:
@@ -37,7 +37,7 @@ class LeaderboardService:
             if user is None:
                 continue
             entry = LeaderboardEntry(
-                user=UserOut.model_validate(user), total=total, rank=rank,
+                user=PublicUserOut.model_validate(user), total=total, rank=rank,
                 streak=user.streak_days,
             )
             if user.id == me_id:

@@ -18,7 +18,7 @@ from app.schemas.dashboard import (
     FeedItemOut,
     GoalProgress,
 )
-from app.schemas.user import UserOut
+from app.schemas.user import PublicUserOut
 from app.schemas.weekly import WeeklySessionOut
 
 _DAYS = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]  # Mongo $dayOfWeek 1..7
@@ -51,7 +51,7 @@ class DashboardService:
                 if u is None:
                     continue
                 contributors.append(Contributor(
-                    user=UserOut.model_validate(u), total=int(row["total"]), rank=rank,
+                    user=PublicUserOut.model_validate(u), total=int(row["total"]), rank=rank,
                 ))
 
         # Weekly chart buckets (Sun..Sat).

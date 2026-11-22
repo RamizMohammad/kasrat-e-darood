@@ -70,6 +70,15 @@ class Settings(BaseSettings):
     SMTP_FROM_EMAIL: str = Field(default="")    # defaults to SMTP_USER when empty
     SUPPORT_EMAIL: str = Field(default="")      # shown in the email footer (optional)
 
+    # --- Rate limiting / proxy ----------------------------------------------
+    # Requests per client IP per path per minute. Auth endpoints (login,
+    # register, OTP, password reset) use the much lower AUTH limit.
+    RATE_LIMIT_PER_MINUTE: int = 120
+    RATE_LIMIT_AUTH_PER_MINUTE: int = 10
+    # Peers allowed to tell us the real client IP via X-Real-IP (nginx on the
+    # Docker network). Comma-separated CIDRs.
+    TRUSTED_PROXY_CIDRS: str = "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,::1/128"
+
     # --- Domain rules --------------------------------------------------------
     SUBMISSION_UNDO_WINDOW_SECONDS: int = 300
     DEFAULT_TIMEZONE: str = "Asia/Kolkata"
@@ -78,6 +87,19 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.APP_ENV == "production"
+
+    def production_problems(self) -> list[str]:
+        """Misconfigurations that must stop a production server from starting."""
+        if not self.is_production:
+            return []
+        problems = []
+        if self.JWT_SECRET in ("", "change-me-in-production") or len(self.JWT_SECRET) < 32:
+            problems.append("JWT_SECRET must be a random string of at least 32 characters")
+        if self.DEBUG:
+            problems.append("DEBUG must be false")
+        if not self.FIREBASE_CREDENTIALS_FILE:
+            problems.append("FIREBASE_CREDENTIALS_FILE must be set (push + Firebase sign-in)")
+        return problems
 
 
 @lru_cache

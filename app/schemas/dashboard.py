@@ -6,7 +6,7 @@ from datetime import datetime
 from beanie import PydanticObjectId
 from pydantic import BaseModel
 
-from app.schemas.user import UserOut
+from app.schemas.user import PublicUserOut
 from app.schemas.weekly import WeeklySessionOut
 
 
@@ -17,7 +17,7 @@ class GoalProgress(BaseModel):
 
 
 class Contributor(BaseModel):
-    user: UserOut
+    user: PublicUserOut
     total: int
     rank: int
 
@@ -64,7 +64,7 @@ class DashboardResponse(BaseModel):
 
 
 class LeaderboardEntry(BaseModel):
-    user: UserOut
+    user: PublicUserOut
     total: int
     rank: int
     streak: int = 0
