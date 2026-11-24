@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 import uuid
 
+from app.core import clock
 from app.core.exceptions import ConflictError, NotFoundError, PermissionDeniedError
 from app.database.redis import cache
 from app.models.activity import ActivityItem
@@ -25,16 +26,22 @@ from app.schemas.submission import (
 )
 from app.config.settings import settings
 from app.services.push_service import send_to_community
+from app.services.streak_service import streak_service
+
+
+def stats_cache_key(user_id) -> str:
+    """Cache key for GET /statistics/me (cleared on every log and undo)."""
+    return f"stats:me:{user_id}"
 
 
 def _start_of_today() -> datetime:
-    now = datetime.now(timezone.utc)
-    return now.replace(hour=0, minute=0, second=0, microsecond=0)
+    """Start of today in the app's time zone (IST), as a UTC instant."""
+    return clock.start_of_today()
 
 
 class SubmissionService:
     async def submit(self, user: User, data: SubmissionCreate,
-                     notify: bool = True) -> SubmissionResult:
+                     notify: bool = True, refresh_streak: bool = True) -> SubmissionResult:
         week = await weekly_repository.get_active(data.group_id)
         if week is None:
             raise NotFoundError("No active week for this group")
@@ -77,9 +84,13 @@ class SubmissionService:
             created_by=user.id,
         ))
 
-        # Invalidate cached read-models for this group.
+        if refresh_streak:
+            await streak_service.refresh(user)
+
+        # Invalidate cached read-models for this group and this user.
         await cache.delete_prefix(f"dashboard:{data.group_id}")
         await cache.delete_prefix(f"leaderboard:{data.group_id}")
+        await cache.delete_prefix(stats_cache_key(user.id))
 
         # Notify the whole community (single submissions only; bulk sends one
         # summary push from submit_bulk to avoid spamming).
@@ -105,9 +116,12 @@ class SubmissionService:
             last = await self.submit(user, SubmissionCreate(
                 group_id=group_id, recitation_id=item.recitation_id,
                 count=item.count, client_uuid=item.client_uuid,
-            ), notify=False)
+            ), notify=False, refresh_streak=False)
             total_count += item.count
         assert last is not None
+        # Streak once for the whole batch; the totals then carry it.
+        streak = await streak_service.refresh(user)
+        last.totals.streak = streak.current
 
         # One summary push for the whole batch.
         try:
@@ -126,7 +140,11 @@ class SubmissionService:
         self, user: User, limit: int = 20
     ) -> list[MySubmissionOut]:
         """The user's most recent submissions, enriched with recitation names."""
-        subs = await submission_repository.recent_for_user(user.id, limit)
+        return await self.page_for_user(user, limit, None)
+
+    async def page_for_user(self, user: User, limit: int, before) -> list[MySubmissionOut]:
+        """A page of the user's submissions, newest first (see the /me route)."""
+        subs = await submission_repository.page_for_user(user.id, limit, before)
         recs = await recitation_repository.get_many({s.recitation_id for s in subs})
         out: list[MySubmissionOut] = []
         for s in subs:
@@ -157,8 +175,10 @@ class SubmissionService:
             raise NotFoundError("Submission not found")
         await inc_user_lifetime(user.id, -submission.count)
         await inc_week(submission.week_id, user.id, -submission.count)
+        await streak_service.refresh(user)       # undoing today's only log breaks it
         await cache.delete_prefix(f"dashboard:{submission.group_id}")
         await cache.delete_prefix(f"leaderboard:{submission.group_id}")
+        await cache.delete_prefix(stats_cache_key(user.id))
         return await self._totals(user, submission.week_id, submission.group_id)
 
     async def _result(self, user, week_id, group_id, submission) -> SubmissionResult:
@@ -178,6 +198,7 @@ class SubmissionService:
             user_lifetime=user.lifetime_total,
             group_week=week.group_total if week else 0,
             today=today,
+            streak=user.streak_days,
         )
 
 

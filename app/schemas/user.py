@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 import uuid
-from pydantic import BaseModel, Field
+from typing import Any
+
+from pydantic import BaseModel, Field, field_validator
 
 from app.schemas.common import ORMModel
+from app.schemas.preferences import Preferences, PreferencesUpdate
 
 
 # "av1:" + dot-separated part codes (e.g. av1:k2.h3.c1), or a preset aura id.
@@ -26,6 +29,13 @@ class PublicUserOut(ORMModel):
 class UserOut(PublicUserOut):
     """A user as they see themselves, or as a super admin sees them."""
     email: str | None = None
+    best_streak: int = 0
+    preferences: Preferences = Field(default_factory=Preferences)
+
+    @field_validator("preferences", mode="before")
+    @classmethod
+    def _stored_prefs(cls, v: Any) -> Any:
+        return Preferences.from_stored(v) if isinstance(v, dict) or v is None else v
 
 
 class UserUpdate(BaseModel):
@@ -33,7 +43,8 @@ class UserUpdate(BaseModel):
     photo_url: str | None = None
     avatar: str | None = Field(default=None, max_length=120, pattern=AVATAR_PATTERN)
     lang: str | None = Field(default=None, pattern="^(en|hi|ur)$")
-    preferences: dict | None = None
+    # Partial: only the fields you send change; unknown keys are a 422.
+    preferences: PreferencesUpdate | None = None
 
 
 class RoleUpdate(BaseModel):

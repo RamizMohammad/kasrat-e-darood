@@ -34,6 +34,8 @@ class Totals(BaseModel):
     user_lifetime: int
     group_week: int
     today: int
+    # Your current streak (days in a row with a log, IST) after this change.
+    streak: int = 0
 
 
 class SubmissionOut(ORMModel):

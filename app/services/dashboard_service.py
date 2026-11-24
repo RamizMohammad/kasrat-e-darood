@@ -3,6 +3,9 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+from app.core import clock
+from app.schemas.preferences import Preferences
+
 import uuid
 
 from app.database.redis import cache
@@ -67,7 +70,7 @@ class DashboardService:
         recent = await self.feed(group_id, limit=10)
 
         remaining = self._remaining_days(week.end_date if week else None)
-        goal_target = int(user.preferences.get("weekly_goal", 7))
+        goal_target = Preferences.from_stored(user.preferences).weekly_goal
         goal = GoalProgress(
             target=goal_target,
             progress=min(user_week, goal_target),
@@ -117,13 +120,11 @@ class DashboardService:
 
 
 def _start_of_today() -> datetime:
-    now = datetime.now(timezone.utc)
-    return now.replace(hour=0, minute=0, second=0, microsecond=0)
+    return clock.start_of_today()
 
 
 def _start_of_month() -> datetime:
-    now = datetime.now(timezone.utc)
-    return now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    return clock.start_of_month()
 
 
 dashboard_service = DashboardService()

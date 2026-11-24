@@ -18,6 +18,7 @@ from typing import Awaitable, Callable
 from loguru import logger
 from sqlalchemy import text
 
+from app.core import clock
 from app.database.postgres import db, session_scope
 
 
@@ -29,6 +30,14 @@ async def purge_expired_tokens() -> str:
     tokens = await refresh_token_repository.purge_expired()
     codes = await otp_repository.purge_expired()
     return f"purged {tokens} refresh tokens, {codes} codes"
+
+
+async def update_streaks() -> str:
+    """Just after local midnight: break the streak of everyone who didn't log
+    yesterday. (Logging keeps streaks up to date during the day.)"""
+    from app.services.streak_service import streak_service
+    n = await streak_service.reset_missed()
+    return f"reset {n} streaks"
 
 
 async def broadcast_islamic_quote() -> str:
@@ -48,10 +57,14 @@ class Job:
     next_after: Callable[[datetime], datetime]
 
 
-def daily_at(hour: int, minute: int) -> Callable[[datetime], datetime]:
+def daily_at(hour: int, minute: int, tz=None) -> Callable[[datetime], datetime]:
+    """Every day at hour:minute in ``tz`` (UTC when None). Returns UTC instants."""
     def nxt(now: datetime) -> datetime:
-        t = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
-        return t if t > now else t + timedelta(days=1)
+        local = now.astimezone(tz) if tz else now
+        t = local.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if t <= local:
+            t = t + timedelta(days=1)   # same wall-clock time tomorrow
+        return t.astimezone(timezone.utc)
     return nxt
 
 
@@ -69,6 +82,7 @@ def every_hours(step: int) -> Callable[[datetime], datetime]:
 JOBS: tuple[Job, ...] = (
     Job("purge_expired_tokens", 834250201, purge_expired_tokens, daily_at(3, 17)),
     Job("broadcast_islamic_quote", 834250202, broadcast_islamic_quote, every_hours(4)),
+    Job("update_streaks", 834250203, update_streaks, daily_at(0, 5, clock.tz())),
 )
 
 

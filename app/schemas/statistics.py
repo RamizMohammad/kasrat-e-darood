@@ -1,7 +1,7 @@
 """Community statistics schemas (Stats page)."""
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 
 import uuid
 from pydantic import BaseModel
@@ -37,3 +37,31 @@ class WeekSummary(BaseModel):
     label: str | None = None
     total: int = 0
     closed_at: datetime | None = None
+
+
+# ── GET /statistics/me ──────────────────────────────────────────────────────
+
+class DayTotal(BaseModel):
+    date: date          # a local (IST) calendar day, "2026-11-24"
+    total: int
+
+
+class MyStats(BaseModel):
+    """Everything the Me tab shows, in one response.
+
+    ``days`` is sparse: only days with at least one log, oldest first, within
+    [from_date, to_date] (the last 365 local days). Missing days are zero.
+    """
+    timezone: str
+    from_date: date
+    to_date: date
+    today: int = 0
+    week: int = 0          # this community week (same as Home's "This week")
+    month: int = 0         # this calendar month, local time
+    lifetime: int = 0
+    current_streak: int = 0
+    best_streak: int = 0
+    active_days: int = 0   # days with a log within the 365-day window
+    days: list[DayTotal] = []
+    by_recitation: list[RecitationStat] = []
+    generated_at: datetime

@@ -8,6 +8,7 @@ from app.core.exceptions import NotFoundError, PermissionDeniedError, Validation
 from app.dependencies.auth import get_current_user
 from app.models.user import GlobalRole, User
 from app.repositories.user_repo import user_repository
+from app.schemas.preferences import Preferences
 from app.schemas.user import (
     PublicUserOut, RoleUpdate, UserListResponse, UserOut, UserUpdate,
 )
@@ -69,7 +70,10 @@ async def get_me(user: User = Depends(get_current_user)) -> UserOut:
 async def update_me(
     body: UserUpdate, user: User = Depends(get_current_user)
 ) -> UserOut:
-    changes = body.model_dump(exclude_unset=True)
+    changes = body.model_dump(exclude_unset=True, exclude={"preferences"})
+    if body.preferences is not None:
+        current = Preferences.from_stored(user.preferences)
+        changes["preferences"] = body.preferences.apply_to(current).model_dump()
     if changes:
         # The ORM only writes the columns that changed, so totals that a
         # concurrent submission just incremented are left alone.

@@ -2,7 +2,10 @@
 from __future__ import annotations
 
 import uuid
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Response
+
+from app.core.exceptions import ValidationAppError
+from app.repositories.base import decode_cursor, encode_cursor
 
 from app.dependencies.auth import get_current_user
 from app.models.user import User
@@ -20,11 +23,28 @@ router = APIRouter(prefix="/submissions", tags=["submissions"])
 
 @router.get("/me", response_model=list[MySubmissionOut])
 async def my_submissions(
-    limit: int = Query(default=20, le=100),
+    response: Response,
+    limit: int = Query(default=20, ge=1, le=100),
+    before: str | None = Query(
+        default=None,
+        description='Next page: the X-Next-Cursor header of the previous page '
+                    '(or "<created_at>|<id>" of the last item you have).'),
     user: User = Depends(get_current_user),
 ) -> list[MySubmissionOut]:
-    """Return the authenticated user's most recent submissions."""
-    return await submission_service.recent_for_user(user, limit)
+    """Your submissions, newest first, ``limit`` at a time.
+
+    When there may be more, the response carries an ``X-Next-Cursor`` header;
+    pass it back as ``?before=`` for the next page.
+    """
+    cursor = None
+    if before:
+        cursor = decode_cursor(before)
+        if cursor is None:
+            raise ValidationAppError("Invalid cursor", code="invalid_cursor")
+    items = await submission_service.page_for_user(user, limit, cursor)
+    if len(items) == limit:
+        response.headers["X-Next-Cursor"] = encode_cursor(items[-1].created_at, items[-1].id)
+    return items
 
 
 @router.post("", response_model=SubmissionResult)

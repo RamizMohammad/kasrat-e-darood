@@ -32,7 +32,11 @@ class User(AuditMixin, Base):
     lang: Mapped[str] = mapped_column(String(5), default="en", server_default="en", nullable=False)
     role: Mapped[GlobalRole] = enum_col(GlobalRole, GlobalRole.MEMBER)
     lifetime_total: Mapped[int] = counter()
+    # Consecutive local (IST) days with at least one log, ending today or
+    # yesterday; best_streak is the longest run ever. Kept up to date on every
+    # log/undo and reset nightly for users who missed a day.
     streak_days: Mapped[int] = counter()
+    best_streak: Mapped[int] = counter()
     last_active_at: Mapped[str | None] = mapped_column(String(40))
     preferences: Mapped[dict] = json_dict()
 
