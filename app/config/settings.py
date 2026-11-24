@@ -6,7 +6,6 @@ validated by Pydantic at startup so the process fails fast on misconfiguration.
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import List
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -27,9 +26,17 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
 
-    # --- MongoDB -------------------------------------------------------------
-    MONGODB_URI: str = Field(default="mongodb://localhost:27017")
-    MONGODB_DB_NAME: str = Field(default="noor")
+    # --- PostgreSQL -----------------------------------------------------------
+    # e.g. postgresql://user:password@central-postgres:5432/kasrat
+    # (postgres:// and postgresql:// are both accepted; asyncpg is used underneath).
+    DATABASE_URL: str = Field(default="")
+    DB_POOL_SIZE: int = 5
+    DB_MAX_OVERFLOW: int = 10
+    # Run `alembic upgrade head` when the API starts (one process at a time,
+    # guarded by a Postgres advisory lock). Turn off to migrate by hand.
+    # Run the scheduled jobs (token cleanup, quote broadcast) inside the API.
+    SCHEDULER_ENABLED: bool = True
+    DB_AUTO_MIGRATE: bool = True
 
     # --- Redis ---------------------------------------------------------------
     REDIS_URL: str = Field(default="redis://localhost:6379/0")
@@ -99,6 +106,8 @@ class Settings(BaseSettings):
             problems.append("DEBUG must be false")
         if not self.FIREBASE_CREDENTIALS_FILE:
             problems.append("FIREBASE_CREDENTIALS_FILE must be set (push + Firebase sign-in)")
+        if not self.DATABASE_URL:
+            problems.append("DATABASE_URL must be set (PostgreSQL)")
         return problems
 
 

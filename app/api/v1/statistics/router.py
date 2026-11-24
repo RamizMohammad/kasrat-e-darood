@@ -1,7 +1,7 @@
 """Community statistics + manual week management (Stats page)."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from fastapi import APIRouter, Depends
 
 from app.core.exceptions import PermissionDeniedError
@@ -18,7 +18,7 @@ router = APIRouter(prefix="/statistics", tags=["statistics"])
 
 @router.get("/community", response_model=CommunityStats)
 async def community_stats(
-    week_id: PydanticObjectId | None = None,
+    week_id: uuid.UUID | None = None,
     user: User = Depends(get_current_user),
 ) -> CommunityStats:
     """Community totals + per-recitation/per-category breakdown for a week.

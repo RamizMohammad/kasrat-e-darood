@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.database.redis import cache
 from app.models.user import User
@@ -21,11 +21,11 @@ from app.schemas.dashboard import (
 from app.schemas.user import PublicUserOut
 from app.schemas.weekly import WeeklySessionOut
 
-_DAYS = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]  # Mongo $dayOfWeek 1..7
+_DAYS = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]  # day-of-week 1..7 (Sunday = 1)
 
 
 class DashboardService:
-    async def build(self, user: User, group_id: PydanticObjectId) -> DashboardResponse:
+    async def build(self, user: User, group_id: uuid.UUID) -> DashboardResponse:
         week = await weekly_repository.get_active(group_id)
         current_week = (
             WeeklySessionOut.model_validate(week) if week is not None else None
@@ -45,9 +45,10 @@ class DashboardService:
         # Top contributors (reuse the weekly leaderboard aggregation).
         contributors: list[Contributor] = []
         if week is not None:
-            rows = await submission_repository.leaderboard_for_week(week.id)
-            for rank, row in enumerate(rows[:5], start=1):
-                u = await user_repository.get(row["_id"])
+            rows = (await submission_repository.leaderboard_for_week(week.id))[:5]
+            people = await user_repository.get_many({r["_id"] for r in rows})
+            for rank, row in enumerate(rows, start=1):
+                u = people.get(row["_id"])
                 if u is None:
                     continue
                 contributors.append(Contributor(
@@ -90,18 +91,15 @@ class DashboardService:
         )
 
     async def feed(
-        self, group_id: PydanticObjectId, limit: int = 20
+        self, group_id: uuid.UUID, limit: int = 20
     ) -> list[FeedItemOut]:
         """Recent group activity, each enriched with the actor's name/initial."""
         activities = await activity_repository.recent(group_id, limit=limit)
+        actors = await user_repository.get_many({a.actor_id for a in activities})
         items: list[FeedItemOut] = []
-        cache_names: dict = {}
         for a in activities:
-            name = cache_names.get(a.actor_id)
-            if name is None:
-                actor = await user_repository.get(a.actor_id)
-                name = actor.display_name if actor else "Member"
-                cache_names[a.actor_id] = name
+            actor = actors.get(a.actor_id)
+            name = actor.display_name if actor else "Member"
             initial = (name.strip()[:1] or "•").upper()
             items.append(FeedItemOut(
                 id=a.id, actor_id=a.actor_id, actor_name=name, initial=initial,

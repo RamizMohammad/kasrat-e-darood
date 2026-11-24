@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import re
 
-from beanie import PydanticObjectId
+import uuid
 from pydantic import BaseModel, Field, field_validator
 
 from app.schemas.common import ORMModel
@@ -51,7 +51,7 @@ class BetaSignupCreate(BaseModel):
 
 
 class BetaSignupOut(ORMModel):
-    id: PydanticObjectId
+    id: uuid.UUID
     full_name: str
     email: str
     device: str

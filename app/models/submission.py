@@ -1,32 +1,31 @@
-"""Submission document — the core write of the platform."""
+"""Submissions: the core write of the platform."""
 from __future__ import annotations
 
-import pymongo
-from beanie import PydanticObjectId
+import uuid
 
-from app.models.base import BaseDocument
+from sqlalchemy import CheckConstraint, Index, Integer, String, text as sql_text
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.models.base import AuditMixin, Base, uuid_col
 
 
-class Submission(BaseDocument):
-    group_id: PydanticObjectId
-    week_id: PydanticObjectId
-    user_id: PydanticObjectId
-    recitation_id: PydanticObjectId
-    count: int
-    note: str | None = None
-    source: str = "app"  # app | bulk | offline_sync
-    client_uuid: str | None = None  # idempotency key
+class Submission(AuditMixin, Base):
+    __tablename__ = "submissions"
 
-    class Settings:
-        name = "submissions"
-        indexes = [
-            pymongo.IndexModel(
-                [("user_id", pymongo.ASCENDING), ("client_uuid", pymongo.ASCENDING)],
-                unique=True,
-                partialFilterExpression={"client_uuid": {"$type": "string"}},
-                name="uq_user_client_uuid",
-            ),
-            [("week_id", pymongo.ASCENDING), ("user_id", pymongo.ASCENDING)],
-            [("group_id", pymongo.ASCENDING), ("recitation_id", pymongo.ASCENDING)],
-            [("created_at", pymongo.DESCENDING)],
-        ]
+    group_id: Mapped[uuid.UUID] = uuid_col(fk="groups.id")
+    week_id: Mapped[uuid.UUID] = uuid_col(fk="weekly_sessions.id")
+    user_id: Mapped[uuid.UUID] = uuid_col(fk="users.id")
+    recitation_id: Mapped[uuid.UUID] = uuid_col(fk="recitations.id")
+    count: Mapped[int] = mapped_column(Integer, nullable=False)
+    note: Mapped[str | None] = mapped_column(String(500))
+    source: Mapped[str] = mapped_column(String(20), default="app", server_default="app", nullable=False)
+    client_uuid: Mapped[str | None] = mapped_column(String(64))  # idempotency key
+
+    __table_args__ = (
+        CheckConstraint("count > 0", name="count_positive"),
+        Index("uq_submissions_user_client_uuid", "user_id", "client_uuid", unique=True,
+              postgresql_where=sql_text("client_uuid IS NOT NULL")),
+        Index("ix_submissions_week_user", "week_id", "user_id"),
+        Index("ix_submissions_group_recitation", "group_id", "recitation_id"),
+        Index("ix_submissions_user_created", "user_id", sql_text("created_at DESC")),
+    )

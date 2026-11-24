@@ -1,7 +1,7 @@
 """Group schemas."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from pydantic import BaseModel, Field
 
 from app.schemas.common import ORMModel
@@ -23,14 +23,14 @@ class GroupUpdate(BaseModel):
 
 
 class GroupOut(ORMModel):
-    id: PydanticObjectId
+    id: uuid.UUID
     name: str
     description: str | None = None
     banner_url: str | None = None
     logo_url: str | None = None
     privacy: str
     invite_code: str
-    owner_id: PydanticObjectId
+    owner_id: uuid.UUID
     member_count: int
 
 
@@ -39,8 +39,8 @@ class JoinRequest(BaseModel):
 
 
 class MembershipOut(ORMModel):
-    id: PydanticObjectId
-    group_id: PydanticObjectId
-    user_id: PydanticObjectId
+    id: uuid.UUID
+    group_id: uuid.UUID
+    user_id: uuid.UUID
     role: str
     status: str

@@ -1,7 +1,7 @@
 """Beta program use-cases: public signup + simple stats."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.models.beta import BetaSignup, BetaTrack
 from app.repositories.beta_repo import beta_repository
@@ -21,7 +21,7 @@ class BetaService:
                 full_name=data.full_name, email=data.email,
                 track=BetaTrack(data.track),
             )
-            decoy.id = PydanticObjectId()  # not persisted; just satisfies the response
+            decoy.id = uuid.uuid4()  # not persisted; just satisfies the response
             return decoy, False
 
         existing = await beta_repository.get_by_email(data.email)

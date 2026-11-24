@@ -1,18 +1,24 @@
 """FastAPI dependencies for authentication and per-group authorization."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
+
 from fastapi import Depends, Header
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import NotFoundError, PermissionDeniedError, UnauthorizedError
 from app.models.group import MemberRole, Membership, MemberStatus
+from app.database.postgres import use_db
 from app.models.user import User
+from app.repositories.group_repo import membership_repository
+from app.repositories.user_repo import user_repository
 from app.security.permissions import Permission, require
 from app.security.tokens import decode_access_token
 
 
 async def get_current_user(
     authorization: str | None = Header(default=None),
+    _session: AsyncSession = Depends(use_db),  # the request's DB session opens first
 ) -> User:
     """Resolve the authenticated user from the Bearer access token."""
     if not authorization or not authorization.lower().startswith("bearer "):
@@ -20,24 +26,20 @@ async def get_current_user(
     token = authorization.split(" ", 1)[1].strip()
     payload = decode_access_token(token)
     try:
-        user_id = PydanticObjectId(payload.get("sub"))
+        user_id = uuid.UUID(str(payload.get("sub")))
     except Exception as exc:  # malformed subject in an otherwise valid token
         raise UnauthorizedError("Invalid access token") from exc
-    user = await User.get(user_id)
-    if user is None or user.deleted:
+    user = await user_repository.get(user_id)
+    if user is None:
         raise UnauthorizedError("User not found")
     return user
 
 
 async def get_membership(
-    group_id: PydanticObjectId, user: User
+    group_id: uuid.UUID, user: User
 ) -> Membership:
     """Return the active membership of `user` in `group_id` or raise."""
-    membership = await Membership.find_one(
-        Membership.group_id == group_id,
-        Membership.user_id == user.id,
-        Membership.deleted == False,  # noqa: E712
-    )
+    membership = await membership_repository.get(group_id, user.id)
     if membership is None:
         raise NotFoundError("You are not a member of this group")
     if membership.status == MemberStatus.BANNED:
@@ -53,7 +55,7 @@ def require_permission(permission: Permission):
     """
 
     async def _dep(
-        group_id: PydanticObjectId,
+        group_id: uuid.UUID,
         user: User = Depends(get_current_user),
     ) -> Membership:
         membership = await get_membership(group_id, user)

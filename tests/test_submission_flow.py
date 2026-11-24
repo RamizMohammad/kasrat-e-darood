@@ -1,6 +1,6 @@
 """Integration tests for the core submission roll-up and the Friday lock.
 
-These exercise the real service layer against an in-memory Mongo.
+These exercise the real service layer against a real PostgreSQL test database.
 """
 from __future__ import annotations
 
@@ -8,19 +8,19 @@ import pytest
 
 from app.models.category import Recitation
 from app.models.user import User
-from app.models.weekly_session import WeeklySession
 from app.schemas.group import GroupCreate
 from app.schemas.submission import SubmissionCreate
 from app.services.group_service import group_service
 from app.services.submission_service import submission_service
 from app.services.weekly_service import weekly_service
+from tests.helpers import insert
 
 pytestmark = pytest.mark.asyncio
 
 
 async def _make_user(name: str = "Tester") -> User:
     user = User(firebase_uid=f"uid-{name}", display_name=name)
-    await user.insert()
+    await insert(user)
     return user
 
 
@@ -28,7 +28,7 @@ async def test_submission_rolls_up_totals_and_is_idempotent(init_db):
     user = await _make_user()
     group = await group_service.create_group(user, GroupCreate(name="Family"))
     rec = Recitation(arabic_name="يس", english_name="Surah Yaseen")
-    await rec.insert()
+    await insert(rec)
 
     result = await submission_service.submit(user, SubmissionCreate(
         group_id=group.id, recitation_id=rec.id, count=3, client_uuid="abc",
@@ -48,15 +48,10 @@ async def test_friday_lock_archives_week_and_opens_next(init_db):
     user = await _make_user("Imam")
     group = await group_service.create_group(user, GroupCreate(name="Masjid"))
     rec = Recitation(arabic_name="درود", english_name="Darood")
-    await rec.insert()
+    await insert(rec)
     await submission_service.submit(user, SubmissionCreate(
         group_id=group.id, recitation_id=rec.id, count=100,
     ))
-
-    # NOTE: real MongoDB enforces "one ACTIVE week per group" via a partial
-    # unique index. The in-memory mock ignores partialFilterExpression, so we
-    # drop the synthetic index here to mirror production behaviour.
-    await WeeklySession.get_motor_collection().drop_indexes()
 
     locked, hall, new_week = await weekly_service.lock_week(group.id, user.id)
     assert locked.status.value == "ARCHIVED"

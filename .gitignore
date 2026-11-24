@@ -8,8 +8,6 @@ conf/
 # repo first, then remove these two lines so they become tracked. Tracking the
 # local copies as they are would overwrite the server's on the next deploy
 # (deploy.yml runs `git reset --hard`).
-Dockerfile
-docker-compose.yml
 
 # Python / tooling
 __pycache__/
@@ -17,3 +15,6 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+sql/
+migrations/
+.env.prod

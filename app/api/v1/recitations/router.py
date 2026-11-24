@@ -1,7 +1,7 @@
 """Category & recitation endpoints."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from fastapi import APIRouter, Depends, Query, status
 
 from app.core.exceptions import PermissionDeniedError
@@ -28,7 +28,7 @@ async def list_categories(_: User = Depends(get_current_user)) -> list[CategoryO
 
 @router.get("/recitations", response_model=list[RecitationOut])
 async def list_recitations(
-    group_id: PydanticObjectId | None = None,
+    group_id: uuid.UUID | None = None,
     q: str | None = Query(default=None),
     _: User = Depends(get_current_user),
 ) -> list[RecitationOut]:
@@ -38,7 +38,7 @@ async def list_recitations(
 
 @router.get("/recitations/{recitation_id}", response_model=RecitationOut)
 async def get_recitation(
-    recitation_id: PydanticObjectId, _: User = Depends(get_current_user)
+    recitation_id: uuid.UUID, _: User = Depends(get_current_user)
 ) -> RecitationOut:
     return RecitationOut.model_validate(await recitation_service.get(recitation_id))
 
@@ -55,7 +55,7 @@ async def create_recitation(
 
 @router.patch("/recitations/{recitation_id}", response_model=RecitationOut)
 async def update_recitation(
-    recitation_id: PydanticObjectId, body: RecitationUpdate,
+    recitation_id: uuid.UUID, body: RecitationUpdate,
     user: User = Depends(get_current_user),
 ) -> RecitationOut:
     return RecitationOut.model_validate(

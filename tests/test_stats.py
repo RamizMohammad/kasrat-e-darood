@@ -3,15 +3,15 @@ from __future__ import annotations
 
 import pytest
 
-from app.core.exceptions import PermissionDeniedError
+
 from app.models.category import Recitation
 from app.models.user import GlobalRole, User
-from app.models.weekly_session import WeeklySession
 from app.schemas.submission import BulkItem, BulkSubmissionCreate
 from app.services.community_service import community_service
 from app.services.stats_service import can_manage_weeks, stats_service
 from app.services.submission_service import submission_service
 from app.services.weekly_service import weekly_service
+from tests.helpers import insert
 
 pytestmark = pytest.mark.asyncio
 
@@ -19,7 +19,7 @@ pytestmark = pytest.mark.asyncio
 async def _user(name="Ramiz", role=GlobalRole.MEMBER) -> User:
     u = User(firebase_uid=f"uid-{name}", display_name=name,
              email=f"{name}@x.com", role=role)
-    await u.insert()
+    await insert(u)
     return u
 
 
@@ -28,8 +28,8 @@ async def _seed_submissions(user):
                         category="Surah")
     darood = Recitation(arabic_name="درود", english_name="Darood Sharif",
                         category="Darood")
-    await yaseen.insert()
-    await darood.insert()
+    await insert(yaseen)
+    await insert(darood)
     await submission_service.submit_bulk(user, BulkSubmissionCreate(items=[
         BulkItem(recitation_id=yaseen.id, count=5, client_uuid="a"),
         BulkItem(recitation_id=darood.id, count=100, client_uuid="b"),
@@ -65,10 +65,6 @@ async def test_super_member_can_close_and_resets(init_db):
     assert before.total == 105
 
     gid = await community_service.resolve_group(admin, None)
-    # mongomock enforces the partial-unique active-week index as a plain unique
-    # index (real MongoDB respects the status filter); drop it so the reopen
-    # insert isn't a false duplicate in this test.
-    await WeeklySession.get_motor_collection().drop_indexes()
     await weekly_service.lock_week(gid, admin.id)
 
     # New week starts at zero; the old week is archived in history.
