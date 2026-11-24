@@ -1,7 +1,7 @@
 """User schemas."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from pydantic import BaseModel, Field
 
 from app.schemas.common import ORMModel
@@ -13,7 +13,7 @@ AVATAR_PATTERN = r"^(av1:[a-z][0-9]{1,2}(\.[a-z][0-9]{1,2}){0,23}|aura_[0-9]{2})
 
 class PublicUserOut(ORMModel):
     """A user as OTHER users see them (leaderboards, search): no email."""
-    id: PydanticObjectId
+    id: uuid.UUID
     display_name: str
     photo_url: str | None = None
     avatar: str | None = None

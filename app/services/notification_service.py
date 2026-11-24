@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import random
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.models.activity import ActivityItem
 from app.models.user import User
@@ -51,18 +51,12 @@ class NotificationService:
         group_id = await community_service.resolve_group(user, None)
         types = CATEGORY_TYPES.get(category)
 
-        # Pull a generous window, then filter to the requested category.
-        activities = await activity_repository.recent(group_id, limit=200)
+        activities = await activity_repository.recent(group_id, limit=limit, types=types)
+        actors = await user_repository.get_many({a.actor_id for a in activities})
         items: list[FeedItemOut] = []
-        names: dict = {}
         for a in activities:
-            if types is not None and a.type not in types:
-                continue
-            name = names.get(a.actor_id)
-            if name is None:
-                actor = await user_repository.get(a.actor_id)
-                name = actor.display_name if actor else "Noor"
-                names[a.actor_id] = name
+            actor = actors.get(a.actor_id)
+            name = actor.display_name if actor else "Noor"
             initial = (name.strip()[:1] or "•").upper()
             items.append(FeedItemOut(
                 id=a.id, actor_id=a.actor_id, actor_name=name, initial=initial,
@@ -74,14 +68,14 @@ class NotificationService:
         return items
 
     async def record_and_push(
-        self, group_id: PydanticObjectId, actor_id: PydanticObjectId,
+        self, group_id: uuid.UUID, actor_id: uuid.UUID,
         type_: str, title: str, text: str, data: dict | None = None,
     ) -> None:
         """Persist an activity entry (so it shows in-app) and push it to everyone."""
-        await ActivityItem(
+        await activity_repository.create(ActivityItem(
             group_id=group_id, actor_id=actor_id, type=type_, text=text,
             payload=data or {}, created_by=actor_id,
-        ).insert()
+        ))
         await send_to_community(title, text, data)
 
     async def broadcast_quote(self) -> None:

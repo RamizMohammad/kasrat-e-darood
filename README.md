@@ -1,7 +1,7 @@
 # Noor — Backend (FastAPI)
 
 Production-oriented backend for **Noor / Kasrat-e-Darrod**, an Islamic community
-recitation tracker. Built with FastAPI + MongoDB (Beanie) + Redis + Celery,
+recitation tracker. Built with FastAPI + PostgreSQL (SQLAlchemy 2 async + Alembic) + Redis,
 following Clean Architecture.
 
 ## Quick start (Docker)
@@ -15,8 +15,8 @@ Swagger UI: http://localhost:8000/docs
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
-uvicorn app.main:app --reload
+cp .env.example .env          # set DATABASE_URL
+uvicorn app.main:app --reload # applies migrations on startup
 python -m scripts_seed        # seed the global recitation library
 ```
 
@@ -27,20 +27,21 @@ app/
   api/router.py          v1 aggregator
   api/v1/<module>/router.py   thin HTTP routes
   services/              business logic (framework-agnostic)
-  repositories/          MongoDB access
-  models/                Beanie documents
+  repositories/          PostgreSQL queries
+  models/                SQLAlchemy tables
   schemas/               Pydantic v2 DTOs
   security/              JWT, Firebase, permissions
   dependencies/          auth + per-group authorization
   middlewares/           request-id, rate limit
-  database/              Mongo + Redis clients
-  tasks/                 Celery app + jobs
+  database/              Postgres engine/sessions, migrations runner, Redis
+  tasks/scheduler.py     scheduled jobs, run inside the API
+migrations/              Alembic migrations (versions/0001_initial_schema.py)
   websocket/             realtime manager + /ws
 tests/                   pytest (unit + integration)
 ```
 
 ## Architecture
-Routes → Services → Repositories → MongoDB. No business logic in routes; no
+Routes → Services → Repositories → PostgreSQL. No business logic in routes; no
 infrastructure in services. See `../docs/ARCHITECTURE.md`,
 `../docs/DATA_MODEL.md`, `../docs/API_CONTRACT.md`.
 
@@ -57,9 +58,21 @@ tally, and the activity feed; it returns fresh totals and is idempotent via
 `client_uuid`. `POST /api/v1/groups/{id}/week/present` performs the Friday lock:
 archives the week, builds the Hall of Fame, and opens the next week.
 
+## Database
+- One transaction per request: committed when the request succeeds, rolled
+  back on any error.
+- Counters (lifetime total, weekly group total) are updated with atomic
+  `UPDATE ... SET n = n + x`, so concurrent submissions never lose counts.
+- Schema changes: edit the models, then
+  `alembic revision --autogenerate -m "what changed"` and review the file.
+  `alembic upgrade head` applies them (startup also does this when
+  `DB_AUTO_MIGRATE=true`).
+
 ## Tests
+Tests run against a real, throw-away PostgreSQL database (it is wiped):
 ```bash
-pytest -q          # 7 tests: tokens, permissions, submission roll-up, Friday lock
+createdb kasrat_test
+TEST_DATABASE_URL=postgresql://postgres:postgres@localhost:5432/kasrat_test pytest -q
 ```
 
 ## Implemented now vs. scaffolded
@@ -68,6 +81,8 @@ groups + memberships + invite codes, categories/recitations, submissions
 (single/bulk/undo, idempotent roll-ups), weekly sessions + Friday lock + Hall of
 Fame, dashboard (one-call), leaderboard (cached, tie-aware), permission system,
 rate limiting, structured logging, health/metrics, WebSocket manager.
-**Scaffolded for extension:** Celery jobs (reminders/streaks/reports),
+**Scheduled jobs** (in-process, `app/tasks/scheduler.py`): nightly cleanup of
+expired tokens/codes and a quote push every 4 hours. No Celery worker or beat.
+**Scaffolded for extension:**
 statistics/achievements/goals/notifications/announcements modules — add a
 model + repo + service + router without touching existing code.

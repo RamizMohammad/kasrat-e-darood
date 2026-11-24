@@ -1,13 +1,13 @@
-"""Group and membership documents."""
+"""Groups and memberships."""
 from __future__ import annotations
 
+import uuid
 from enum import Enum
 
-import pymongo
-from beanie import Indexed, PydanticObjectId
-from pydantic import Field
+from sqlalchemy import Index, Integer, String, text as sql_text
+from sqlalchemy.orm import Mapped, mapped_column
 
-from app.models.base import BaseDocument
+from app.models.base import AuditMixin, Base, enum_col, json_dict, uuid_col
 
 
 class Privacy(str, Enum):
@@ -30,37 +30,37 @@ class MemberStatus(str, Enum):
     MUTED = "muted"
 
 
-class Group(BaseDocument):
-    name: str
-    description: str | None = None
-    banner_url: str | None = None
-    logo_url: str | None = None
-    privacy: Privacy = Privacy.PRIVATE
-    invite_code: Indexed(str, unique=True)  # type: ignore[valid-type]
-    owner_id: PydanticObjectId
-    timezone: str = "Asia/Kolkata"
-    hijri_method: str = "umm_al_qura"
-    member_count: int = 1
-    settings: dict = Field(default_factory=dict)
+class Group(AuditMixin, Base):
+    __tablename__ = "groups"
 
-    class Settings:
-        name = "groups"
-        indexes = [[("name", pymongo.TEXT), ("description", pymongo.TEXT)]]
+    name: Mapped[str] = mapped_column(String(120), nullable=False)
+    description: Mapped[str | None] = mapped_column(String(500))
+    banner_url: Mapped[str | None] = mapped_column(String(500))
+    logo_url: Mapped[str | None] = mapped_column(String(500))
+    privacy: Mapped[Privacy] = enum_col(Privacy, Privacy.PRIVATE)
+    invite_code: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
+    # No foreign key: the global community group is owned by a system sentinel id.
+    owner_id: Mapped[uuid.UUID] = uuid_col()
+    timezone: Mapped[str] = mapped_column(String(64), default="Asia/Kolkata",
+                                          server_default="Asia/Kolkata", nullable=False)
+    hijri_method: Mapped[str] = mapped_column(String(32), default="umm_al_qura",
+                                              server_default="umm_al_qura", nullable=False)
+    member_count: Mapped[int] = mapped_column(Integer, default=1, server_default="1", nullable=False)
+    settings: Mapped[dict] = json_dict()
 
 
-class Membership(BaseDocument):
-    group_id: PydanticObjectId
-    user_id: PydanticObjectId
-    role: MemberRole = MemberRole.MEMBER
-    status: MemberStatus = MemberStatus.ACTIVE
+class Membership(AuditMixin, Base):
+    __tablename__ = "memberships"
 
-    class Settings:
-        name = "memberships"
-        indexes = [
-            pymongo.IndexModel(
-                [("group_id", pymongo.ASCENDING), ("user_id", pymongo.ASCENDING)],
-                unique=True,
-                name="uq_group_user",
-            ),
-            [("group_id", pymongo.ASCENDING), ("role", pymongo.ASCENDING)],
-        ]
+    group_id: Mapped[uuid.UUID] = uuid_col(fk="groups.id")
+    user_id: Mapped[uuid.UUID] = uuid_col(fk="users.id", index=True)
+    role: Mapped[MemberRole] = enum_col(MemberRole, MemberRole.MEMBER)
+    status: Mapped[MemberStatus] = enum_col(MemberStatus, MemberStatus.ACTIVE)
+
+    __table_args__ = (
+        # One live membership per (group, user); leaving soft-deletes it so a
+        # later re-join can insert a fresh row.
+        Index("uq_memberships_group_user_live", "group_id", "user_id", unique=True,
+              postgresql_where=sql_text("deleted = false")),
+        Index("ix_memberships_group_role", "group_id", "role"),
+    )

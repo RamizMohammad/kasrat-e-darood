@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import hmac
 import secrets
 from datetime import datetime, timedelta, timezone
 
@@ -14,6 +15,8 @@ from app.core.exceptions import (
 from app.models.activity import PasswordResetCode, RefreshToken
 from app.models.base import utcnow
 from app.models.user import User
+from app.database.postgres import db
+from app.repositories.auth_repo import otp_repository, refresh_token_repository
 from app.repositories.user_repo import user_repository
 from app.schemas.auth import LoginResponse, TokenPair
 from app.schemas.user import UserOut
@@ -36,7 +39,7 @@ def _hash_code(code: str) -> str:
 
 
 def _as_aware(dt: datetime) -> datetime:
-    """MongoDB returns naive UTC datetimes; make them tz-aware for comparison."""
+    """Treat a naive datetime as UTC so comparisons never mix naive and aware."""
     return dt if dt.tzinfo is not None else dt.replace(tzinfo=timezone.utc)
 
 
@@ -60,7 +63,10 @@ class AuthService:
             password_hash=hash_password(password),
             lang=lang if lang in ("en", "hi", "ur") else "en",
         )
-        await user_repository.create(user)
+        if await user_repository.create_unique(user) is None:
+            # Lost a race with another sign-up for the same email.
+            raise ConflictError("An account with this email already exists",
+                                code="email_taken")
         pair = await self._issue_tokens(user)
         return LoginResponse(
             access_token=pair.access_token,
@@ -109,7 +115,8 @@ class AuthService:
         if user is None and email:
             user = await user_repository.get_by_email(email)
             if user is not None:
-                await user.set({User.firebase_uid: uid})  # link to Google
+                user.firebase_uid = uid  # link to Google
+                await user_repository.save(user)
         if user is None:
             user = User(
                 firebase_uid=uid,
@@ -132,38 +139,36 @@ class AuthService:
         expires = utcnow() + timedelta(
             minutes=settings.PASSWORD_RESET_CODE_TTL_MINUTES
         )
-        await PasswordResetCode(
+        await otp_repository.create(PasswordResetCode(
             user_id=user.id, email=user.email or "", code_hash=_hash_code(code),
             purpose=purpose, expires_at=expires,
-        ).insert()
+        ))
         return code
 
     async def _consume_code(self, email: str, code: str, purpose: str) -> User:
         """Validate the latest OTP for (email, purpose); mark used; return user."""
         email = _normalize_email(email)
-        record = await PasswordResetCode.find(
-            PasswordResetCode.email == email,
-            PasswordResetCode.purpose == purpose,
-            PasswordResetCode.used == False,  # noqa: E712
-        ).sort("-created_at").first_or_none()
+        record = await otp_repository.latest_unused(email, purpose)
 
         if record is None or _as_aware(record.expires_at) < utcnow():
             raise ValidationAppError("Invalid or expired code", code="invalid_code")
         if record.attempts >= settings.PASSWORD_RESET_MAX_ATTEMPTS:
             record.used = True
-            await record.save()
+            await otp_repository.save(record)
+            await db().commit()  # keep the lock-out even though we raise
             raise ValidationAppError("Too many attempts. Request a new code.",
                                      code="too_many_attempts")
-        if record.code_hash != _hash_code(code):
+        if not hmac.compare_digest(record.code_hash, _hash_code(code)):
             record.attempts += 1
-            await record.save()
+            await otp_repository.save(record)
+            await db().commit()  # count the miss even though we raise
             raise ValidationAppError("Incorrect code", code="incorrect_code")
 
         user = await user_repository.get(record.user_id)
         if user is None:
             raise ValidationAppError("Account not found", code="not_found")
         record.used = True
-        await record.save()
+        await otp_repository.save(record)
         return user
 
     async def create_reset_code(self, email: str) -> tuple[str, str] | None:
@@ -181,7 +186,8 @@ class AuthService:
     async def reset_password(self, email: str, code: str, new_password: str) -> None:
         """Verify the OTP and set a new password."""
         user = await self._consume_code(email, code, "password_reset")
-        await user.set({User.password_hash: hash_password(new_password)})
+        user.password_hash = hash_password(new_password)
+        await user_repository.save(user)
         # A reset means the old password may be known to someone else:
         # sign every existing session out.
         await self._revoke_all_sessions(user)
@@ -206,23 +212,20 @@ class AuthService:
         # Soft-delete, strip personal data, and sign out everywhere. Freeing
         # the email and sign-in identity lets the person register again later
         # (the unique firebase_uid index would otherwise block a new account).
-        await user.set({
-            User.deleted: True,
-            User.email: None,
-            User.phone: None,
-            User.photo_url: None,
-            User.password_hash: None,
-            User.display_name: "Deleted user",
-            User.firebase_uid: f"deleted:{user.id}",
-        })
+        user.deleted = True
+        user.email = None
+        user.phone = None
+        user.photo_url = None
+        user.avatar = None
+        user.password_hash = None
+        user.display_name = "Deleted user"
+        user.firebase_uid = f"deleted:{user.id}"
+        await user_repository.save(user)
         await self._revoke_all_sessions(user)
         return email, lang
 
     async def _revoke_all_sessions(self, user: User) -> None:
-        await RefreshToken.find(
-            RefreshToken.user_id == user.id,
-            RefreshToken.revoked == False,  # noqa: E712
-        ).update({"$set": {"revoked": True}})
+        await refresh_token_repository.revoke_all_for(user.id)
 
     async def login_with_firebase(self, id_token: str) -> LoginResponse:
         identity = verify_id_token(id_token)
@@ -245,15 +248,12 @@ class AuthService:
 
     async def refresh(self, raw_refresh: str) -> TokenPair:
         token_hash = hash_refresh_token(raw_refresh)
-        record = await RefreshToken.find_one(
-            RefreshToken.token_hash == token_hash,
-            RefreshToken.revoked == False,  # noqa: E712
-        )
+        record = await refresh_token_repository.get_live(token_hash)
         if record is None or _as_aware(record.expires_at) < utcnow():
             raise UnauthorizedError("Invalid or expired refresh token")
         # Rotation: revoke the old token, issue a fresh pair.
         record.revoked = True
-        await record.save()
+        await refresh_token_repository.save(record)
         user = await user_repository.get(record.user_id)
         if user is None:
             raise UnauthorizedError("User not found")
@@ -261,17 +261,17 @@ class AuthService:
 
     async def logout(self, raw_refresh: str) -> None:
         token_hash = hash_refresh_token(raw_refresh)
-        record = await RefreshToken.find_one(RefreshToken.token_hash == token_hash)
+        record = await refresh_token_repository.get_any(token_hash)
         if record is not None:
             record.revoked = True
-            await record.save()
+            await refresh_token_repository.save(record)
 
     async def _issue_tokens(self, user: User) -> TokenPair:
         access = create_access_token(str(user.id), role=user.role.value)
         raw, token_hash, expires = create_refresh_token()
-        await RefreshToken(
+        await refresh_token_repository.create(RefreshToken(
             user_id=user.id, token_hash=token_hash, expires_at=expires
-        ).insert()
+        ))
         return TokenPair(access_token=access, refresh_token=raw)
 
 

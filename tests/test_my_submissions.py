@@ -7,13 +7,14 @@ from app.models.category import Recitation
 from app.models.user import User
 from app.schemas.submission import BulkItem, BulkSubmissionCreate
 from app.services.submission_service import submission_service
+from tests.helpers import insert
 
 pytestmark = pytest.mark.asyncio
 
 
 async def _user() -> User:
     u = User(firebase_uid="uid-prof", display_name="Ramiz", email="r@x.com")
-    await u.insert()
+    await insert(u)
     return u
 
 
@@ -23,8 +24,8 @@ async def test_recent_for_user_enriches_names(init_db):
                         urdu_name="سورۃ یٰسین", category="Surah")
     subhan = Recitation(arabic_name="سبحان اللہ", english_name="Subhan Allah",
                         urdu_name="سبحان اللہ", category="Zikr")
-    await yaseen.insert()
-    await subhan.insert()
+    await insert(yaseen)
+    await insert(subhan)
 
     await submission_service.submit_bulk(user, BulkSubmissionCreate(items=[
         BulkItem(recitation_id=yaseen.id, count=3, client_uuid="a"),

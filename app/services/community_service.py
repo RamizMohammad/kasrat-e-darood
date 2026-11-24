@@ -7,7 +7,7 @@ feed) so callers never have to know the id.
 """
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.models.group import (
     Group,
@@ -17,7 +17,7 @@ from app.models.group import (
     Privacy,
 )
 from app.models.user import User
-from app.repositories.group_repo import group_repository
+from app.repositories.group_repo import group_repository, membership_repository
 from app.services.weekly_service import weekly_service
 
 # Reserved, unique invite code that identifies the singleton community group.
@@ -26,42 +26,40 @@ GLOBAL_INVITE_CODE = "GLOBAL00"
 
 class CommunityService:
     async def get_or_create_global_group(self) -> Group:
-        group = await Group.find_one(
-            Group.invite_code == GLOBAL_INVITE_CODE,
-            Group.deleted == False,  # noqa: E712
-        )
+        group = await group_repository.get_by_invite_code(GLOBAL_INVITE_CODE)
         if group is None:
             group = Group(
                 name="Noor Community",
                 description="The shared community circle for all members.",
                 privacy=Privacy.PUBLIC,
                 invite_code=GLOBAL_INVITE_CODE,
-                owner_id=PydanticObjectId(),  # system-owned sentinel
+                owner_id=uuid.uuid4(),  # system-owned sentinel
                 member_count=0,
             )
-            await group_repository.create(group)
+            if await group_repository.create_unique(group) is None:
+                # Another request created it at the same moment: use theirs.
+                group = await group_repository.get_by_invite_code(GLOBAL_INVITE_CODE)
+                assert group is not None
+                return group
             # An active weekly session is required by the dashboard/leaderboard.
             await weekly_service.open_first_week(group)
         return group
 
     async def ensure_member(self, user: User, group: Group) -> None:
-        existing = await Membership.find_one(
-            Membership.group_id == group.id,
-            Membership.user_id == user.id,
-            Membership.deleted == False,  # noqa: E712
-        )
+        existing = await membership_repository.get(group.id, user.id)
         if existing is None:
-            await Membership(
+            # create_unique: two first requests from one new user can race here.
+            await membership_repository.create_unique(Membership(
                 group_id=group.id,
                 user_id=user.id,
                 role=MemberRole.MEMBER,
                 status=MemberStatus.ACTIVE,
                 created_by=user.id,
-            ).insert()
+            ))
 
     async def resolve_group(
-        self, user: User, group_id: PydanticObjectId | None
-    ) -> PydanticObjectId:
+        self, user: User, group_id: uuid.UUID | None
+    ) -> uuid.UUID:
         """Return the group to read from, defaulting to the community group.
 
         When no group_id is supplied the user is (idempotently) joined to the

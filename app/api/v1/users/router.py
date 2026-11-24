@@ -1,7 +1,7 @@
 """User endpoints."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from fastapi import APIRouter, Depends, Query
 
 from app.core.exceptions import NotFoundError, PermissionDeniedError, ValidationAppError
@@ -22,7 +22,7 @@ def _require_super_admin(actor: User) -> None:
 
 @router.get("", response_model=UserListResponse)
 async def list_users(
-    cursor: PydanticObjectId | None = None,
+    cursor: str | None = None,
     limit: int = Query(default=50, le=200),
     actor: User = Depends(get_current_user),
 ) -> UserListResponse:
@@ -39,7 +39,7 @@ async def list_users(
 
 @router.patch("/{user_id}/role", response_model=UserOut)
 async def set_user_role(
-    user_id: PydanticObjectId,
+    user_id: uuid.UUID,
     body: RoleUpdate,
     actor: User = Depends(get_current_user),
 ) -> UserOut:
@@ -55,7 +55,8 @@ async def set_user_role(
     target = await user_repository.get(user_id)
     if target is None:
         raise NotFoundError("User not found")
-    await target.set({User.role: new_role})
+    target.role = new_role
+    await user_repository.save(target)
     return UserOut.model_validate(target)
 
 
@@ -70,9 +71,11 @@ async def update_me(
 ) -> UserOut:
     changes = body.model_dump(exclude_unset=True)
     if changes:
-        # $set only the changed fields: a full save would overwrite totals
-        # that a concurrent submission just incremented.
-        await user.set(changes)
+        # The ORM only writes the columns that changed, so totals that a
+        # concurrent submission just incremented are left alone.
+        for key, value in changes.items():
+            setattr(user, key, value)
+        await user_repository.save(user)
     return UserOut.model_validate(user)
 
 
@@ -86,7 +89,7 @@ async def search_users(
 
 @router.get("/{user_id}", response_model=UserOut)
 async def get_user(
-    user_id: PydanticObjectId, actor: User = Depends(get_current_user)
+    user_id: uuid.UUID, actor: User = Depends(get_current_user)
 ) -> UserOut:
     target = await user_repository.get(user_id)
     if target is None:

@@ -1,7 +1,7 @@
 """Dashboard & leaderboard endpoints."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from fastapi import APIRouter, Depends, Query
 
 from app.dependencies.auth import get_current_user
@@ -19,7 +19,7 @@ router = APIRouter(tags=["dashboard"])
 
 @router.get("/dashboard", response_model=DashboardResponse)
 async def get_dashboard(
-    group_id: PydanticObjectId | None = None,
+    group_id: uuid.UUID | None = None,
     user: User = Depends(get_current_user),
 ) -> DashboardResponse:
     """Return the entire home dashboard in one optimized response.
@@ -32,7 +32,7 @@ async def get_dashboard(
 
 @router.get("/leaderboards", response_model=LeaderboardResponse)
 async def get_leaderboard(
-    group_id: PydanticObjectId | None = None,
+    group_id: uuid.UUID | None = None,
     scope: str = Query(default="weekly"),
     around_me: bool = False,
     limit: int = Query(default=100, le=100),

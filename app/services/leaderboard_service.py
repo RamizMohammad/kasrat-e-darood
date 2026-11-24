@@ -1,7 +1,7 @@
 """Leaderboard read-model with Redis caching and tie-aware ranking."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.database.redis import cache
 from app.repositories.submission_repo import submission_repository
@@ -13,7 +13,7 @@ from app.schemas.user import PublicUserOut
 
 class LeaderboardService:
     async def weekly(
-        self, group_id: PydanticObjectId, me_id: PydanticObjectId,
+        self, group_id: uuid.UUID, me_id: uuid.UUID,
         around_me: bool = False, limit: int = 100,
     ) -> LeaderboardResponse:
         cache_key = f"leaderboard:{group_id}:weekly:{limit}"
@@ -23,6 +23,7 @@ class LeaderboardService:
             return LeaderboardResponse(scope="weekly", entries=[], me=None)
 
         rows = await submission_repository.leaderboard_for_week(week.id)
+        people = await user_repository.get_many({r["_id"] for r in rows})
         entries: list[LeaderboardEntry] = []
         me_entry: LeaderboardEntry | None = None
         prev_total: int | None = None
@@ -33,7 +34,7 @@ class LeaderboardService:
             if total != prev_total:
                 rank = index
                 prev_total = total
-            user = await user_repository.get(row["_id"])
+            user = people.get(row["_id"])
             if user is None:
                 continue
             entry = LeaderboardEntry(

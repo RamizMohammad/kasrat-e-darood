@@ -1,0 +1,30 @@
+# One container: the API. Scheduled jobs (token cleanup, quote push) run
+# inside it, so there is no Celery worker or beat.
+# Redis (central-redis) and the nginx proxy live on the shared, pre-existing
+# `proxy_network`; PostgreSQL is reached via DATABASE_URL in .env.
+
+services:
+  api:
+    build: .
+    image: kasrat-backend:latest
+    container_name: kasrat-api
+    restart: unless-stopped
+    env_file: .env
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8010 --proxy-headers --forwarded-allow-ips="*"
+    expose: ["8010"]
+    networks: [proxy_network]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  proxy_network:
+    external: true

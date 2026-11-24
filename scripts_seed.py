@@ -1,6 +1,6 @@
 """Seed the global recitation library (categories + recitations).
 
-Run once against a reachable MongoDB:  python -m scripts_seed
+Run after DATABASE_URL is set (applies migrations first):  python -m scripts_seed
 
 Idempotent: categories are inserted if missing (by slug); each recitation is
 upserted by english_name, so re-running refreshes content (e.g. Urdu names)
@@ -10,7 +10,10 @@ from __future__ import annotations
 
 import asyncio
 
-from app.database.mongo import close_mongo_connection, connect_to_mongo
+from sqlalchemy import select
+
+from app.database.migrate import upgrade_head
+from app.database.postgres import close_postgres, db, session_scope
 from app.models.category import Category, Recitation
 
 CATEGORIES = [{'name': 'Surah', 'slug': 'surah', 'color': '#004532', 'icon': 'book', 'sort_order': 0},
@@ -498,35 +501,45 @@ RECITATIONS = [{'category': 'Surah',
   'sort_order': 42}]
 
 
-async def main() -> None:
-    await connect_to_mongo()
-
+async def seed() -> tuple[int, int]:
+    """Insert or update the global recitation library. Safe to run repeatedly."""
+    session = db()
     for c in CATEGORIES:
-        if await Category.find_one(Category.slug == c["slug"]) is None:
-            await Category.insert(Category(**c))
+        found = (await session.execute(select(Category).where(Category.slug == c["slug"]))).scalar()
+        if found is None:
+            session.add(Category(**c))
+    await session.flush()
 
-    cat_by_name = {c.name: c.id for c in await Category.find_all().to_list()}
+    cats = (await session.execute(select(Category))).scalars().all()
+    cat_by_name = {c.name: c.id for c in cats}
 
     inserted = updated = 0
     for r in RECITATIONS:
         data = dict(r)
         data["category_id"] = cat_by_name.get(data["category"])
-        existing = await Recitation.find_one(
+        existing = (await session.execute(select(Recitation).where(
             Recitation.english_name == data["english_name"],
-            Recitation.group_id == None,  # noqa: E711  (global library)
-        )
+            Recitation.group_id.is_(None),  # global library
+        ))).scalar()
         if existing is None:
-            await Recitation.insert(Recitation(**data))
+            session.add(Recitation(**data))
             inserted += 1
         else:
             for k, v in data.items():
                 setattr(existing, k, v)
-            await existing.save()
+            existing.touch()
             updated += 1
+    await session.flush()
+    return inserted, updated
 
+
+async def main() -> None:
+    await upgrade_head()          # make sure the tables exist
+    async with session_scope():
+        inserted, updated = await seed()
     print(f"Seed complete. categories={len(CATEGORIES)} "
           f"recitations inserted={inserted} updated={updated}")
-    await close_mongo_connection()
+    await close_postgres()
 
 
 if __name__ == "__main__":

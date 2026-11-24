@@ -1,10 +1,9 @@
 """Community statistics: per-recitation + per-category breakdowns, week history."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.models.user import GlobalRole, User
-from app.models.weekly_session import WeeklySession, WeekStatus
 from app.repositories.recitation_repo import recitation_repository
 from app.repositories.submission_repo import submission_repository
 from app.repositories.weekly_repo import weekly_repository
@@ -27,8 +26,8 @@ class StatsService:
     async def community(
         self,
         user: User,
-        group_id: PydanticObjectId | None = None,
-        week_id: PydanticObjectId | None = None,
+        group_id: uuid.UUID | None = None,
+        week_id: uuid.UUID | None = None,
     ) -> CommunityStats:
         gid = await community_service.resolve_group(user, group_id)
         week = (await weekly_repository.get(week_id) if week_id
@@ -39,18 +38,15 @@ class StatsService:
             return CommunityStats(total=0, can_manage=can_manage)
 
         rows = await submission_repository.totals_by_recitation(week.id)
+        recs = await recitation_repository.get_many({r["_id"] for r in rows})
         by_recitation: list[RecitationStat] = []
         by_category: dict[str, int] = {}
         total = 0
-        name_cache: dict = {}
         for row in rows:
             rid = row["_id"]
             count = int(row["total"])
             total += count
-            rec = name_cache.get(rid)
-            if rec is None:
-                rec = await recitation_repository.get(rid)
-                name_cache[rid] = rec
+            rec = recs.get(rid)
             category = (rec.category if rec and rec.category else "Other")
             by_recitation.append(RecitationStat(
                 recitation_id=rid,
@@ -76,15 +72,11 @@ class StatsService:
         )
 
     async def weeks(
-        self, user: User, group_id: PydanticObjectId | None = None
+        self, user: User, group_id: uuid.UUID | None = None
     ) -> list[WeekSummary]:
         """All closed (non-active) weeks, newest first."""
         gid = await community_service.resolve_group(user, group_id)
-        sessions = await WeeklySession.find(
-            WeeklySession.group_id == gid,
-            WeeklySession.status != WeekStatus.ACTIVE,
-            WeeklySession.deleted == False,  # noqa: E712
-        ).sort("-week_number").to_list()
+        sessions = await weekly_repository.closed_for_group(gid)
         return [WeekSummary(
             week_id=s.id, week_number=s.week_number, label=s.gregorian_week,
             total=s.group_total, closed_at=s.locked_at,

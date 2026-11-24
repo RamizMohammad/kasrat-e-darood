@@ -3,12 +3,13 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.core.exceptions import ConflictError, NotFoundError
 from app.models.activity import ActivityItem
 from app.models.group import Group
 from app.models.weekly_session import WeeklySession, WeekStatus
+from app.repositories.activity_repo import activity_repository
 from app.repositories.submission_repo import submission_repository
 from app.repositories.user_repo import user_repository
 from app.repositories.weekly_repo import weekly_repository
@@ -36,7 +37,7 @@ class WeeklyService:
         return await self._open_week(group.id, week_number=1)
 
     async def _open_week(
-        self, group_id: PydanticObjectId, week_number: int
+        self, group_id: uuid.UUID, week_number: int
     ) -> WeeklySession:
         if await weekly_repository.get_active(group_id) is not None:
             raise ConflictError("An active week already exists for this group")
@@ -53,29 +54,31 @@ class WeeklyService:
         await weekly_repository.create(session)
         return session
 
-    async def get_current(self, group_id: PydanticObjectId) -> WeeklySession:
+    async def get_current(self, group_id: uuid.UUID) -> WeeklySession:
         session = await weekly_repository.get_active(group_id)
         if session is None:
             raise NotFoundError("No active week for this group")
         return session
 
-    async def history(self, group_id: PydanticObjectId,
-                      cursor: PydanticObjectId | None, limit: int):
+    async def history(self, group_id: uuid.UUID,
+                      cursor: str | None, limit: int):
         return await weekly_repository.history(group_id, cursor, limit)
 
     async def lock_week(
-        self, group_id: PydanticObjectId, locked_by: PydanticObjectId
+        self, group_id: uuid.UUID, locked_by: uuid.UUID
     ) -> tuple[WeeklySession, list[HallOfFameEntry], WeeklySession]:
         """Friday lock: finalize totals + Hall of Fame, archive, open next week.
 
-        Runs inside a MongoDB transaction when the deployment supports it
-        (replica set); on a standalone dev server it executes sequentially.
+        Runs in the request's transaction. The active week row is locked
+        (SELECT ... FOR UPDATE), so two admins pressing "present" at once
+        can't both archive it: the second waits, then finds no active week.
         """
-        active = await weekly_repository.get_active(group_id)
+        active = await weekly_repository.get_active(group_id, for_update=True)
         if active is None:
             raise NotFoundError("No active week to lock")
 
         rows = await submission_repository.leaderboard_for_week(active.id)
+        people = await user_repository.get_many({r["_id"] for r in rows[:3]})
         hall: list[HallOfFameEntry] = []
         totals: dict[str, int] = {}
         group_total = 0
@@ -85,7 +88,7 @@ class WeeklyService:
             totals[str(uid)] = total
             group_total += total
             if rank <= 3:
-                user = await user_repository.get(uid)
+                user = people.get(uid)
                 hall.append(HallOfFameEntry(
                     user_id=uid,
                     display_name=user.display_name if user else "Member",
@@ -95,7 +98,7 @@ class WeeklyService:
         active.status = WeekStatus.ARCHIVED
         active.totals = totals
         active.group_total = group_total
-        active.hall_of_fame = [h.model_dump() for h in hall]
+        active.hall_of_fame = [h.model_dump(mode="json") for h in hall]
         active.locked_at = datetime.now(timezone.utc)
         active.locked_by = locked_by
         await weekly_repository.save(active)
@@ -106,10 +109,10 @@ class WeeklyService:
         text = (f"Week {active.week_number} has been finalized and archived. "
                 f"A new week has begun.")
         try:
-            await ActivityItem(
+            await activity_repository.create(ActivityItem(
                 group_id=group_id, actor_id=locked_by, type="week.locked",
                 text=text, created_by=locked_by,
-            ).insert()
+            ))
             await send_to_community("Consideration filed", text)
         except Exception:  # pragma: no cover - notification must not block the lock
             pass

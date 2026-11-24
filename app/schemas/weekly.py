@@ -3,15 +3,15 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from beanie import PydanticObjectId
+import uuid
 from pydantic import BaseModel
 
 from app.schemas.common import ORMModel
 
 
 class WeeklySessionOut(ORMModel):
-    id: PydanticObjectId
-    group_id: PydanticObjectId
+    id: uuid.UUID
+    group_id: uuid.UUID
     week_number: int
     start_date: datetime
     end_date: datetime
@@ -20,7 +20,7 @@ class WeeklySessionOut(ORMModel):
 
 
 class HallOfFameEntry(BaseModel):
-    user_id: PydanticObjectId
+    user_id: uuid.UUID
     display_name: str
     total: int
     rank: int

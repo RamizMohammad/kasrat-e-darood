@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from beanie import PydanticObjectId
+import uuid
 from pydantic import BaseModel
 
 from app.schemas.user import PublicUserOut
@@ -23,8 +23,8 @@ class Contributor(BaseModel):
 
 
 class ActivityOut(BaseModel):
-    id: PydanticObjectId
-    actor_id: PydanticObjectId
+    id: uuid.UUID
+    actor_id: uuid.UUID
     type: str
     text: str
     reactions: dict = {}
@@ -32,8 +32,8 @@ class ActivityOut(BaseModel):
 
 class FeedItemOut(BaseModel):
     """An activity-feed entry enriched with the actor's display info."""
-    id: PydanticObjectId
-    actor_id: PydanticObjectId
+    id: uuid.UUID
+    actor_id: uuid.UUID
     actor_name: str
     initial: str
     type: str

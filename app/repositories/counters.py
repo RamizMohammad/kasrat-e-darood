@@ -1,64 +1,78 @@
 """Atomic counter updates for submission roll-ups.
 
-Totals are changed with MongoDB ``$inc`` on the server instead of
-load → add → save in Python. Two people logging at the same moment (or one
-person on two phones) both land; nothing is overwritten by a stale copy.
+Totals change with one SQL UPDATE (``SET n = n + :delta``) instead of
+load → add → save in Python, so two people logging at the same moment (or one
+person on two phones) both land and nothing is overwritten by a stale copy.
 """
 from __future__ import annotations
 
-from beanie import PydanticObjectId
-from pymongo import ReturnDocument
+import uuid
 
+from sqlalchemy import func, inspect, update
+from sqlalchemy.orm.attributes import set_committed_value
+
+from app.database.postgres import db
 from app.models.base import utcnow
 from app.models.submission import Submission
 from app.models.user import User
 from app.models.weekly_session import WeeklySession
 
 
-async def inc_user_lifetime(user_id: PydanticObjectId, delta: int) -> int:
+def _sync(model, row_id: uuid.UUID, **values) -> None:
+    """Show the new value on an already-loaded object WITHOUT marking it dirty.
+
+    Assigning it normally would make the ORM flush `SET n = <value>` later and
+    undo a concurrent increment; set_committed_value only updates memory.
+    """
+    key = inspect(model).identity_key_from_primary_key((row_id,))
+    obj = db().sync_session.identity_map.get(key)
+    if obj is not None:
+        for name, value in values.items():
+            set_committed_value(obj, name, value)
+
+
+async def inc_user_lifetime(user_id: uuid.UUID, delta: int) -> int:
     """Add ``delta`` to a user's lifetime total; return the new total (never < 0)."""
-    coll = User.get_motor_collection()
-    doc = await coll.find_one_and_update(
-        {"_id": user_id},
-        {"$inc": {"lifetime_total": delta}, "$set": {"updated_at": utcnow()}},
-        return_document=ReturnDocument.AFTER,
-        projection={"lifetime_total": 1},
-    )
-    total = int(doc["lifetime_total"]) if doc else 0
-    if total < 0:  # only possible if old data was already inconsistent
-        await coll.update_one({"_id": user_id, "lifetime_total": {"$lt": 0}},
-                              {"$set": {"lifetime_total": 0}})
-        total = 0
+    stmt = (update(User).where(User.id == user_id)
+            .values(lifetime_total=func.greatest(User.lifetime_total + delta, 0),
+                    updated_at=utcnow())
+            .returning(User.lifetime_total)
+            .execution_options(synchronize_session=False))
+    total = int((await db().execute(stmt)).scalar() or 0)
+    _sync(User, user_id, lifetime_total=total)
     return total
 
 
-async def inc_week(week_id: PydanticObjectId, user_id: PydanticObjectId,
-                   delta: int) -> None:
-    """Add ``delta`` to a week's group total and to the user's tally in it."""
-    key = f"totals.{user_id}"
-    coll = WeeklySession.get_motor_collection()
-    await coll.update_one(
-        {"_id": week_id},
-        {"$inc": {"group_total": delta, key: delta}, "$set": {"updated_at": utcnow()}},
-    )
-    if delta < 0:
-        await coll.update_one({"_id": week_id, "group_total": {"$lt": 0}},
-                              {"$set": {"group_total": 0}})
-        await coll.update_one({"_id": week_id, key: {"$lt": 0}},
-                              {"$set": {key: 0}})
+async def inc_week(week_id: uuid.UUID, user_id: uuid.UUID, delta: int) -> int:
+    """Add ``delta`` to a week's live group total; return the new total.
+
+    Per-user weekly totals are summed from submissions, so only the group
+    total is stored live.
+    """
+    stmt = (update(WeeklySession).where(WeeklySession.id == week_id)
+            .values(group_total=func.greatest(WeeklySession.group_total + delta, 0),
+                    updated_at=utcnow())
+            .returning(WeeklySession.group_total)
+            .execution_options(synchronize_session=False))
+    total = int((await db().execute(stmt)).scalar() or 0)
+    _sync(WeeklySession, week_id, group_total=total)
+    return total
 
 
-async def claim_undo(submission_id: PydanticObjectId) -> bool:
+async def claim_undo(submission_id: uuid.UUID) -> bool:
     """Soft-delete a submission exactly once.
 
-    Returns False when it was already deleted (e.g. a double-tapped undo),
-    so the caller does not subtract the count twice. ``client_uuid`` is
-    cleared so the unique (user_id, client_uuid) index doesn't block a later
-    log that reuses it.
+    Returns False when it was already deleted (e.g. a double-tapped undo), so
+    the caller doesn't subtract the count twice. ``client_uuid`` is cleared so
+    the unique (user_id, client_uuid) index doesn't block a later log reusing it.
     """
-    result = await Submission.get_motor_collection().update_one(
-        {"_id": submission_id, "deleted": False},
-        {"$set": {"deleted": True, "client_uuid": None, "updated_at": utcnow()},
-         "$inc": {"version": 1}},
-    )
-    return result.modified_count == 1
+    stmt = (update(Submission)
+            .where(Submission.id == submission_id, Submission.deleted.is_(False))
+            .values(deleted=True, client_uuid=None, updated_at=utcnow(),
+                    version=Submission.version + 1)
+            .returning(Submission.id)
+            .execution_options(synchronize_session=False))
+    claimed = (await db().execute(stmt)).first() is not None
+    if claimed:
+        _sync(Submission, submission_id, deleted=True, client_uuid=None)
+    return claimed

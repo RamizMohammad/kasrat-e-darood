@@ -1,7 +1,7 @@
 """Category & recitation use-cases (admin-managed library)."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.core.exceptions import NotFoundError
 from app.models.category import Category, Recitation
@@ -18,11 +18,11 @@ class RecitationService:
         return await category_repository.list_all()
 
     async def list_recitations(
-        self, group_id: PydanticObjectId | None, q: str | None
+        self, group_id: uuid.UUID | None, q: str | None
     ) -> list[Recitation]:
         return await recitation_repository.list_for_group(group_id, q)
 
-    async def get(self, recitation_id: PydanticObjectId) -> Recitation:
+    async def get(self, recitation_id: uuid.UUID) -> Recitation:
         rec = await recitation_repository.get(recitation_id)
         if rec is None:
             raise NotFoundError("Recitation not found")
@@ -39,7 +39,7 @@ class RecitationService:
         return await recitation_repository.create(rec)
 
     async def update(
-        self, recitation_id: PydanticObjectId, data: RecitationUpdate, by: User
+        self, recitation_id: uuid.UUID, data: RecitationUpdate, by: User
     ) -> Recitation:
         rec = await self.get(recitation_id)
         for key, value in data.model_dump(exclude_unset=True).items():

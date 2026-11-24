@@ -7,13 +7,14 @@ from app.api.v1.users.router import list_users, set_user_role
 from app.core.exceptions import PermissionDeniedError
 from app.models.user import GlobalRole, User
 from app.schemas.user import RoleUpdate
+from tests.helpers import get, insert
 
 pytestmark = pytest.mark.asyncio
 
 
 async def _user(name: str, role: GlobalRole = GlobalRole.MEMBER) -> User:
     u = User(firebase_uid=f"uid-{name}", display_name=name, role=role)
-    await u.insert()
+    await insert(u)
     return u
 
 
@@ -37,7 +38,7 @@ async def test_super_admin_can_change_role(init_db):
 
     out = await set_user_role(target.id, RoleUpdate(role="super_member"), actor=admin)
     assert out.role == "super_member"
-    refreshed = await User.get(target.id)
+    refreshed = await get(User, target.id)
     assert refreshed.role == GlobalRole.SUPER_MEMBER
 
 

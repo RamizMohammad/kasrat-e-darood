@@ -8,19 +8,20 @@ from app.models.user import User
 from app.schemas.submission import BulkItem, BulkSubmissionCreate
 from app.services.community_service import community_service
 from app.services.submission_service import submission_service
+from tests.helpers import insert
 
 pytestmark = pytest.mark.asyncio
 
 
 async def _user(name="Ramiz") -> User:
     u = User(firebase_uid=f"uid-{name}", display_name=name, email=f"{name}@x.com")
-    await u.insert()
+    await insert(u)
     return u
 
 
 async def _recitation(name) -> Recitation:
     r = Recitation(arabic_name=name, english_name=name, category="Zikr")
-    await r.insert()
+    await insert(r)
     return r
 
 

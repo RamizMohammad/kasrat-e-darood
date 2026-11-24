@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import secrets
 
-from beanie import PydanticObjectId
+import uuid
 
 from app.core.exceptions import ConflictError, NotFoundError, PermissionDeniedError
 from app.models.group import Group, MemberRole, Membership, MemberStatus
@@ -30,11 +30,11 @@ class GroupService:
         )
         await group_repository.create(group)
         # Owner membership
-        await Membership(
+        await membership_repository.create(Membership(
             group_id=group.id, user_id=owner.id,
             role=MemberRole.OWNER, status=MemberStatus.ACTIVE,
             created_by=owner.id,
-        ).insert()
+        ))
         # First active week
         await weekly_service.open_first_week(group)
         return group
@@ -44,18 +44,16 @@ class GroupService:
         group_ids = [m.group_id for m in memberships]
         if not group_ids:
             return []
-        return await Group.find(
-            {"_id": {"$in": group_ids}, "deleted": False}
-        ).to_list()
+        return await group_repository.list_by_ids(group_ids)
 
-    async def get_group(self, group_id: PydanticObjectId) -> Group:
+    async def get_group(self, group_id: uuid.UUID) -> Group:
         group = await group_repository.get(group_id)
         if group is None:
             raise NotFoundError("Group not found")
         return group
 
     async def update_group(
-        self, group_id: PydanticObjectId, data: GroupUpdate, by: User
+        self, group_id: uuid.UUID, data: GroupUpdate, by: User
     ) -> Group:
         group = await self.get_group(group_id)
         patch = data.model_dump(exclude_unset=True)
@@ -75,12 +73,13 @@ class GroupService:
             role=MemberRole.MEMBER, status=MemberStatus.ACTIVE,
             created_by=user.id,
         )
-        await membership.insert()
+        if await membership_repository.create_unique(membership) is None:
+            raise ConflictError("Already a member")
         group.member_count += 1
         await group_repository.save(group)
         return membership
 
-    async def leave_group(self, user: User, group_id: PydanticObjectId) -> None:
+    async def leave_group(self, user: User, group_id: uuid.UUID) -> None:
         membership = await membership_repository.get(group_id, user.id)
         if membership is None:
             raise NotFoundError("Not a member")
@@ -91,13 +90,13 @@ class GroupService:
         group.member_count = max(0, group.member_count - 1)
         await group_repository.save(group)
 
-    async def rotate_invite_code(self, group_id: PydanticObjectId) -> str:
+    async def rotate_invite_code(self, group_id: uuid.UUID) -> str:
         group = await self.get_group(group_id)
         group.invite_code = _generate_invite_code()
         await group_repository.save(group)
         return group.invite_code
 
-    async def list_members(self, group_id: PydanticObjectId) -> list[Membership]:
+    async def list_members(self, group_id: uuid.UUID) -> list[Membership]:
         return await membership_repository.list_for_group(group_id)
 
 

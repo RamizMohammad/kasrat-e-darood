@@ -6,6 +6,7 @@ import pytest
 from app.models.beta import BetaSignup
 from app.schemas.beta import BetaSignupCreate
 from app.services.beta_service import beta_service
+from tests.helpers import count
 
 pytestmark = pytest.mark.asyncio
 
@@ -22,7 +23,7 @@ async def test_signup_persists_and_is_idempotent(init_db):
     )
     assert already2 is True
     assert s2.id == s1.id
-    assert await BetaSignup.find(BetaSignup.deleted == False).count() == 1  # noqa: E712
+    assert await count(BetaSignup, BetaSignup.deleted == False) == 1  # noqa: E712
 
 
 async def test_honeypot_is_not_persisted(init_db):
@@ -32,7 +33,7 @@ async def test_honeypot_is_not_persisted(init_db):
     assert already is False
     assert decoy.id is not None  # response is satisfied
     # …but nothing was stored.
-    assert await BetaSignup.find(BetaSignup.deleted == False).count() == 0  # noqa: E712
+    assert await count(BetaSignup, BetaSignup.deleted == False) == 0  # noqa: E712
 
 
 async def test_stats_counts_only_real_signups(init_db):

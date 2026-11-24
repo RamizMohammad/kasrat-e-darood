@@ -8,13 +8,14 @@ from app.models.group import Membership
 from app.models.user import User
 from app.services.community_service import community_service
 from app.services.dashboard_service import dashboard_service
+from tests.helpers import count, find_one, insert
 
 pytestmark = pytest.mark.asyncio
 
 
 async def _make_user(name: str = "Ramiz") -> User:
     user = User(firebase_uid=f"uid-{name}", display_name=name, email=f"{name}@x.com")
-    await user.insert()
+    await insert(user)
     return user
 
 
@@ -28,25 +29,24 @@ async def test_resolve_group_auto_joins_user(init_db):
     user = await _make_user()
     gid = await community_service.resolve_group(user, None)
 
-    membership = await Membership.find_one(
+    membership = await find_one(Membership,
         Membership.group_id == gid, Membership.user_id == user.id
     )
     assert membership is not None
     # Idempotent: calling again doesn't create a duplicate.
     await community_service.resolve_group(user, None)
-    count = await Membership.find(
-        Membership.group_id == gid, Membership.user_id == user.id
-    ).count()
-    assert count == 1
+    n = await count(Membership,
+                    Membership.group_id == gid, Membership.user_id == user.id)
+    assert n == 1
 
 
 async def test_feed_enriches_actor_name_and_initial(init_db):
     user = await _make_user("Aisha")
     group = await community_service.get_or_create_global_group()
-    await ActivityItem(
+    await insert(ActivityItem(
         group_id=group.id, actor_id=user.id, type="submission",
         text="Completed Surah Yaseen", reactions={"fire": 3},
-    ).insert()
+    ))
 
     items = await dashboard_service.feed(group.id, limit=10)
     assert len(items) == 1

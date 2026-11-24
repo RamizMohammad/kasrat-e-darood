@@ -4,7 +4,9 @@ from __future__ import annotations
 from fastapi import APIRouter
 from starlette.responses import PlainTextResponse
 
-from app.database.mongo import mongo
+from sqlalchemy import text
+
+from app.database.postgres import engine
 from app.database.redis import cache
 
 router = APIRouter(tags=["ops"])
@@ -22,14 +24,15 @@ async def live() -> dict:
 
 @router.get("/health/ready")
 async def ready() -> dict:
-    """Readiness check — verifies MongoDB (and Redis if configured)."""
-    checks = {"mongo": False, "redis": cache.client is not None}
+    """Readiness check — verifies PostgreSQL (and Redis if configured)."""
+    checks = {"postgres": False, "redis": cache.client is not None}
     try:
-        await mongo.db.command("ping")
-        checks["mongo"] = True
+        async with engine().connect() as conn:
+            await conn.execute(text("SELECT 1"))
+        checks["postgres"] = True
     except Exception:
-        checks["mongo"] = False
-    ready_ok = checks["mongo"]
+        checks["postgres"] = False
+    ready_ok = checks["postgres"]
     return {"status": "ready" if ready_ok else "degraded", "checks": checks}
 
 

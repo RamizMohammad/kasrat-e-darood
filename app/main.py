@@ -18,7 +18,9 @@ from app.api.router import api_router
 from app.config.settings import settings
 from app.core.exceptions import register_exception_handlers
 from app.core.logging import configure_logging
-from app.database.mongo import close_mongo_connection, connect_to_mongo
+from app.database.migrate import upgrade_head
+from app.database.postgres import close_postgres, connect_to_postgres
+from app.tasks.scheduler import scheduler
 from app.database.redis import cache
 from app.middlewares.rate_limit import RateLimitMiddleware
 from app.middlewares.request_context import RequestContextMiddleware
@@ -49,11 +51,16 @@ async def lifespan(_: FastAPI):
     if problems:
         raise RuntimeError("Unsafe production config: " + "; ".join(problems))
     init_firebase()
-    await connect_to_mongo()
+    await connect_to_postgres()
+    if settings.DB_AUTO_MIGRATE:
+        await upgrade_head()
     await cache.connect()
+    if settings.SCHEDULER_ENABLED:
+        scheduler.start()
     yield
+    await scheduler.stop()
     await cache.close()
-    await close_mongo_connection()
+    await close_postgres()
 
 
 def create_app() -> FastAPI:

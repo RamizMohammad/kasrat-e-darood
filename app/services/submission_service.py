@@ -3,14 +3,14 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-from beanie import PydanticObjectId
-from pymongo.errors import DuplicateKeyError
+import uuid
 
 from app.core.exceptions import ConflictError, NotFoundError, PermissionDeniedError
 from app.database.redis import cache
 from app.models.activity import ActivityItem
 from app.models.submission import Submission
 from app.models.user import User
+from app.repositories.activity_repo import activity_repository
 from app.repositories.counters import claim_undo, inc_user_lifetime, inc_week
 from app.repositories.recitation_repo import recitation_repository
 from app.repositories.submission_repo import submission_repository
@@ -56,28 +56,26 @@ class SubmissionService:
             recitation_id=data.recitation_id, count=data.count, note=data.note,
             client_uuid=data.client_uuid, created_by=user.id,
         )
-        try:
-            await submission_repository.create(submission)
-        except DuplicateKeyError:
+        if await submission_repository.create_unique(submission) is None:
             # Two requests with the same client_uuid raced past the check
             # above; the other one won. Return its result, count nothing.
             existing = await submission_repository.find_by_client_uuid(
                 user.id, data.client_uuid or ""
             )
             if existing is None:
-                raise
+                raise ConflictError("Duplicate submission")
             return await self._result(user, week.id, data.group_id, existing)
 
         # Roll-ups: atomic server-side increments (see repositories/counters).
-        user.lifetime_total = await inc_user_lifetime(user.id, data.count)
+        await inc_user_lifetime(user.id, data.count)   # also refreshes user.lifetime_total
         await inc_week(week.id, user.id, data.count)
 
-        await ActivityItem(
+        await activity_repository.create(ActivityItem(
             group_id=data.group_id, actor_id=user.id, type="submission.created",
             text=f"{user.display_name} completed {recitation.english_name} ×{data.count}",
             payload={"recitation_id": str(recitation.id), "count": data.count},
             created_by=user.id,
-        ).insert()
+        ))
 
         # Invalidate cached read-models for this group.
         await cache.delete_prefix(f"dashboard:{data.group_id}")
@@ -129,23 +127,19 @@ class SubmissionService:
     ) -> list[MySubmissionOut]:
         """The user's most recent submissions, enriched with recitation names."""
         subs = await submission_repository.recent_for_user(user.id, limit)
+        recs = await recitation_repository.get_many({s.recitation_id for s in subs})
         out: list[MySubmissionOut] = []
-        names: dict = {}
         for s in subs:
-            cached = names.get(s.recitation_id)
-            if cached is None:
-                rec = await recitation_repository.get(s.recitation_id)
-                cached = (rec.english_name if rec else "Recitation",
-                          rec.urdu_name if rec else None)
-                names[s.recitation_id] = cached
+            rec = recs.get(s.recitation_id)
             out.append(MySubmissionOut(
                 id=s.id, recitation_id=s.recitation_id,
-                recitation_name=cached[0], urdu_name=cached[1],
+                recitation_name=rec.english_name if rec else "Recitation",
+                urdu_name=rec.urdu_name if rec else None,
                 count=s.count, created_at=s.created_at,
             ))
         return out
 
-    async def undo(self, user: User, submission_id: PydanticObjectId) -> Totals:
+    async def undo(self, user: User, submission_id: uuid.UUID) -> Totals:
         submission = await submission_repository.get(submission_id)
         if submission is None:
             raise NotFoundError("Submission not found")
@@ -161,7 +155,7 @@ class SubmissionService:
         # Claim the undo atomically so a double tap can't subtract twice.
         if not await claim_undo(submission.id):
             raise NotFoundError("Submission not found")
-        user.lifetime_total = await inc_user_lifetime(user.id, -submission.count)
+        await inc_user_lifetime(user.id, -submission.count)
         await inc_week(submission.week_id, user.id, -submission.count)
         await cache.delete_prefix(f"dashboard:{submission.group_id}")
         await cache.delete_prefix(f"leaderboard:{submission.group_id}")

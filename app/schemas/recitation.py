@@ -1,14 +1,14 @@
 """Category & recitation schemas."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from pydantic import BaseModel, Field
 
 from app.schemas.common import ORMModel
 
 
 class CategoryOut(ORMModel):
-    id: PydanticObjectId
+    id: uuid.UUID
     name: str
     slug: str
     color: str
@@ -21,8 +21,8 @@ class RecitationCreate(BaseModel):
     urdu_name: str | None = None
     transliteration: str | None = None
     translation: str | None = None
-    category_id: PydanticObjectId | None = None
-    group_id: PydanticObjectId | None = None
+    category_id: uuid.UUID | None = None
+    group_id: uuid.UUID | None = None
     description: str | None = None
     benefits: str | None = None
     reference: str | None = None
@@ -44,15 +44,15 @@ class RecitationUpdate(BaseModel):
 
 
 class RecitationOut(ORMModel):
-    id: PydanticObjectId
-    group_id: PydanticObjectId | None = None
+    id: uuid.UUID
+    group_id: uuid.UUID | None = None
     arabic_name: str
     english_name: str
     urdu_name: str | None = None
     transliteration: str | None = None
     category: str | None = None
     translation: str | None = None
-    category_id: PydanticObjectId | None = None
+    category_id: uuid.UUID | None = None
     description: str | None = None
     reference: str | None = None
     color: str

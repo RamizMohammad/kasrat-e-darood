@@ -7,6 +7,7 @@ from app.core.exceptions import ValidationAppError
 from app.models.user import GlobalRole, User
 from app.services import auth_service as auth_module
 from app.services.auth_service import auth_service
+from tests.helpers import get
 
 pytestmark = pytest.mark.asyncio
 
@@ -18,7 +19,7 @@ async def test_roles_enum_has_three_values():
 async def test_register_defaults_to_member(init_db):
     res = await auth_service.register(
         email="m@example.com", password="secret123", display_name="M")
-    user = await User.get(res.user.id)
+    user = await get(User, res.user.id)
     assert user.role == GlobalRole.MEMBER
 
 
@@ -58,12 +59,13 @@ async def test_google_login_creates_member(init_db, monkeypatch):
     monkeypatch.setattr(
         auth_module, "verify_google_id_token",
         lambda token: {"uid": "g-123", "email": "G@gmail.com",
-                       "name": "Google User", "picture": None},
+                       "name": "Google User", "picture": None,
+                       "email_verified": True},
     )
     res = await auth_service.login_with_google("fake-token")
     assert res.access_token
     assert res.user.email == "g@gmail.com"
-    user = await User.get(res.user.id)
+    user = await get(User, res.user.id)
     assert user.role == GlobalRole.MEMBER
     assert user.firebase_uid == "google:g-123"
 

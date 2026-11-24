@@ -1,7 +1,7 @@
 """Submission endpoints (core write path)."""
 from __future__ import annotations
 
-from beanie import PydanticObjectId
+import uuid
 from fastapi import APIRouter, Depends, Query
 
 from app.dependencies.auth import get_current_user
@@ -44,6 +44,6 @@ async def create_bulk(
 
 @router.delete("/{submission_id}", response_model=Totals)
 async def undo_submission(
-    submission_id: PydanticObjectId, user: User = Depends(get_current_user)
+    submission_id: uuid.UUID, user: User = Depends(get_current_user)
 ) -> Totals:
     return await submission_service.undo(user, submission_id)

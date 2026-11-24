@@ -3,12 +3,12 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from beanie import PydanticObjectId
+import uuid
 from pydantic import BaseModel
 
 
 class RecitationStat(BaseModel):
-    recitation_id: PydanticObjectId
+    recitation_id: uuid.UUID
     name: str
     urdu_name: str | None = None
     category: str | None = None
@@ -21,7 +21,7 @@ class CategoryStat(BaseModel):
 
 
 class CommunityStats(BaseModel):
-    week_id: PydanticObjectId | None = None
+    week_id: uuid.UUID | None = None
     week_number: int | None = None
     label: str | None = None
     status: str | None = None
@@ -32,7 +32,7 @@ class CommunityStats(BaseModel):
 
 
 class WeekSummary(BaseModel):
-    week_id: PydanticObjectId
+    week_id: uuid.UUID
     week_number: int
     label: str | None = None
     total: int = 0
