@@ -107,9 +107,9 @@
               exit 1
             fi
 
-            # ---------- 2. Pull master ----------
-            echo "===> Pulling latest master"
-            { git fetch origin master && git reset --hard origin/master; } || { mark stage "git pull"; exit 1; }
+            # ---------- 2. Pull qa ----------
+            echo "===> Pulling latest qa"
+            { git fetch origin qa && git reset --hard origin/qa; } || { mark stage "git pull"; exit 1; }
             NEW_SHA=$(git rev-parse HEAD)
             mark new_sha "$(git rev-parse --short HEAD)"
             mark files_changed "$(git diff --name-only "$PREV_SHA" "$NEW_SHA" | wc -l | tr -d ' ')"
@@ -229,7 +229,7 @@
             MSG="$HEAD
             $LINE
             📁 <b>Project:</b> Confess API
-            🌿 <b>Branch:</b> <code>master</code>
+            🌿 <b>Branch:</b> <code>qa</code>
             📝 <b>Commit:</b> <a href=\"$REPO_URL/commit/$SHA\">$SHORT</a>
             💬 <b>Message:</b> $TITLE
             👤 <b>Author:</b> $(printf '%s' "$AUTHOR" | esc)
