@@ -40,6 +40,18 @@ async def update_streaks() -> str:
     return f"reset {n} streaks"
 
 
+async def close_week_if_due() -> str:
+    """Friday around Maghrib: close the week, fill Hall of Fame, open the next.
+
+    Runs every few minutes and does nothing until the active week's closing
+    time has come, so a restart at 18:29 can't make it miss the close, and a
+    second run right after finds the new week not yet due.
+    """
+    from app.services.weekly_service import weekly_service
+    archived = await weekly_service.close_due()
+    return f"closed week {archived.week_number}" if archived else "not due"
+
+
 async def broadcast_islamic_quote() -> str:
     """Push an Islamic quote / motivation to the whole community."""
     from app.services.notification_service import notification_service
@@ -68,6 +80,15 @@ def daily_at(hour: int, minute: int, tz=None) -> Callable[[datetime], datetime]:
     return nxt
 
 
+def every_minutes(step: int) -> Callable[[datetime], datetime]:
+    """At minutes divisible by ``step`` (UTC): :00, :05, :10 ... for 5."""
+    def nxt(now: datetime) -> datetime:
+        t = now.replace(second=0, microsecond=0)
+        t += timedelta(minutes=step - t.minute % step)
+        return t
+    return nxt
+
+
 def every_hours(step: int) -> Callable[[datetime], datetime]:
     """On the hour, at hours divisible by ``step`` (UTC): 0, 4, 8, ... for 4."""
     def nxt(now: datetime) -> datetime:
@@ -83,6 +104,7 @@ JOBS: tuple[Job, ...] = (
     Job("purge_expired_tokens", 834250201, purge_expired_tokens, daily_at(3, 17)),
     Job("broadcast_islamic_quote", 834250202, broadcast_islamic_quote, every_hours(4)),
     Job("update_streaks", 834250203, update_streaks, daily_at(0, 5, clock.tz())),
+    Job("close_week_if_due", 834250204, close_week_if_due, every_minutes(5)),
 )
 
 

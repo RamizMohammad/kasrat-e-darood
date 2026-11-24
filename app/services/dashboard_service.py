@@ -8,12 +8,10 @@ from app.schemas.preferences import Preferences
 
 import uuid
 
-from app.database.redis import cache
 from app.models.user import User
 from app.repositories.activity_repo import activity_repository
 from app.repositories.submission_repo import submission_repository
 from app.repositories.user_repo import user_repository
-from app.repositories.weekly_repo import weekly_repository
 from app.schemas.dashboard import (
     ChartPoint,
     Contributor,
@@ -29,7 +27,11 @@ _DAYS = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]  # day-of-week 1..
 
 class DashboardService:
     async def build(self, user: User, group_id: uuid.UUID) -> DashboardResponse:
-        week = await weekly_repository.get_active(group_id)
+        """``group_id`` only picks the activity feed; the numbers are the
+        user's own and the one global week's."""
+        from app.services.group_service import group_service
+        from app.services.weekly_service import weekly_service
+        week = await weekly_service.current()
         current_week = (
             WeeklySessionOut.model_validate(week) if week is not None else None
         )
@@ -38,11 +40,11 @@ class DashboardService:
             await submission_repository.sum_for_user_week(week.id, user.id)
             if week else 0
         )
-        today = await submission_repository.sum_for_user_since(
-            user.id, group_id, _start_of_today()
+        today = await submission_repository.sum_for_user_since_all_groups(
+            user.id, _start_of_today()
         )
-        monthly = await submission_repository.sum_for_user_since(
-            user.id, group_id, _start_of_month()
+        monthly = await submission_repository.sum_for_user_since_all_groups(
+            user.id, _start_of_month()
         )
 
         # Top contributors (reuse the weekly leaderboard aggregation).
@@ -91,6 +93,7 @@ class DashboardService:
             top_contributors=contributors,
             recent_activity=recent,
             weekly_chart=weekly_chart,
+            groups_this_week=await group_service.this_week(user),
         )
 
     async def feed(

@@ -10,13 +10,21 @@ from app.models.activity import (
 from app.models.base import Base
 from app.models.beta import BetaSignup
 from app.models.category import Category, Recitation
-from app.models.group import Group, Membership
+from app.models.group import (
+    Group,
+    GroupAnnouncement,
+    GroupAuditLog,
+    GroupWeek,
+    JoinRequest,
+    Membership,
+)
 from app.models.submission import Submission
 from app.models.user import User
 from app.models.weekly_session import WeeklySession
 
 ALL_MODELS = [
-    User, Group, Membership, Category, Recitation, WeeklySession, Submission,
+    User, Group, Membership, JoinRequest, GroupAnnouncement, GroupAuditLog, GroupWeek,
+    Category, Recitation, WeeklySession, Submission,
     ActivityItem, LeaderboardSnapshot, Notification, DeviceToken, RefreshToken,
     PasswordResetCode, BetaSignup,
 ]

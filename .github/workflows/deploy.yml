@@ -132,9 +132,11 @@
             dump_logs
 
             # ---------- 4. Rollback ----------
-            echo "===> Rolling back to '$BACKUP_BRANCH'"
-            if { git fetch origin "$BACKUP_BRANCH" && git reset --hard "origin/$BACKUP_BRANCH"; } \
-              && build_and_start ""; then
+            # PREV_SHA is the exact commit pushed to the backup branch, and it is
+            # still local. Resetting to it avoids depending on an origin/backup
+            # remote-tracking ref (absent on single-branch clones).
+            echo "===> Rolling back to '$BACKUP_BRANCH' ($PREV_SHA)"
+            if git reset --hard "$PREV_SHA" && build_and_start ""; then
               mark rollback ok
               mark rollback_result "$LAST_STATUS"
               mark live backup

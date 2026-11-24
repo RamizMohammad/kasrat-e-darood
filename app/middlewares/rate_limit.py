@@ -26,6 +26,8 @@ _SENSITIVE_SUFFIXES = (
 
 def limit_for(path: str) -> tuple[str, int]:
     """Return (bucket, max requests per window) for a request path."""
+    if "/invites/" in path or path.startswith("/j/"):
+        return "invite", settings.RATE_LIMIT_INVITES_PER_MINUTE
     if path.endswith(_SENSITIVE_SUFFIXES):
         return "auth", settings.RATE_LIMIT_AUTH_PER_MINUTE
     return "api", settings.RATE_LIMIT_PER_MINUTE
@@ -44,7 +46,10 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         if cache.client is None or path.startswith("/health"):
             return await call_next(request)
         bucket, limit = limit_for(path)
-        key = f"ratelimit:{bucket}:{client_ip(request)}:{path}"
+        # Invite codes are in the path: count them together, or someone could
+        # try every code at the full per-path rate.
+        scope = "codes" if bucket == "invite" else path
+        key = f"ratelimit:{bucket}:{client_ip(request)}:{scope}"
         try:
             count = await cache.client.incr(key)
             if count == 1:

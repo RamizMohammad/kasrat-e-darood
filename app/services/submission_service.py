@@ -25,6 +25,7 @@ from app.schemas.submission import (
     Totals,
 )
 from app.config.settings import settings
+from loguru import logger
 from app.services.push_service import send_to_community
 from app.services.streak_service import streak_service
 
@@ -42,9 +43,14 @@ def _start_of_today() -> datetime:
 class SubmissionService:
     async def submit(self, user: User, data: SubmissionCreate,
                      notify: bool = True, refresh_streak: bool = True) -> SubmissionResult:
-        week = await weekly_repository.get_active(data.group_id)
-        if week is None:
-            raise NotFoundError("No active week for this group")
+        """Store one log. It belongs to the user: it counts this (global) week
+        on the global board and on every group board the user is in."""
+        from app.services.community_service import community_service
+        from app.services.weekly_service import weekly_service
+
+        global_group = await community_service.get_or_create_global_group()
+        group_id = await self._source_group(user, data.group_id, global_group.id)
+        week = await weekly_service.current()
 
         # Idempotency: a repeated client_uuid returns the existing result.
         if data.client_uuid:
@@ -52,14 +58,14 @@ class SubmissionService:
                 user.id, data.client_uuid
             )
             if existing is not None:
-                return await self._result(user, week.id, data.group_id, existing)
+                return await self._result(user, existing.week_id, existing)
 
         recitation = await recitation_repository.get(data.recitation_id)
         if recitation is None:
             raise NotFoundError("Recitation not found")
 
         submission = Submission(
-            group_id=data.group_id, week_id=week.id, user_id=user.id,
+            group_id=group_id, week_id=week.id, user_id=user.id,
             recitation_id=data.recitation_id, count=data.count, note=data.note,
             client_uuid=data.client_uuid, created_by=user.id,
         )
@@ -71,14 +77,14 @@ class SubmissionService:
             )
             if existing is None:
                 raise ConflictError("Duplicate submission")
-            return await self._result(user, week.id, data.group_id, existing)
+            return await self._result(user, existing.week_id, existing)
 
         # Roll-ups: atomic server-side increments (see repositories/counters).
         await inc_user_lifetime(user.id, data.count)   # also refreshes user.lifetime_total
         await inc_week(week.id, user.id, data.count)
 
         await activity_repository.create(ActivityItem(
-            group_id=data.group_id, actor_id=user.id, type="submission.created",
+            group_id=global_group.id, actor_id=user.id, type="submission.created",
             text=f"{user.display_name} completed {recitation.english_name} ×{data.count}",
             payload={"recitation_id": str(recitation.id), "count": data.count},
             created_by=user.id,
@@ -87,10 +93,12 @@ class SubmissionService:
         if refresh_streak:
             await streak_service.refresh(user)
 
-        # Invalidate cached read-models for this group and this user.
-        await cache.delete_prefix(f"dashboard:{data.group_id}")
-        await cache.delete_prefix(f"leaderboard:{data.group_id}")
-        await cache.delete_prefix(stats_cache_key(user.id))
+        await self._invalidate(user.id)
+        try:
+            from app.services.member_service import member_service
+            await member_service.check_goals(user, week)
+        except Exception:  # pragma: no cover - a push must never break a log
+            logger.exception("goal check failed")
 
         # Notify the whole community (single submissions only; bulk sends one
         # summary push from submit_bulk to avoid spamming).
@@ -103,18 +111,34 @@ class SubmissionService:
             except Exception:  # pragma: no cover - push must never break a submit
                 pass
 
-        return await self._result(user, week.id, data.group_id, submission)
+        return await self._result(user, week.id, submission)
+
+    @staticmethod
+    async def _source_group(user: User, group_id, global_id):
+        """Where a log was made from (optional). A group you're not in is refused."""
+        if group_id is None or group_id == global_id:
+            return None
+        from app.repositories.group_repo import membership_repository
+        from app.models.group import MemberStatus
+        m = await membership_repository.get(group_id, user.id)
+        if m is None or m.status != MemberStatus.ACTIVE:
+            raise PermissionDeniedError("You are not a member of this group", code="not_member")
+        return group_id
+
+    @staticmethod
+    async def _invalidate(user_id) -> None:
+        from app.services.board_service import invalidate_boards_for
+        await cache.delete_prefix("dashboard:")
+        await cache.delete_prefix("leaderboard:")
+        await cache.delete_prefix(stats_cache_key(user_id))
+        await invalidate_boards_for(user_id)
 
     async def submit_bulk(self, user: User, data: BulkSubmissionCreate) -> Totals:
-        # Default to the shared community group when no group is specified.
-        from app.services.community_service import community_service
-        group_id = await community_service.resolve_group(user, data.group_id)
-
         last: SubmissionResult | None = None
         total_count = 0
         for item in data.items:
             last = await self.submit(user, SubmissionCreate(
-                group_id=group_id, recitation_id=item.recitation_id,
+                group_id=data.group_id, recitation_id=item.recitation_id,
                 count=item.count, client_uuid=item.client_uuid,
             ), notify=False, refresh_streak=False)
             total_count += item.count
@@ -176,21 +200,19 @@ class SubmissionService:
         await inc_user_lifetime(user.id, -submission.count)
         await inc_week(submission.week_id, user.id, -submission.count)
         await streak_service.refresh(user)       # undoing today's only log breaks it
-        await cache.delete_prefix(f"dashboard:{submission.group_id}")
-        await cache.delete_prefix(f"leaderboard:{submission.group_id}")
-        await cache.delete_prefix(stats_cache_key(user.id))
-        return await self._totals(user, submission.week_id, submission.group_id)
+        await self._invalidate(user.id)
+        return await self._totals(user, submission.week_id)
 
-    async def _result(self, user, week_id, group_id, submission) -> SubmissionResult:
+    async def _result(self, user, week_id, submission) -> SubmissionResult:
         return SubmissionResult(
             submission=SubmissionOut.model_validate(submission),
-            totals=await self._totals(user, week_id, group_id),
+            totals=await self._totals(user, week_id),
         )
 
-    async def _totals(self, user: User, week_id, group_id) -> Totals:
+    async def _totals(self, user: User, week_id) -> Totals:
         user_week = await submission_repository.sum_for_user_week(week_id, user.id)
-        today = await submission_repository.sum_for_user_since(
-            user.id, group_id, _start_of_today()
+        today = await submission_repository.sum_for_user_since_all_groups(
+            user.id, _start_of_today()
         )
         week = await weekly_repository.get(week_id)
         return Totals(

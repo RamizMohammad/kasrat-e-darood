@@ -31,6 +31,12 @@ class WeeklySessionRepository(BaseRepository[WeeklySession]):
                 .order_by(WeeklySession.week_number.desc()))
         return list((await db().execute(stmt)).scalars().all())
 
+    async def latest_closed(self, group_id: uuid.UUID) -> WeeklySession | None:
+        stmt = (self.live().where(WeeklySession.group_id == group_id,
+                                  WeeklySession.status != WeekStatus.ACTIVE)
+                .order_by(WeeklySession.week_number.desc()).limit(1))
+        return (await db().execute(stmt)).scalars().first()
+
     async def history(self, group_id: uuid.UUID, cursor: str | None, limit: int):
         return await self.list_paginated(
             WeeklySession.group_id == group_id,

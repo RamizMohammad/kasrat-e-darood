@@ -14,6 +14,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.health import router as health_router
+from app.api.links.router import router as links_router
 from app.api.router import api_router
 from app.config.settings import settings
 from app.core.exceptions import register_exception_handlers
@@ -87,7 +88,7 @@ def create_app() -> FastAPI:
         allow_credentials=False,
         allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["Authorization", "Content-Type"],
-        expose_headers=["X-Next-Cursor"],   # paging for GET /submissions/me
+        expose_headers=["X-Next-Cursor"],   # paging (submissions, groups, Hall of Fame...)
     )
     app.add_middleware(RateLimitMiddleware)
     app.add_middleware(RequestContextMiddleware)
@@ -97,6 +98,7 @@ def create_app() -> FastAPI:
     app.include_router(health_router)
     app.include_router(ws_router)
     app.include_router(api_router, prefix=settings.API_V1_PREFIX)
+    app.include_router(links_router)       # /j/{code} invite page + assetlinks.json
 
     # --- Optional local landing page -----------------------------------------
     # In production the web frontend is deployed separately (e.g. Vercel), so
