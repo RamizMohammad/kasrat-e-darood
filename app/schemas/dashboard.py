@@ -6,6 +6,7 @@ from datetime import datetime
 import uuid
 from pydantic import BaseModel
 
+from app.schemas.group import GroupsThisWeek
 from app.schemas.user import PublicUserOut
 from app.schemas.weekly import WeeklySessionOut
 
@@ -61,6 +62,8 @@ class DashboardResponse(BaseModel):
     top_contributors: list[Contributor]
     recent_activity: list[FeedItemOut]
     weekly_chart: list[ChartPoint]
+    # v3: one card per group you're in (not the global circle), biggest first.
+    groups_this_week: list[GroupsThisWeek] = []
 
 
 class LeaderboardEntry(BaseModel):

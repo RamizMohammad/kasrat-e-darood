@@ -53,7 +53,7 @@ async def test_friday_lock_archives_week_and_opens_next(init_db):
         group_id=group.id, recitation_id=rec.id, count=100,
     ))
 
-    locked, hall, new_week = await weekly_service.lock_week(group.id, user.id)
+    locked, hall, new_week = await weekly_service.close_week(user.id)
     assert locked.status.value == "ARCHIVED"
     assert locked.group_total == 100
     assert hall[0].total == 100 and hall[0].rank == 1

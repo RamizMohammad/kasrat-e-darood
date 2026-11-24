@@ -8,9 +8,11 @@ from app.core.exceptions import NotFoundError, PermissionDeniedError, Validation
 from app.dependencies.auth import get_current_user
 from app.models.user import GlobalRole, User
 from app.repositories.user_repo import user_repository
+from app.schemas.auth import OkResponse
 from app.schemas.preferences import Preferences
+from app.services.device_service import device_service
 from app.schemas.user import (
-    PublicUserOut, RoleUpdate, UserListResponse, UserOut, UserUpdate,
+    DeviceIn, PublicUserOut, RoleUpdate, UserListResponse, UserOut, UserUpdate,
 )
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -71,6 +73,7 @@ async def update_me(
     body: UserUpdate, user: User = Depends(get_current_user)
 ) -> UserOut:
     changes = body.model_dump(exclude_unset=True, exclude={"preferences"})
+    groups_before = Preferences.from_stored(user.preferences).notify.groups
     if body.preferences is not None:
         current = Preferences.from_stored(user.preferences)
         changes["preferences"] = body.preferences.apply_to(current).model_dump()
@@ -80,7 +83,25 @@ async def update_me(
         for key, value in changes.items():
             setattr(user, key, value)
         await user_repository.save(user)
+    if Preferences.from_stored(user.preferences).notify.groups != groups_before:
+        # Group pushes are topics: follow or drop every group topic.
+        await device_service.sync_user(user)
     return UserOut.model_validate(user)
+
+
+@router.post("/me/devices", response_model=OkResponse)
+async def register_device(body: DeviceIn, user: User = Depends(get_current_user)) -> OkResponse:
+    """Call on sign-in and whenever FCM gives the app a new token. The token is
+    subscribed to the topics of every group you're in."""
+    await device_service.register(user, body.token, body.platform)
+    return OkResponse()
+
+
+@router.delete("/me/devices/{token}", response_model=OkResponse)
+async def unregister_device(token: str, user: User = Depends(get_current_user)) -> OkResponse:
+    """Call on log out, so this phone stops getting your group pushes."""
+    await device_service.unregister(user, token)
+    return OkResponse()
 
 
 @router.get("/search", response_model=list[PublicUserOut])

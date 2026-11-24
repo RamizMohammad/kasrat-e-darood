@@ -9,7 +9,6 @@ from app.dependencies.auth import get_current_user
 from app.models.user import User
 from app.schemas.auth import OkResponse
 from app.schemas.statistics import CommunityStats, MyStats, WeekSummary
-from app.services.community_service import community_service
 from app.services.stats_service import can_manage_weeks, stats_service
 from app.services.weekly_service import weekly_service
 
@@ -43,10 +42,14 @@ async def week_history(user: User = Depends(get_current_user)) -> list[WeekSumma
 
 
 @router.post("/close-week", response_model=OkResponse)
-async def close_week(user: User = Depends(get_current_user)) -> OkResponse:
-    """Finalize the current week and start a fresh one. Super members/admins only."""
+async def close_week(
+    week_id: uuid.UUID | None = None,
+    user: User = Depends(get_current_user),
+) -> OkResponse:
+    """Close the week now (it otherwise closes itself on Friday around
+    Maghrib). Super members/admins only. Pass the ``week_id`` you showed in
+    the confirm dialog: if that week is already closed, nothing happens."""
     if not can_manage_weeks(user):
         raise PermissionDeniedError("Only super members or admins can close the week")
-    gid = await community_service.resolve_group(user, None)
-    await weekly_service.lock_week(gid, user.id)
+    await weekly_service.close_week(user.id, expected_week_id=week_id)
     return OkResponse()

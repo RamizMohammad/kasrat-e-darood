@@ -35,6 +35,19 @@ async def get_current_user(
     return user
 
 
+async def get_optional_user(
+    authorization: str | None = Header(default=None),
+    _session: AsyncSession = Depends(use_db),
+) -> User | None:
+    """The signed-in user, or None (for pages that also work signed out)."""
+    if not authorization:
+        return None
+    try:
+        return await get_current_user(authorization, _session)
+    except UnauthorizedError:
+        return None
+
+
 async def get_membership(
     group_id: uuid.UUID, user: User
 ) -> Membership:

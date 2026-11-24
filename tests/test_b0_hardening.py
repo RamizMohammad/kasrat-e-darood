@@ -12,13 +12,14 @@ from app.models.activity import RefreshToken
 from app.models.category import Recitation
 from app.models.submission import Submission
 from app.models.user import User
-from app.models.weekly_session import WeeklySession
 from app.schemas.group import GroupCreate
 from app.schemas.submission import SubmissionCreate
 from app.security import firebase as firebase_module
 from app.services import auth_service as auth_module
 from app.services.auth_service import auth_service
 from app.services.group_service import group_service
+from app.services.join_service import join_service
+from app.services.weekly_service import weekly_service
 from app.repositories.submission_repo import submission_repository
 from app.services.submission_service import submission_service
 from tests.helpers import count, find_one, get, insert
@@ -29,7 +30,7 @@ pytestmark = pytest.mark.asyncio
 async def _setup(name="A"):
     user = User(firebase_uid=f"uid-{name}", display_name=name)
     await insert(user)
-    group = await group_service.create_group(user, GroupCreate(name=f"G{name}"))
+    group = await group_service.create_group(user, GroupCreate(name=f"Group {name}"))
     rec = Recitation(arabic_name="درود", english_name="Darood")
     await insert(rec)
     return user, group, rec
@@ -47,7 +48,7 @@ async def test_stale_user_copies_do_not_lose_counts(init_db):
         group_id=group.id, recitation_id=rec.id, count=5, client_uuid="t2"), notify=False)
     fresh = await get(User, user.id)
     assert fresh.lifetime_total == 15
-    week = await find_one(WeeklySession, WeeklySession.group_id == group.id)
+    week = await weekly_service.current()
     assert week.group_total == 15
     assert await submission_repository.sum_for_user_week(week.id, user.id) == 15
 
@@ -56,11 +57,12 @@ async def test_group_total_adds_across_members(init_db):
     a, group, rec = await _setup("A")
     b = User(firebase_uid="uid-B", display_name="B")
     await insert(b)
+    await join_service.add_member(group, b, by=b)       # logs from non-members are refused
     await submission_service.submit(a, SubmissionCreate(
         group_id=group.id, recitation_id=rec.id, count=7, client_uuid="t3"), notify=False)
     await submission_service.submit(b, SubmissionCreate(
         group_id=group.id, recitation_id=rec.id, count=3, client_uuid="t4"), notify=False)
-    week = await find_one(WeeklySession, WeeklySession.group_id == group.id)
+    week = await weekly_service.current()
     assert week.group_total == 10
     assert await submission_repository.sum_for_user_week(week.id, a.id) == 7
     assert await submission_repository.sum_for_user_week(week.id, b.id) == 3
@@ -76,7 +78,7 @@ async def test_double_undo_subtracts_once(init_db):
         await submission_service.undo(user, res.submission.id)
     fresh = await get(User, user.id)
     assert fresh.lifetime_total == 0
-    week = await find_one(WeeklySession, WeeklySession.group_id == group.id)
+    week = await weekly_service.current()
     assert week.group_total == 0
 
 

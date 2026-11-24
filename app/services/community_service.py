@@ -1,4 +1,7 @@
-"""Shared community group: a single app-wide group every user belongs to.
+"""Shared community group: the one app-wide circle every user belongs to.
+
+Its weekly sessions are THE weeks: every log points at the active one, and
+every board (global and group) reads from them.
 
 The product currently uses one global community group rather than per-user
 groups. This service lazily bootstraps that group and auto-joins users, and
@@ -26,7 +29,16 @@ GLOBAL_INVITE_CODE = "GLOBAL00"
 
 class CommunityService:
     async def get_or_create_global_group(self) -> Group:
-        group = await group_repository.get_by_invite_code(GLOBAL_INVITE_CODE)
+        group = await group_repository.get_global()
+        if group is None:
+            # Older databases: the community group exists but isn't marked yet.
+            group = await group_repository.get_by_invite_code(GLOBAL_INVITE_CODE)
+            if group is not None:
+                group.is_global = True
+                await group_repository.save(group)
+                if await weekly_service.global_week_or_none(group.id) is None:
+                    await weekly_service.open_first_week(group)
+                return group
         if group is None:
             group = Group(
                 name="Noor Community",
@@ -35,10 +47,12 @@ class CommunityService:
                 invite_code=GLOBAL_INVITE_CODE,
                 owner_id=uuid.uuid4(),  # system-owned sentinel
                 member_count=0,
+                is_global=True,
+                member_limit=2_000_000_000,
             )
             if await group_repository.create_unique(group) is None:
                 # Another request created it at the same moment: use theirs.
-                group = await group_repository.get_by_invite_code(GLOBAL_INVITE_CODE)
+                group = await group_repository.get_global()
                 assert group is not None
                 return group
             # An active weekly session is required by the dashboard/leaderboard.

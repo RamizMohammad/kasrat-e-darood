@@ -82,6 +82,8 @@ class Settings(BaseSettings):
     # register, OTP, password reset) use the much lower AUTH limit.
     RATE_LIMIT_PER_MINUTE: int = 120
     RATE_LIMIT_AUTH_PER_MINUTE: int = 10
+    # Invite previews / joins / the /j/ page, all codes together, per IP.
+    RATE_LIMIT_INVITES_PER_MINUTE: int = 30
     # Peers allowed to tell us the real client IP via X-Real-IP (nginx on the
     # Docker network). Comma-separated CIDRs.
     TRUSTED_PROXY_CIDRS: str = "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,::1/128"
@@ -90,6 +92,29 @@ class Settings(BaseSettings):
     SUBMISSION_UNDO_WINDOW_SECONDS: int = 300
     DEFAULT_TIMEZONE: str = "Asia/Kolkata"
     WEEK_LOCK_WEEKDAY: int = 4  # 0=Mon … 4=Friday
+    # The week closes on WEEK_LOCK_WEEKDAY at this local time (around Maghrib),
+    # archives into Hall of Fame and the next week opens at the same instant.
+    WEEK_CLOSE_LOCAL_TIME: str = Field(default="18:30", pattern=r"^([01][0-9]|2[0-3]):[0-5][0-9]$")
+    # A week closed early by hand still runs until the NEXT scheduled close,
+    # unless that is closer than this many hours (then it runs a full week more).
+    WEEK_MIN_HOURS: int = 12
+
+    # --- Groups ---------------------------------------------------------------
+    GROUPS_MAX_OWNED: int = 10
+    GROUP_MEMBER_LIMIT: int = 500
+    GROUP_JOINS_PER_HOUR: int = 20
+    GROUP_REQUEST_RETRY_DAYS: int = 7
+    GROUP_BOARD_CACHE_SECONDS: int = 60
+
+    # --- Invite links / Android App Links -------------------------------------
+    # Public base for invite links: {INVITE_LINK_BASE}/j/{code}
+    INVITE_LINK_BASE: str = "https://kasrat.darood.mohammadramiz.in"
+    ANDROID_PACKAGE: str = "in.mohammad.ramiz.islamic.kasrat_e_darrod"
+    # SHA-256 fingerprints of the signing certs (upload key AND Play App
+    # Signing key), comma-separated, "AA:BB:..." form. Served in assetlinks.json.
+    ANDROID_CERT_SHA256: str = ""
+    PLAY_STORE_URL: str = ("https://play.google.com/store/apps/details"
+                           "?id=in.mohammad.ramiz.islamic.kasrat_e_darrod")
 
     @property
     def is_production(self) -> bool:

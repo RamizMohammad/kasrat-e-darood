@@ -48,6 +48,16 @@ class ConflictError(AppError):
     code = "conflict"
 
 
+class GoneError(AppError):
+    status_code = status.HTTP_410_GONE
+    code = "gone"
+
+
+class TooManyError(AppError):
+    status_code = status.HTTP_429_TOO_MANY_REQUESTS
+    code = "rate_limited"
+
+
 class ValidationAppError(AppError):
     status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
     code = "validation_error"

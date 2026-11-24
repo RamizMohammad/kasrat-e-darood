@@ -10,7 +10,9 @@ from app.schemas.common import ORMModel
 
 
 class SubmissionCreate(BaseModel):
-    group_id: uuid.UUID
+    # Optional since v3: a log counts on every board you're on. When given, it
+    # records which group screen it was logged from (must be one of yours).
+    group_id: uuid.UUID | None = None
     recitation_id: uuid.UUID
     count: int = Field(gt=0, le=1_000_000)
     note: str | None = Field(default=None, max_length=500)
@@ -40,7 +42,7 @@ class Totals(BaseModel):
 
 class SubmissionOut(ORMModel):
     id: uuid.UUID
-    group_id: uuid.UUID
+    group_id: uuid.UUID | None = None
     week_id: uuid.UUID
     user_id: uuid.UUID
     recitation_id: uuid.UUID

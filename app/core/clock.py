@@ -43,3 +43,28 @@ def start_of_month(now: datetime | None = None) -> datetime:
 
 def days_ago(n: int, now: datetime | None = None) -> date:
     return local_today(now) - timedelta(days=n)
+
+
+# ── Week boundaries ─────────────────────────────────────────────────────────
+# A Kasrat week closes every Friday at WEEK_CLOSE_LOCAL_TIME (local), and the
+# next week starts at that same instant.
+
+def _close_time() -> time:
+    h, m = settings.WEEK_CLOSE_LOCAL_TIME.split(":")
+    return time(int(h), int(m))
+
+
+def next_week_close(now: datetime | None = None) -> datetime:
+    """The first scheduled close strictly after ``now`` (UTC instant)."""
+    now = now or now_utc()
+    local = now.astimezone(tz())
+    days = (settings.WEEK_LOCK_WEEKDAY - local.weekday()) % 7
+    candidate = datetime.combine(local.date() + timedelta(days=days), _close_time(), tzinfo=tz())
+    if candidate <= local:
+        candidate = datetime.combine(candidate.date() + timedelta(days=7), _close_time(), tzinfo=tz())
+    return candidate.astimezone(timezone.utc)
+
+
+def previous_week_close(now: datetime | None = None) -> datetime:
+    """The latest scheduled close at or before ``now``."""
+    return next_week_close(now) - timedelta(days=7)

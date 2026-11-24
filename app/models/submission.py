@@ -12,7 +12,11 @@ from app.models.base import AuditMixin, Base, uuid_col
 class Submission(AuditMixin, Base):
     __tablename__ = "submissions"
 
-    group_id: Mapped[uuid.UUID] = uuid_col(fk="groups.id")
+    # Logs belong to the user, not a group: one log counts on the global board
+    # and on every group board the user is in. group_id only records where it
+    # was logged from (None for the usual case).
+    group_id: Mapped[uuid.UUID | None] = uuid_col(fk="groups.id", nullable=True)
+    # Always a week of the one global week series.
     week_id: Mapped[uuid.UUID] = uuid_col(fk="weekly_sessions.id")
     user_id: Mapped[uuid.UUID] = uuid_col(fk="users.id")
     recitation_id: Mapped[uuid.UUID] = uuid_col(fk="recitations.id")
@@ -28,4 +32,6 @@ class Submission(AuditMixin, Base):
         Index("ix_submissions_week_user", "week_id", "user_id"),
         Index("ix_submissions_group_recitation", "group_id", "recitation_id"),
         Index("ix_submissions_user_created", "user_id", sql_text("created_at DESC")),
+        Index("ix_submissions_week_user_created", "week_id", "user_id", "created_at",
+              postgresql_where=sql_text("deleted = false")),
     )

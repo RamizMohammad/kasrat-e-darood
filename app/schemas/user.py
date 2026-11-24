@@ -55,3 +55,8 @@ class UserListResponse(BaseModel):
     items: list[UserOut]
     next_cursor: str | None = None
     total: int
+
+
+class DeviceIn(BaseModel):
+    token: str = Field(min_length=20, max_length=300)
+    platform: str = Field(default="android", pattern=r"^(android|ios|web)$")
