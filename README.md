@@ -81,8 +81,16 @@ groups + memberships + invite codes, categories/recitations, submissions
 (single/bulk/undo, idempotent roll-ups), weekly sessions + Friday lock + Hall of
 Fame, dashboard (one-call), leaderboard (cached, tie-aware), permission system,
 rate limiting, structured logging, health/metrics, WebSocket manager.
+**Me tab (B1):** `GET /statistics/me` returns a 365-day heat map, totals per
+recitation, today / week / month / lifetime and current + best streak in one
+call (cached 60 s per user, cleared on every log and undo). "A day" is a local
+day in `DEFAULT_TIMEZONE` (Asia/Kolkata), not UTC. `PATCH /users/me` takes a
+validated, partial `preferences` object (hide on boards, weekly goal, prayer
+method, reminders, push types); `GET /submissions/me?limit=&before=` pages with
+an `X-Next-Cursor` header.
 **Scheduled jobs** (in-process, `app/tasks/scheduler.py`): nightly cleanup of
-expired tokens/codes and a quote push every 4 hours. No Celery worker or beat.
+expired tokens/codes, streak reset at 00:05 IST for users who missed a day, and
+a quote push every 4 hours. No Celery worker or beat.
 **Scaffolded for extension:**
 statistics/achievements/goals/notifications/announcements modules — add a
 model + repo + service + router without touching existing code.

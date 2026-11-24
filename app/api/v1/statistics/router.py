@@ -8,12 +8,20 @@ from app.core.exceptions import PermissionDeniedError
 from app.dependencies.auth import get_current_user
 from app.models.user import User
 from app.schemas.auth import OkResponse
-from app.schemas.statistics import CommunityStats, WeekSummary
+from app.schemas.statistics import CommunityStats, MyStats, WeekSummary
 from app.services.community_service import community_service
 from app.services.stats_service import can_manage_weeks, stats_service
 from app.services.weekly_service import weekly_service
 
 router = APIRouter(prefix="/statistics", tags=["statistics"])
+
+
+@router.get("/me", response_model=MyStats)
+async def my_stats(user: User = Depends(get_current_user)) -> MyStats:
+    """Your own numbers for the Me tab: a 365-day heat map (local days),
+    totals per recitation, today / week / month / lifetime and your current
+    and best streak. Cached for 60 s; logging or undoing refreshes it."""
+    return await stats_service.me(user)
 
 
 @router.get("/community", response_model=CommunityStats)
