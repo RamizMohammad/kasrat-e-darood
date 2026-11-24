@@ -10,7 +10,8 @@ services:
     container_name: kasrat-api
     restart: unless-stopped
     env_file: .env
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8010 --proxy-headers --forwarded-allow-ips="*"
+    # Apply any pending Alembic migrations (no-op if already at head), then start the API.
+    command: sh -c 'alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8010 --proxy-headers --forwarded-allow-ips="*"'
     expose: ["8010"]
     networks: [proxy_network]
     healthcheck:
