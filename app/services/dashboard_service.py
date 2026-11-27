@@ -21,6 +21,11 @@ from app.schemas.dashboard import (
 )
 from app.schemas.user import PublicUserOut
 from app.schemas.weekly import WeeklySessionOut
+from app.database.redis import cache
+from app.services.board_service import HIDDEN_ID, HIDDEN_NAME, is_hidden
+
+# The community top 5 on the dashboard is shared by everyone for this long.
+TOP_CACHE_SECONDS = 20
 
 _DAYS = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]  # day-of-week 1..7 (Sunday = 1)
 
@@ -47,18 +52,27 @@ class DashboardService:
             user.id, _start_of_month()
         )
 
-        # Top contributors (reuse the weekly leaderboard aggregation).
+        # Top contributors. Ranking the whole week for every dashboard open is
+        # the heaviest query here, and it's the same for everyone: computed once
+        # per TOP_CACHE_SECONDS and shared (a few seconds stale is fine).
         contributors: list[Contributor] = []
         if week is not None:
-            rows = (await submission_repository.leaderboard_for_week(week.id))[:5]
-            people = await user_repository.get_many({r["_id"] for r in rows})
-            for rank, row in enumerate(rows, start=1):
-                u = people.get(row["_id"])
+            key = f"community:top5:{week.id}"
+            rows = await cache.get_json(key)
+            if rows is None:
+                ranked_rows = (await submission_repository.leaderboard_for_week(week.id))[:5]
+                rows = [[str(r["_id"]), int(r["total"])] for r in ranked_rows]
+                await cache.set_json(key, rows, ttl=TOP_CACHE_SECONDS)
+            people = await user_repository.get_many({uuid.UUID(uid) for uid, _ in rows})
+            for rank, (uid, total) in enumerate(rows, start=1):
+                u = people.get(uuid.UUID(uid))
                 if u is None:
                     continue
-                contributors.append(Contributor(
-                    user=PublicUserOut.model_validate(u), total=int(row["total"]), rank=rank,
-                ))
+                public = PublicUserOut.model_validate(u)
+                if u.id != user.id and is_hidden(u):        # "hide me on boards"
+                    public = public.model_copy(update={
+                        "id": HIDDEN_ID, "display_name": HIDDEN_NAME, "photo_url": None, "avatar": None})
+                contributors.append(Contributor(user=public, total=total, rank=rank))
 
         # Weekly chart buckets (Sun..Sat).
         chart_map = {d: 0 for d in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}

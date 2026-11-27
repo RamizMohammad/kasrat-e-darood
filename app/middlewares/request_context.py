@@ -52,6 +52,10 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
             access_log(request.method, request.url.path, response.status_code,
                        (time.perf_counter() - start) * 1000, ip)
         response.headers["X-Request-ID"] = correlation_id
+        if request.url.path.startswith(settings.API_V1_PREFIX):
+            # Personal data: no proxy, CDN or browser may keep a copy.
+            response.headers.setdefault("Cache-Control", "no-store, private")
+            response.headers.setdefault("Vary", "Authorization")
         for name, value in _SECURITY_HEADERS.items():
             response.headers.setdefault(name, value)
         if settings.is_production:
