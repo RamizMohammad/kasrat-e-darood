@@ -15,6 +15,7 @@ Settings (env): LOG_LEVEL, LOG_FORMAT=pretty|json, LOG_COLOR=auto|always|never
 """
 from __future__ import annotations
 
+import inspect
 import json
 import logging
 import os
@@ -46,15 +47,15 @@ _LIBRARY_LEVELS = {
     "cachecontrol": "WARNING",
 }
 
-# Level colours (Loguru markup). Names padded to one width so columns line up.
+# Level colours (Loguru markup): (opening tags, matching closing tags).
 _LEVEL_STYLE = {
-    "TRACE": "<dim>",
-    "DEBUG": "<blue>",
-    "INFO": "<green>",
-    "SUCCESS": "<green><bold>",
-    "WARNING": "<yellow><bold>",
-    "ERROR": "<red><bold>",
-    "CRITICAL": "<white><bold><RED>",
+    "TRACE": ("<dim>", "</dim>"),
+    "DEBUG": ("<blue>", "</blue>"),
+    "INFO": ("<green>", "</green>"),
+    "SUCCESS": ("<green><bold>", "</bold></green>"),
+    "WARNING": ("<yellow><bold>", "</bold></yellow>"),
+    "ERROR": ("<red><bold>", "</bold></red>"),
+    "CRITICAL": ("<white><bold><RED>", "</RED></bold></white>"),
 }
 
 
@@ -68,8 +69,7 @@ def _short_name(name: str | None) -> str:
 
 
 def _pretty_format(record) -> str:
-    style = _LEVEL_STYLE.get(record["level"].name, "")
-    close = "".join(f"</{t[1:]}" for t in reversed(style.split(">")[:-1])) if style else ""
+    style, close = _LEVEL_STYLE.get(record["level"].name, ("", ""))
     record["extra"].setdefault("request_id", "-")
     record["extra"]["_where"] = f'{_short_name(record["name"])}:{record["function"]}:{record["line"]}'
     line = (
@@ -77,7 +77,8 @@ def _pretty_format(record) -> str:
         f"{style}{{level: <8}}{close} <dim>│</dim> "
         "<magenta>{extra[request_id]: <8.8}</magenta> <dim>│</dim> "
         "<cyan>{extra[_where]}</cyan> <dim>│</dim> "
-        f"{style if record['level'].no >= 30 else ''}{{message}}{close if record['level'].no >= 30 else ''}"
+        + ("{style}{{message}}{close}".format(style=style, close=close)
+           if record["level"].no >= 30 else "{message}")
     )
     # Anything bound with logger.bind(...) other than our own keys goes at the end.
     extras = {k: v for k, v in record["extra"].items()
@@ -124,9 +125,10 @@ class InterceptHandler(logging.Handler):
             level: str | int = logger.level(record.levelname).name
         except ValueError:
             level = record.levelno
-        # Find the caller outside the logging module so file:line is right.
-        frame, depth = logging.currentframe(), 2
-        while frame is not None and frame.f_code.co_filename == logging.__file__:
+        # Walk out of this handler and the logging module to the real caller,
+        # so function:line point at uvicorn / sqlalchemy, not logging internals.
+        frame, depth = inspect.currentframe(), 0
+        while frame is not None and (depth == 0 or frame.f_code.co_filename == logging.__file__):
             frame = frame.f_back
             depth += 1
         logger.opt(depth=depth, exception=record.exc_info).patch(
