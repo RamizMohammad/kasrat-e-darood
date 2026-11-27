@@ -11,6 +11,8 @@ from starlette.requests import Request
 from starlette.responses import Response
 
 from app.config.settings import settings
+from app.core.client_ip import client_ip
+from app.core.logging import access_log
 
 # A client-supplied X-Request-ID is only reused when it looks like an id, so
 # nobody can write newlines or fake entries into the logs through it.
@@ -38,14 +40,17 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
         supplied = request.headers.get("X-Request-ID", "")
         correlation_id = supplied if _SAFE_ID.match(supplied) else str(uuid.uuid4())
         start = time.perf_counter()
+        ip = client_ip(request)
         with logger.contextualize(request_id=correlation_id):
-            response = await call_next(request)
-            elapsed_ms = (time.perf_counter() - start) * 1000
-            logger.info(
-                "{method} {path} -> {status} ({ms:.1f}ms)",
-                method=request.method, path=request.url.path,
-                status=response.status_code, ms=elapsed_ms,
-            )
+            try:
+                response = await call_next(request)
+            except Exception:
+                # The 500 handler answers the client; this keeps the access line.
+                access_log(request.method, request.url.path, 500,
+                           (time.perf_counter() - start) * 1000, ip)
+                raise
+            access_log(request.method, request.url.path, response.status_code,
+                       (time.perf_counter() - start) * 1000, ip)
         response.headers["X-Request-ID"] = correlation_id
         for name, value in _SECURITY_HEADERS.items():
             response.headers.setdefault(name, value)
