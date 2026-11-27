@@ -37,6 +37,23 @@ def is_hidden(user: User) -> bool:
     return Preferences.from_stored(user.preferences).hide_on_boards
 
 
+HIDDEN_ID = uuid.UUID(int=0)
+
+
+def feed_actor(user: User | None, viewer_id: uuid.UUID | None, actor_id: uuid.UUID,
+               text: str, fallback: str) -> tuple[uuid.UUID, str, str]:
+    """(actor_id, actor_name, text) for a feed row. People who hide themselves
+    on boards also stay hidden in feeds: their id is blanked and their name
+    in older rows' text is replaced."""
+    if user is None:
+        return actor_id, fallback, text
+    if user.id != viewer_id and is_hidden(user):
+        if user.display_name and text.startswith(user.display_name):
+            text = HIDDEN_NAME + text[len(user.display_name):]
+        return HIDDEN_ID, HIDDEN_NAME, text
+    return actor_id, user.display_name, text
+
+
 def board_user(user: User | None, viewer_id: uuid.UUID | None) -> BoardUser:
     if user is None:
         return BoardUser(id=None, display_name=HIDDEN_NAME, hidden=True)

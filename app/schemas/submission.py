@@ -16,13 +16,13 @@ class SubmissionCreate(BaseModel):
     recitation_id: uuid.UUID
     count: int = Field(gt=0, le=1_000_000)
     note: str | None = Field(default=None, max_length=500)
-    client_uuid: str | None = None
+    client_uuid: str | None = Field(default=None, max_length=64)
 
 
 class BulkItem(BaseModel):
     recitation_id: uuid.UUID
     count: int = Field(gt=0, le=1_000_000)
-    client_uuid: str | None = None
+    client_uuid: str | None = Field(default=None, max_length=64)
 
 
 class BulkSubmissionCreate(BaseModel):

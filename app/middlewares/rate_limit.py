@@ -23,18 +23,24 @@ _SENSITIVE_SUFFIXES = (
     "/beta/signup",
 )
 
+# Only the container's own health check is exempt. /health/ready touches the
+# database, so it is limited like everything else.
+_EXEMPT = {"/health", "/health/live"}
+
 
 def limit_for(path: str) -> tuple[str, int]:
     """Return (bucket, max requests per window) for a request path."""
     if "/invites/" in path or path.startswith("/j/"):
         return "invite", settings.RATE_LIMIT_INVITES_PER_MINUTE
-    if path.endswith(_SENSITIVE_SUFFIXES):
+    if path.rstrip("/").endswith(_SENSITIVE_SUFFIXES):
         return "auth", settings.RATE_LIMIT_AUTH_PER_MINUTE
     return "api", settings.RATE_LIMIT_PER_MINUTE
 
 
 class RateLimitMiddleware(BaseHTTPMiddleware):
-    """Limit each client IP per path per 60-second window.
+    """Limit each client IP per path per 60-second window, plus an overall
+    per-IP ceiling so rotating through many paths (ids in the URL) doesn't
+    multiply the allowance.
 
     Fails open if Redis is unavailable so the API stays up.
     """
@@ -43,18 +49,23 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next) -> Response:
         path = request.url.path
-        if cache.client is None or path.startswith("/health"):
+        if cache.client is None or path in _EXEMPT:
             return await call_next(request)
         bucket, limit = limit_for(path)
+        ip = client_ip(request)
         # Invite codes are in the path: count them together, or someone could
-        # try every code at the full per-path rate.
-        scope = "codes" if bucket == "invite" else path
-        key = f"ratelimit:{bucket}:{client_ip(request)}:{scope}"
+        # try every code at the full per-path rate. Auth paths are normalised
+        # so a trailing slash isn't a second allowance.
+        if bucket == "invite":
+            scope = "codes"
+        elif bucket == "auth":
+            scope = path.rstrip("/").lower()
+        else:
+            scope = path
         try:
-            count = await cache.client.incr(key)
-            if count == 1:
-                await cache.client.expire(key, self.window)
-            if count > limit:
+            count = await cache.hit(f"ratelimit:{bucket}:{ip}:{scope}", self.window)
+            overall = await cache.hit(f"ratelimit:all:{ip}", self.window)
+            if count > limit or overall > settings.RATE_LIMIT_OVERALL_PER_MINUTE:
                 return JSONResponse(
                     status_code=429,
                     content={"error": {"code": "rate_limited",

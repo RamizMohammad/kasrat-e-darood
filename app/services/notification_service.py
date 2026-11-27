@@ -54,13 +54,14 @@ class NotificationService:
         activities = await activity_repository.recent(group_id, limit=limit, types=types)
         actors = await user_repository.get_many({a.actor_id for a in activities})
         items: list[FeedItemOut] = []
+        from app.services.board_service import feed_actor
         for a in activities:
-            actor = actors.get(a.actor_id)
-            name = actor.display_name if actor else "Noor"
+            actor_id, name, text = feed_actor(actors.get(a.actor_id), user.id, a.actor_id,
+                                              a.text, "Noor")
             initial = (name.strip()[:1] or "•").upper()
             items.append(FeedItemOut(
-                id=a.id, actor_id=a.actor_id, actor_name=name, initial=initial,
-                type=a.type, text=a.text, reactions=a.reactions,
+                id=a.id, actor_id=actor_id, actor_name=name, initial=initial,
+                type=a.type, text=text, reactions=a.reactions,
                 created_at=a.created_at,
             ))
             if len(items) >= limit:

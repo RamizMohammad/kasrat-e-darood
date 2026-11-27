@@ -9,9 +9,11 @@ from datetime import datetime, timedelta, timezone
 from app.config.settings import settings
 from app.core.exceptions import (
     ConflictError,
+    TooManyError,
     UnauthorizedError,
     ValidationAppError,
 )
+from app.database.redis import cache
 from app.models.activity import PasswordResetCode, RefreshToken
 from app.models.base import utcnow
 from app.models.user import User
@@ -36,6 +38,19 @@ def _normalize_email(email: str) -> str:
 
 def _hash_code(code: str) -> str:
     return hashlib.sha256(code.encode()).hexdigest()
+
+
+# Checked against when the email has no account, so a wrong email takes as
+# long as a wrong password and response times don't reveal who is registered.
+_DUMMY_HASH = hash_password(secrets.token_urlsafe(16))
+
+
+def _login_key(email: str) -> str:
+    return f"login-fail:{hashlib.sha256(email.encode()).hexdigest()}"
+
+
+def _otp_key(email: str) -> str:
+    return f"otp-sent:{hashlib.sha256(email.encode()).hexdigest()}"
 
 
 def _as_aware(dt: datetime) -> datetime:
@@ -77,10 +92,19 @@ class AuthService:
     async def login_with_password(self, email: str, password: str) -> LoginResponse:
         """Verify email/password credentials and return an authenticated session."""
         email = _normalize_email(email)
+        # Per-account lockout on top of the per-IP limit: someone spreading
+        # guesses over many IPs still gets only a few tries per account.
+        if await cache.count(_login_key(email)) >= settings.LOGIN_MAX_FAILURES:
+            raise TooManyError(
+                f"Too many attempts. Try again in {settings.LOGIN_LOCKOUT_MINUTES} minutes, "
+                "or reset your password.")
         user = await user_repository.get_by_email(email)
-        if user is None or not verify_password(password, user.password_hash):
+        ok = verify_password(password, user.password_hash if user and user.password_hash else _DUMMY_HASH)
+        if user is None or not user.password_hash or not ok:
+            await cache.hit(_login_key(email), settings.LOGIN_LOCKOUT_MINUTES * 60)
             raise UnauthorizedError("Incorrect email or password",
                                     code="invalid_credentials")
+        await cache.clear(_login_key(email))
         pair = await self._issue_tokens(user)
         return LoginResponse(
             access_token=pair.access_token,
@@ -116,13 +140,22 @@ class AuthService:
             user = await user_repository.get_by_email(email)
             if user is not None:
                 user.firebase_uid = uid  # link to Google
+                if user.password_hash:
+                    # Registration never proved the email belonged to whoever
+                    # chose that password. Google has now proved it belongs to
+                    # this person, so the old password (and every session made
+                    # with it) is dropped: otherwise someone could register a
+                    # victim's email first and keep a way in after the victim
+                    # starts using the account. "Forgot password" sets a new one.
+                    user.password_hash = None
+                    await self._revoke_all_sessions(user)
                 await user_repository.save(user)
         if user is None:
             user = User(
                 firebase_uid=uid,
-                display_name=identity.get("name") or "User",
+                display_name=(identity.get("name") or "User")[:80],
                 email=email,
-                photo_url=identity.get("picture"),
+                photo_url=(identity.get("picture") or None) and identity["picture"][:500],
             )
             await user_repository.create(user)
 
@@ -134,7 +167,13 @@ class AuthService:
         )
 
     # --- One-time codes (OTP) -------------------------------------------------
-    async def _create_code(self, user: User, purpose: str) -> str:
+    async def _create_code(self, user: User, purpose: str) -> str | None:
+        """A new 6-digit code, or None when this email already got
+        OTP_MAX_PER_HOUR codes this hour (stops inbox flooding and getting a
+        fresh set of guesses with every new code)."""
+        key = _otp_key(_normalize_email(user.email or str(user.id)))
+        if await cache.hit(key, 3600) > settings.OTP_MAX_PER_HOUR:
+            return None
         code = f"{secrets.randbelow(1_000_000):06d}"
         expires = utcnow() + timedelta(
             minutes=settings.PASSWORD_RESET_CODE_TTL_MINUTES
@@ -181,6 +220,8 @@ class AuthService:
         if user is None:
             return None
         code = await self._create_code(user, "password_reset")
+        if code is None:
+            return None  # silently: the response must not differ
         return code, user.lang
 
     async def reset_password(self, email: str, code: str, new_password: str) -> None:
@@ -188,6 +229,7 @@ class AuthService:
         user = await self._consume_code(email, code, "password_reset")
         user.password_hash = hash_password(new_password)
         await user_repository.save(user)
+        await cache.clear(_login_key(_normalize_email(email)))
         # A reset means the old password may be known to someone else:
         # sign every existing session out.
         await self._revoke_all_sessions(user)
@@ -198,6 +240,8 @@ class AuthService:
         if not user.email:
             return None
         code = await self._create_code(user, "account_deletion")
+        if code is None:
+            raise TooManyError("Too many codes requested. Try again in an hour.")
         return code, user.lang
 
     async def confirm_account_deletion(
@@ -231,10 +275,18 @@ class AuthService:
         identity = verify_id_token(id_token)
         user = await user_repository.get_by_firebase_uid(identity["uid"])
         if user is None:
+            # Keep the address only when Firebase verified it and no live
+            # account uses it: an unverified one would block the real owner
+            # from registering (and from resetting a password).
+            email = identity.get("email") if identity.get("email_verified") else None
+            if email:
+                email = _normalize_email(email)
+                if await user_repository.get_by_email(email) is not None:
+                    email = None
             user = User(
                 firebase_uid=identity["uid"],
-                display_name=identity.get("name") or "User",
-                email=identity.get("email"),
+                display_name=(identity.get("name") or "User")[:80],
+                email=email,
                 phone=identity.get("phone"),
                 photo_url=identity.get("picture"),
             )

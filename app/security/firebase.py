@@ -50,6 +50,7 @@ def verify_id_token(id_token: str) -> dict:
             "email": None,
             "phone": None,
             "picture": None,
+            "email_verified": False,
         }
     try:  # pragma: no cover - requires real credentials
         from firebase_admin import auth as fb_auth
@@ -61,6 +62,7 @@ def verify_id_token(id_token: str) -> dict:
             "email": decoded.get("email"),
             "phone": decoded.get("phone_number"),
             "picture": decoded.get("picture"),
+            "email_verified": bool(decoded.get("email_verified")),
         }
     except Exception as exc:  # pragma: no cover
         raise UnauthorizedError("Invalid Firebase token") from exc

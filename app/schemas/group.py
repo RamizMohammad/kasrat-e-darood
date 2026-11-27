@@ -147,7 +147,7 @@ class InviteOut(BaseModel):
 
 
 class DeleteGroupBody(_Strict):
-    confirm_name: str
+    confirm_name: str = Field(max_length=200)
 
 
 class GroupRankEntry(BaseModel):

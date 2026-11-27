@@ -38,17 +38,34 @@ class UserOut(PublicUserOut):
         return Preferences.from_stored(v) if isinstance(v, dict) or v is None else v
 
 
+def _clean_display_name(v: str | None) -> str | None:
+    if v is None:
+        return v
+    v = " ".join(v.split())               # trim + collapse whitespace, drops newlines
+    if any(ord(c) < 32 or 0x200B <= ord(c) <= 0x200F or 0x202A <= ord(c) <= 0x202E for c in v):
+        raise ValueError("Name contains characters that aren't allowed")
+    if not 1 <= len(v) <= 80:
+        raise ValueError("Name must be 1–80 characters")
+    return v
+
+
 class UserUpdate(BaseModel):
     display_name: str | None = None
-    photo_url: str | None = None
+    # https only: the app and any web page load it as an image.
+    photo_url: str | None = Field(default=None, max_length=500, pattern=r"^https://[^\s]+$")
     avatar: str | None = Field(default=None, max_length=120, pattern=AVATAR_PATTERN)
     lang: str | None = Field(default=None, pattern="^(en|hi|ur)$")
     # Partial: only the fields you send change; unknown keys are a 422.
     preferences: PreferencesUpdate | None = None
 
+    @field_validator("display_name")
+    @classmethod
+    def _name(cls, v: str | None) -> str | None:
+        return _clean_display_name(v)
+
 
 class RoleUpdate(BaseModel):
-    role: str  # member | super_member | super_admin
+    role: str = Field(max_length=20)  # member | super_member | super_admin
 
 
 class UserListResponse(BaseModel):

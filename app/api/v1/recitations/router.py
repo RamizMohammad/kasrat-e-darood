@@ -29,7 +29,7 @@ async def list_categories(_: User = Depends(get_current_user)) -> list[CategoryO
 @router.get("/recitations", response_model=list[RecitationOut])
 async def list_recitations(
     group_id: uuid.UUID | None = None,
-    q: str | None = Query(default=None),
+    q: str | None = Query(default=None, max_length=80),
     _: User = Depends(get_current_user),
 ) -> list[RecitationOut]:
     recs = await recitation_service.list_recitations(group_id, q)
@@ -58,6 +58,8 @@ async def update_recitation(
     recitation_id: uuid.UUID, body: RecitationUpdate,
     user: User = Depends(get_current_user),
 ) -> RecitationOut:
+    if user.role not in _LIBRARY_MANAGER_ROLES:
+        raise PermissionDeniedError("Only super members or admins can edit recitations")
     return RecitationOut.model_validate(
         await recitation_service.update(recitation_id, body, user)
     )
