@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import uuid
 
-from sqlalchemy import Index, Integer, String, Text
+from sqlalchemy import Index, Integer, String, Text, text as sql_text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import AuditMixin, Base, uuid_col
@@ -38,5 +38,12 @@ class Recitation(AuditMixin, Base):
     sort_order: Mapped[int] = mapped_column(Integer, default=0, server_default="0", nullable=False)
     visibility: Mapped[str] = mapped_column(String(16), default="public", server_default="public", nullable=False)
     default_increment: Mapped[int] = mapped_column(Integer, default=1, server_default="1", nullable=False)
+    # Where an imported row came from ("quran:36", "hisn:75", "curated:kalima-2"…);
+    # scripts_import_library uses it to never insert the same item twice.
+    source_key: Mapped[str | None] = mapped_column(String(120))
 
-    __table_args__ = (Index("ix_recitations_group_sort", "group_id", "sort_order"),)
+    __table_args__ = (
+        Index("ix_recitations_group_sort", "group_id", "sort_order"),
+        Index("uq_recitations_source_key", "source_key", unique=True,
+              postgresql_where=sql_text("source_key IS NOT NULL AND deleted = false")),
+    )
