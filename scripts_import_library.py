@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import re
 import unicodedata
 from dataclasses import dataclass, field
@@ -211,7 +212,9 @@ async def get_json(client: httpx.AsyncClient, url: str) -> dict | list:
         try:
             r = await client.get(url)
             r.raise_for_status()
-            return r.json()
+            # strict=False: some Hisn al-Muslim files have raw tabs/newlines
+            # inside strings, which strict JSON rejects. clean() tidies them.
+            return json.loads(r.content.decode("utf-8-sig", errors="replace"), strict=False)
         except (httpx.HTTPError, ValueError) as exc:
             last = exc
             await asyncio.sleep(1.5 * (attempt + 1))
@@ -250,12 +253,19 @@ async def fetch_hisn(client: httpx.AsyncClient) -> list[dict]:
     if not chapters:
         raise RuntimeError("Hisn al-Muslim index is empty")
     sem = asyncio.Semaphore(6)
+    skipped_chapters: list[int] = []
 
     async def one(ch: dict) -> list[dict]:
         cid = int(ch["ID"])
         title = clean(ch.get("TITLE")) or f"Hisn al-Muslim {cid}"
         async with sem:
-            body = await get_json(client, ch.get("TEXT") or HISN_CHAPTER_URL.format(id=cid))
+            try:
+                body = await get_json(client, ch.get("TEXT") or HISN_CHAPTER_URL.format(id=cid))
+            except RuntimeError as exc:
+                # One broken chapter mustn't stop the rest; re-running later picks it up.
+                logger.warning("Skipping Hisn al-Muslim chapter {} ({}): {}", cid, title, exc)
+                skipped_chapters.append(cid)
+                return []
         items = next((v for v in body.values() if isinstance(v, list)), []) if isinstance(body, dict) else []
         rows = []
         for i, it in enumerate(items, start=1):
@@ -284,6 +294,10 @@ async def fetch_hisn(client: httpx.AsyncClient) -> list[dict]:
         return rows
 
     chunks = await asyncio.gather(*(one(ch) for ch in chapters))
+    if skipped_chapters:
+        logger.warning("Hisn al-Muslim chapters skipped: {}", sorted(skipped_chapters))
+    if len(skipped_chapters) > len(chapters) // 2:
+        raise RuntimeError("Most Hisn al-Muslim chapters failed to download; not importing a partial set")
     return [r for chunk in chunks for r in chunk]
 
 
