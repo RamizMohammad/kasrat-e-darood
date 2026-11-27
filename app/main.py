@@ -12,6 +12,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from loguru import logger
 
 from app.api.health import router as health_router
 from app.api.links.router import router as links_router
@@ -49,7 +50,8 @@ _CORS_ORIGIN_REGEX = os.getenv("CORS_ALLOW_ORIGIN_REGEX", "") or None
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     """Manage startup/shutdown of external resources."""
-    configure_logging()
+    configure_logging()          # no-op if already done at import
+    logger.info("Starting {} · env={}", settings.APP_NAME, settings.APP_ENV)
     problems = settings.production_problems()
     if problems:
         raise RuntimeError("Unsafe production config: " + "; ".join(problems))
@@ -60,13 +62,18 @@ async def lifespan(_: FastAPI):
     await cache.connect()
     if settings.SCHEDULER_ENABLED:
         scheduler.start()
+    logger.success("{} is up", settings.APP_NAME)
     yield
+    logger.info("Shutting down …")
     await scheduler.stop()
     await cache.close()
     await close_postgres()
 
 
 def create_app() -> FastAPI:
+    # Before anything logs: uvicorn has already set up its own loggers by the
+    # time it imports this module, and this takes them over.
+    configure_logging()
     # Interactive docs and the OpenAPI schema are disabled in production so the
     # API surface isn't publicly browsable.
     docs_enabled = not settings.is_production

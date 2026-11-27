@@ -21,4 +21,4 @@ HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
 
 # Apply any pending Alembic migrations (no-op if already at head), then start the API.
 # (docker-compose.yml sets the same command.)
-CMD ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8010 --no-server-header"]
+CMD ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8010 --no-server-header --no-access-log"]
