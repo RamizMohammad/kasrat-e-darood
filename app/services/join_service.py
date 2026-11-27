@@ -90,7 +90,17 @@ class JoinService:
         return await group_service.preview(await _by_code(code), viewer)
 
     async def join_code(self, user: User, code: str) -> JoinResult:
-        return await self._join(user, await _by_code(code))
+        # Per-account cap on wrong codes (the IP limit alone can be dodged by
+        # rotating IPs while guessing codes of private groups).
+        key = f"invite-fail:{user.id}"
+        if await cache.count(key) >= settings.INVITE_CODE_MAX_FAILURES_PER_HOUR:
+            raise TooManyError("Too many wrong codes. Try again in an hour.")
+        try:
+            group = await _by_code(code)
+        except NotFoundError:
+            await cache.hit(key, 3600)
+            raise
+        return await self._join(user, group)
 
     async def join_public(self, user: User, group_id: uuid.UUID) -> JoinResult:
         group = await load_group(group_id)

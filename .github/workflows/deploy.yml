@@ -1,4 +1,4 @@
-  name: Deploy Confess to VPS
+  name: Deploy Kasrat-e-darood to VPS
 
   on:
     push:
@@ -65,7 +65,7 @@
             build_and_start() {
               BUILD_FAILED=0
               echo "===> Building image"
-              docker compose build $1 --progress=plain 2>&1 | tee /tmp/confess_build.log
+              docker compose build $1 --progress=plain 2>&1 | tee /tmp/Kasrat-e-darood_build.log
               if [ "${PIPESTATUS[0]}" -ne 0 ]; then
                 LAST_STATUS="build failed"; BUILD_FAILED=1; return 1
               fi
@@ -78,7 +78,7 @@
             dump_logs() {
               echo "@@@LOGS_BEGIN"
               if [ "$BUILD_FAILED" = 1 ]; then
-                tail -n 20 /tmp/confess_build.log
+                tail -n 20 /tmp/Kasrat-e-darood_build.log
               else
                 docker compose logs --tail=20 --no-color "$SERVICE" 2>&1 || true
               fi
@@ -230,7 +230,7 @@
 
             MSG="$HEAD
             $LINE
-            📁 <b>Project:</b> Confess API
+            📁 <b>Project:</b> Kasrat-e-darood API
             🌿 <b>Branch:</b> <code>qa</code>
             📝 <b>Commit:</b> <a href=\"$REPO_URL/commit/$SHA\">$SHORT</a>
             💬 <b>Message:</b> $TITLE

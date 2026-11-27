@@ -35,6 +35,19 @@ def stats_cache_key(user_id) -> str:
     return f"stats:me:{user_id}"
 
 
+def public_name(user: User) -> str:
+    """The name others see in the feed and pushes: "A member" for people who
+    hide themselves on boards."""
+    from app.services.board_service import HIDDEN_NAME, is_hidden
+    return HIDDEN_NAME if is_hidden(user) else user.display_name
+
+
+async def community_push_allowed(user: User) -> bool:
+    """At most one "X completed …" community push per user per cooldown, so
+    nobody can spam every phone by logging count=1 over and over."""
+    return await cache.claim(f"push-cooldown:{user.id}", settings.COMMUNITY_PUSH_COOLDOWN_SECONDS)
+
+
 def _start_of_today() -> datetime:
     """Start of today in the app's time zone (IST), as a UTC instant."""
     return clock.start_of_today()
@@ -85,7 +98,7 @@ class SubmissionService:
 
         await activity_repository.create(ActivityItem(
             group_id=global_group.id, actor_id=user.id, type="submission.created",
-            text=f"{user.display_name} completed {recitation.english_name} ×{data.count}",
+            text=f"{public_name(user)} completed {recitation.english_name} ×{data.count}",
             payload={"recitation_id": str(recitation.id), "count": data.count},
             created_by=user.id,
         ))
@@ -104,10 +117,11 @@ class SubmissionService:
         # summary push from submit_bulk to avoid spamming).
         if notify:
             try:
-                await send_to_community(
-                    "New recitation logged",
-                    f"{user.display_name} completed {recitation.english_name} ×{data.count}",
-                )
+                if await community_push_allowed(user):
+                    await send_to_community(
+                        "New recitation logged",
+                        f"{public_name(user)} completed {recitation.english_name} ×{data.count}",
+                    )
             except Exception:  # pragma: no cover - push must never break a submit
                 pass
 
@@ -150,11 +164,12 @@ class SubmissionService:
         # One summary push for the whole batch.
         try:
             n = len(data.items)
-            await send_to_community(
-                "New recitations logged",
-                f"{user.display_name} logged {n} "
-                f"{'recitation' if n == 1 else 'recitations'} (×{total_count}).",
-            )
+            if await community_push_allowed(user):
+                await send_to_community(
+                    "New recitations logged",
+                    f"{public_name(user)} logged {n} "
+                    f"{'recitation' if n == 1 else 'recitations'} (×{total_count}).",
+                )
         except Exception:  # pragma: no cover
             pass
 

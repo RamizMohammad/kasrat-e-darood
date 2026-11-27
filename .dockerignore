@@ -5,3 +5,16 @@ tests
 __pycache__
 *.pyc
 web
+
+# Secrets never go into the image: env vars come from env_file, the Firebase
+# key is mounted read-only by docker-compose.yml.
+.env
+.env.*
+!.env.example
+*.env
+conf/
+secrets.properties
+service-account.json
+*.pem
+*.key
+.claude

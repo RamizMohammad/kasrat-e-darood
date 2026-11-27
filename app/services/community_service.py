@@ -80,7 +80,13 @@ class CommunityService:
         global community group and its id is returned.
         """
         if group_id is not None:
-            return group_id
+            # Only groups you're an active member of (dashboard feed and the
+            # legacy leaderboard read from it). Without this anyone could read
+            # a private group's activity and board by guessing its id.
+            from app.services.group_service import load_group, require_member
+            group = await load_group(group_id)
+            await require_member(group, user)
+            return group.id
         group = await self.get_or_create_global_group()
         await self.ensure_member(user, group)
         return group.id

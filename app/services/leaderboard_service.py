@@ -9,6 +9,7 @@ from app.repositories.user_repo import user_repository
 from app.repositories.weekly_repo import weekly_repository
 from app.schemas.dashboard import LeaderboardEntry, LeaderboardResponse
 from app.schemas.user import PublicUserOut
+from app.services.board_service import HIDDEN_ID, HIDDEN_NAME, is_hidden
 
 
 class LeaderboardService:
@@ -37,10 +38,11 @@ class LeaderboardService:
             user = people.get(row["_id"])
             if user is None:
                 continue
-            entry = LeaderboardEntry(
-                user=PublicUserOut.model_validate(user), total=total, rank=rank,
-                streak=user.streak_days,
-            )
+            public = PublicUserOut.model_validate(user)
+            if user.id != me_id and is_hidden(user):
+                public = public.model_copy(update={
+                    "id": HIDDEN_ID, "display_name": HIDDEN_NAME, "photo_url": None, "avatar": None})
+            entry = LeaderboardEntry(user=public, total=total, rank=rank, streak=user.streak_days)
             if user.id == me_id:
                 me_entry = entry
             if len(entries) < limit:

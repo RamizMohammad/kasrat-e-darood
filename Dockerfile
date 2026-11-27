@@ -11,9 +11,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 8000
+# Run as an unprivileged user, not root.
+RUN useradd --system --uid 10001 --no-create-home app && chown -R app /code
+USER app
+
+EXPOSE 8010
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+    CMD curl -f http://localhost:8010/health || exit 1
 
 # Apply any pending Alembic migrations (no-op if already at head), then start the API.
-CMD ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+# (docker-compose.yml sets the same command.)
+CMD ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8010 --no-server-header"]

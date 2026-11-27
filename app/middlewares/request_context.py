@@ -1,6 +1,7 @@
-"""Request-context middleware: correlation id + structured access logging."""
+"""Request-context middleware: correlation id, access log, security headers."""
 from __future__ import annotations
 
+import re
 import time
 import uuid
 
@@ -9,12 +10,33 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
 
+from app.config.settings import settings
+
+# A client-supplied X-Request-ID is only reused when it looks like an id, so
+# nobody can write newlines or fake entries into the logs through it.
+_SAFE_ID = re.compile(r"^[A-Za-z0-9._-]{1,64}$")
+
+_SECURITY_HEADERS = {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "no-referrer",
+}
+# Production only: the API returns JSON and the /j/ invite page is static HTML
+# with inline CSS and no scripts. (In development /docs needs its scripts.)
+_PRODUCTION_HEADERS = {
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; "
+                               "img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; "
+                               "form-action 'none'",
+}
+
 
 class RequestContextMiddleware(BaseHTTPMiddleware):
-    """Attach a correlation id to each request and log latency."""
+    """Attach a correlation id to each request, log latency, add security headers."""
 
     async def dispatch(self, request: Request, call_next) -> Response:
-        correlation_id = request.headers.get("X-Request-ID", str(uuid.uuid4()))
+        supplied = request.headers.get("X-Request-ID", "")
+        correlation_id = supplied if _SAFE_ID.match(supplied) else str(uuid.uuid4())
         start = time.perf_counter()
         with logger.contextualize(request_id=correlation_id):
             response = await call_next(request)
@@ -25,4 +47,9 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
                 status=response.status_code, ms=elapsed_ms,
             )
         response.headers["X-Request-ID"] = correlation_id
+        for name, value in _SECURITY_HEADERS.items():
+            response.headers.setdefault(name, value)
+        if settings.is_production:
+            for name, value in _PRODUCTION_HEADERS.items():
+                response.headers.setdefault(name, value)
         return response

@@ -11,8 +11,15 @@ services:
     restart: unless-stopped
     env_file: .env
     # Apply any pending Alembic migrations (no-op if already at head), then start the API.
-    command: sh -c 'alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8010 --proxy-headers --forwarded-allow-ips="*"'
+    # No --proxy-headers: with --forwarded-allow-ips="*" uvicorn took the client
+    # IP from the left of X-Forwarded-For, which the caller controls, so every
+    # request could claim a new IP and skip the rate limits. The app reads the
+    # real IP from nginx's X-Real-IP instead (app/core/client_ip.py).
+    command: sh -c 'alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8010 --no-server-header'
     expose: ["8010"]
+    # The Firebase key is mounted, not copied into the image (.dockerignore).
+    volumes:
+      - ./conf/firebase.json:/code/conf/firebase.json:ro
     networks: [proxy_network]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8010/health"]

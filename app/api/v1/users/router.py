@@ -106,21 +106,21 @@ async def unregister_device(token: str, user: User = Depends(get_current_user)) 
 
 @router.get("/search", response_model=list[PublicUserOut])
 async def search_users(
-    q: str, _: User = Depends(get_current_user)
+    q: str = Query(min_length=1, max_length=80), _: User = Depends(get_current_user)
 ) -> list[PublicUserOut]:
     users = await user_repository.search(q)
     return [PublicUserOut.model_validate(u) for u in users]
 
 
-@router.get("/{user_id}", response_model=UserOut)
+@router.get("/{user_id}", response_model=UserOut | PublicUserOut)
 async def get_user(
     user_id: uuid.UUID, actor: User = Depends(get_current_user)
-) -> UserOut:
+) -> UserOut | PublicUserOut:
     target = await user_repository.get(user_id)
     if target is None:
         raise NotFoundError("User not found")
-    out = UserOut.model_validate(target)
-    # Only the user themselves and super admins see the email address.
-    if actor.id != target.id and actor.role != GlobalRole.SUPER_ADMIN:
-        out = out.model_copy(update={"email": None})
-    return out
+    # The user themselves and super admins get the full record (email,
+    # preferences); everyone else only what boards and search already show.
+    if actor.id == target.id or actor.role == GlobalRole.SUPER_ADMIN:
+        return UserOut.model_validate(target)
+    return PublicUserOut.model_validate(target)

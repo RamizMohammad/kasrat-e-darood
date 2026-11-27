@@ -82,6 +82,18 @@ class Settings(BaseSettings):
     # register, OTP, password reset) use the much lower AUTH limit.
     RATE_LIMIT_PER_MINUTE: int = 120
     RATE_LIMIT_AUTH_PER_MINUTE: int = 10
+    # Every path together, per IP per minute (many phones can share one
+    # mobile-network IP, so keep this generous).
+    RATE_LIMIT_OVERALL_PER_MINUTE: int = 600
+    # Per account, on top of the per-IP limits (attackers rotate IPs):
+    # wrong passwords before sign-in is paused, and one-time codes emailed.
+    LOGIN_MAX_FAILURES: int = 10
+    LOGIN_LOCKOUT_MINUTES: int = 15
+    OTP_MAX_PER_HOUR: int = 5
+    # Wrong invite codes one signed-in user may try per hour.
+    INVITE_CODE_MAX_FAILURES_PER_HOUR: int = 30
+    # At most one "X completed …" community push per user in this many seconds.
+    COMMUNITY_PUSH_COOLDOWN_SECONDS: int = 600
     # Invite previews / joins / the /j/ page, all codes together, per IP.
     RATE_LIMIT_INVITES_PER_MINUTE: int = 30
     # Peers allowed to tell us the real client IP via X-Real-IP (nginx on the

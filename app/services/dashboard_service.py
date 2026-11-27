@@ -69,7 +69,7 @@ class DashboardService:
                         for d in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]]
 
         # Recent activity (enriched with actor display info).
-        recent = await self.feed(group_id, limit=10)
+        recent = await self.feed(group_id, limit=10, viewer_id=user.id)
 
         remaining = self._remaining_days(week.end_date if week else None)
         goal_target = Preferences.from_stored(user.preferences).weekly_goal
@@ -97,19 +97,20 @@ class DashboardService:
         )
 
     async def feed(
-        self, group_id: uuid.UUID, limit: int = 20
+        self, group_id: uuid.UUID, limit: int = 20, viewer_id: uuid.UUID | None = None,
     ) -> list[FeedItemOut]:
         """Recent group activity, each enriched with the actor's name/initial."""
+        from app.services.board_service import feed_actor
         activities = await activity_repository.recent(group_id, limit=limit)
         actors = await user_repository.get_many({a.actor_id for a in activities})
         items: list[FeedItemOut] = []
         for a in activities:
-            actor = actors.get(a.actor_id)
-            name = actor.display_name if actor else "Member"
+            actor_id, name, text = feed_actor(actors.get(a.actor_id), viewer_id, a.actor_id,
+                                              a.text, "Member")
             initial = (name.strip()[:1] or "•").upper()
             items.append(FeedItemOut(
-                id=a.id, actor_id=a.actor_id, actor_name=name, initial=initial,
-                type=a.type, text=a.text, reactions=a.reactions,
+                id=a.id, actor_id=actor_id, actor_name=name, initial=initial,
+                type=a.type, text=text, reactions=a.reactions,
                 created_at=a.created_at,
             ))
         return items

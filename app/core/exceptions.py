@@ -79,9 +79,16 @@ def register_exception_handlers(app: FastAPI) -> None:
 
     @app.exception_handler(RequestValidationError)
     async def _handle_validation(_: Request, exc: RequestValidationError) -> JSONResponse:
+        # Only where and what — never the submitted value, which can be a
+        # password or a token.
+        parts = []
+        for err in exc.errors()[:5]:
+            where = ".".join(str(p) for p in err.get("loc", ()) if p not in ("body", "query", "path"))
+            msg = str(err.get("msg", "invalid"))
+            parts.append(f"{where}: {msg}" if where else msg)
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            content=_envelope("validation_error", str(exc.errors())),
+            content=_envelope("validation_error", "; ".join(parts) or "Invalid request"),
         )
 
     @app.exception_handler(Exception)

@@ -26,7 +26,9 @@ from app.database.redis import cache
 from app.middlewares.rate_limit import RateLimitMiddleware
 from app.middlewares.request_context import RequestContextMiddleware
 from app.security.firebase import init_firebase
-from app.websocket.router import router as ws_router
+# The /ws socket (app/websocket) is not mounted: it had no authentication,
+# nothing broadcasts on it and the app doesn't use it. Add a token + membership
+# check before mounting it again.
 
 
 def _cors_origins() -> list[str]:
@@ -96,7 +98,6 @@ def create_app() -> FastAPI:
     register_exception_handlers(app)
 
     app.include_router(health_router)
-    app.include_router(ws_router)
     app.include_router(api_router, prefix=settings.API_V1_PREFIX)
     app.include_router(links_router)       # /j/{code} invite page + assetlinks.json
 

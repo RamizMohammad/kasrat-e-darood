@@ -58,13 +58,17 @@ class MemberService:
     async def members(self, user: User, group_id: uuid.UUID, q: str | None, status: str,
                       offset: int, limit: int):
         group = await load_group(group_id)
-        await require_member(group, user, Permission.MEMBER_MANAGE if status == "banned" else Permission.VIEW)
+        me = await require_member(group, user,
+                                  Permission.MEMBER_MANAGE if status == "banned" else Permission.VIEW)
         st = MemberStatus.BANNED if status == "banned" else MemberStatus.ACTIVE
         rows = await membership_repository.search(group.id, st, q, offset, limit + 1)
         week = await weekly_service.current()
         totals = dict(await board_repo.group_board(group.id, week.id)) if st == MemberStatus.ACTIVE else {}
+        # Total-only groups: members see only their own number (as on the board).
+        sees_all = not group.total_only or MemberRole(me.role) in (MemberRole.OWNER, MemberRole.ADMIN)
         items = [MemberOut(user=mini(u), role=MemberRole(m.role), status=m.status.value,
-                           joined_at=m.created_at, week_total=totals.get(u.id, 0))
+                           joined_at=m.created_at,
+                           week_total=totals.get(u.id, 0) if sees_all or u.id == user.id else 0)
                  for m, u in rows[:limit]]
         return items, (offset + limit if len(rows) > limit else None)
 

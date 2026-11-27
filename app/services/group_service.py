@@ -198,7 +198,11 @@ class GroupService:
         author = await user_repository.get(pinned.author_id) if pinned else None
         last = None if group.is_global else await group_week_repository.latest_closed(group.id)
         last_week = None
-        if last is not None:
+        hide_top = group.total_only and MemberRole(m.role) not in (MemberRole.OWNER, MemberRole.ADMIN)
+        if last is not None and hide_top:
+            last_week = LastWeek(week_number=last.week_number, total=last.total,
+                                 goal_reached=last.goal_reached_at is not None, top=[])
+        elif last is not None:
             people = await user_repository.get_many({uuid.UUID(t["user_id"]) for t in last.top})
             last_week = LastWeek(
                 week_number=last.week_number, total=last.total,
