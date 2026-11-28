@@ -24,6 +24,7 @@ from app.database.migrate import upgrade_head
 from app.database.postgres import close_postgres, connect_to_postgres
 from app.tasks.scheduler import scheduler
 from app.database.redis import cache
+from app.middlewares.compression import SelectiveGZipMiddleware
 from app.middlewares.rate_limit import RateLimitMiddleware
 from app.middlewares.request_context import RequestContextMiddleware
 from app.security.firebase import init_firebase
@@ -100,6 +101,8 @@ def create_app() -> FastAPI:
         expose_headers=["X-Next-Cursor"],   # paging (submissions, groups, Hall of Fame...)
     )
     app.add_middleware(RateLimitMiddleware)
+    # Inside the access log, so its timings include compressing.
+    app.add_middleware(SelectiveGZipMiddleware, minimum_size=1024)
     app.add_middleware(RequestContextMiddleware)
 
     register_exception_handlers(app)
