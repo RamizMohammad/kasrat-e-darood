@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import uuid
-from fastapi import APIRouter, Depends, Query, status
+import hashlib
+
+from fastapi import APIRouter, Depends, Query, Request, Response, status
 
 from app.core.exceptions import PermissionDeniedError
 from app.dependencies.auth import get_current_user
@@ -28,12 +30,35 @@ async def list_categories(_: User = Depends(get_current_user)) -> list[CategoryO
 
 @router.get("/recitations", response_model=list[RecitationOut])
 async def list_recitations(
+    request: Request,
+    response: Response,
     group_id: uuid.UUID | None = None,
     q: str | None = Query(default=None, max_length=80),
     _: User = Depends(get_current_user),
-) -> list[RecitationOut]:
+):
+    """The library. Sends an ETag; a client that already has this version
+    (If-None-Match) gets 304 and no body, so the app doesn't download the
+    whole library on every launch."""
     recs = await recitation_service.list_recitations(group_id, q)
+    etag = _library_etag(recs, group_id, q)
+    if etag in _if_none_match(request):
+        return Response(status_code=304, headers={"ETag": etag})
+    response.headers["ETag"] = etag
     return [RecitationOut.model_validate(r) for r in recs]
+
+
+def _library_etag(recs, group_id, q) -> str:
+    """Changes whenever a recitation is added, edited, removed or re-sorted."""
+    h = hashlib.sha256()
+    h.update(f"v1|{group_id}|{q or ''}|{len(recs)}".encode())
+    for r in recs:
+        h.update(f"|{r.id}:{r.updated_at.isoformat() if r.updated_at else ''}".encode())
+    return 'W/"' + h.hexdigest()[:32] + '"'
+
+
+def _if_none_match(request: Request) -> set[str]:
+    raw = request.headers.get("if-none-match", "")
+    return {t.strip() for t in raw.split(",") if t.strip()}
 
 
 @router.get("/recitations/{recitation_id}", response_model=RecitationOut)
