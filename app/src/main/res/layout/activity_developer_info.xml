@@ -1,85 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- P3 · About (screen 33): what the app is, who made it, privacy, version. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
-    android:fillViewport="true">
+    android:background="@color/ink"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/k_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="48dp"
-        android:paddingBottom="32dp">
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="center_vertical" android:orientation="horizontal">
-            <TextView android:id="@+id/btn_back"
-                android:layout_width="40dp" android:layout_height="40dp"
-                android:gravity="center" android:text="‹" android:textSize="28sp"
-                android:textColor="@color/on_surface" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" android:text="@string/developer_info"
-                android:textSize="26sp" android:textStyle="bold"
-                android:fontFamily="serif" android:textColor="@color/primary" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_back"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/action_back"
+                app:icon="@drawable/ic_ph_arrow_left"
+                app:iconTint="@color/text_primary" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/bg_avatar_green">
-            <ImageView android:layout_width="38dp" android:layout_height="38dp"
-                android:layout_gravity="center" android:src="@drawable/ic_mosque"
-                app:tint="@color/primary" />
-        </FrameLayout>
-
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textColor="@color/primary" />
-        <TextView
-            android:id="@+id/dev_version"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="v1.0"
-            android:textColor="@color/on_surface_variant"
-            android:textSize="13sp" />
-
-        <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="24dp" app:contentPadding="20dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/developed_by" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp" android:text="Mohammad Ramiz"
-                    android:textSize="18sp" android:textStyle="bold"
-                    android:textColor="@color/on_surface" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" android:text="@string/contact"
-                    android:textColor="@color/on_surface_variant" android:textSize="12sp"
-                    style="@style/Text.Overline" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp" android:text="ramizanas6@gmail.com"
-                    android:textColor="@color/primary" android:textSize="15sp" />
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp" android:text="@string/about_app"
-                    android:textColor="@color/on_surface_variant" android:textSize="14sp"
-                    android:lineSpacingExtra="3dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            android:layout_marginTop="20dp"
+            android:accessibilityHeading="true"
+            android:text="@string/about_title"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/about_column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/margin_screen"
+            android:paddingBottom="@dimen/space_xl">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_paper_card"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/paper_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share_card_bismillah"
+                    android:textAppearance="@style/TextAppearance.Kasrat.Arabic"
+                    android:textColor="@color/paper_ink" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:text="@string/app_name"
+                    android:textAppearance="@style/TextAppearance.Kasrat.Headline"
+                    android:textColor="@color/paper_ink" />
+
+                <TextView
+                    android:id="@+id/about_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="@style/TextAppearance.Kasrat.MetaSmall"
+                    android:textColor="@color/paper_meta"
+                    android:textDirection="ltr" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:gravity="center"
+                    android:text="@string/about_app"
+                    android:textAppearance="@style/TextAppearance.Kasrat.Recitation"
+                    android:textColor="@color/paper_meta" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/Kasrat.SectionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_section_made_by" />
+
+            <LinearLayout
+                android:id="@+id/about_people"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_plate"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/space_xs" />
+
+            <TextView
+                style="@style/Kasrat.SectionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_section_privacy" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_plate"
+                android:padding="@dimen/space_md"
+                android:text="@string/about_privacy"
+                android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                style="@style/Kasrat.SectionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_section_credits" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_plate"
+                android:padding="@dimen/space_md"
+                android:text="@string/about_credits"
+                android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

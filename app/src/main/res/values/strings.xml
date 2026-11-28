@@ -10,7 +10,7 @@
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="forgot">Forgot?</string>
-    <string name="or_continue_with">OR CONTINUE WITH</string>
+    <string name="or_continue_with">Or continue with</string>
     <string name="continue_google">Continue with Google</string>
     <string name="no_account">Don\'t have an account? </string>
     <string name="register">Register</string>
@@ -21,7 +21,7 @@
     <string name="phone_tab">Phone Number</string>
     <string name="hint_email">name@example.com</string>
 
-    <string name="welcome_to_noor">Welcome to Noor</string>
+    <string name="welcome_to_noor">Welcome to</string>
     <string name="join_noor">Join Noor and begin your journey of mindful spiritual progress.</string>
     <string name="personal_details">Personal details</string>
     <string name="full_name">Full Name</string>
@@ -124,7 +124,7 @@
     <string name="weekly_insights">Weekly Insights</string>
     <string name="view_full_leaderboard">View Full Leaderboard</string>
     <string name="get_started">Get Started</string>
-    <string name="spiritual_consistency">SPIRITUAL CONSISTENCY</string>
+    <string name="spiritual_consistency">Spiritual consistency</string>
 
     <!-- Notifications screen + push -->
     <string name="notifications_title">Notifications</string>
@@ -160,10 +160,10 @@
     <string name="no_submissions_week">No submissions yet this week.</string>
     <string name="community_standings">Community Standings</string>
     <string name="leaderboard_subtitle">This week\'s top reciters across the community.</string>
-    <string name="top_reciters">TOP RECITERS</string>
-    <string name="everyone_else">EVERYONE ELSE</string>
+    <string name="top_reciters">Top reciters</string>
+    <string name="everyone_else">Everyone else</string>
     <string name="leaderboard">Leaderboard</string>
-    <string name="by_category_overline">BY CATEGORY</string>
+    <string name="by_category_overline">By category</string>
 
     <!-- Stats: close the week (super member / super admin) -->
     <string name="file_consideration">File Consideration &amp; Start New Week</string>
@@ -176,7 +176,7 @@
     <!-- Profile: archived week report (PDF) -->
     <string name="week_report">Download Week Report</string>
     <string name="week_report_subtitle">Tap any archived week to download its PDF report.</string>
-    <string name="total_submissions_overline">TOTAL</string>
+    <string name="total_submissions_overline">Total</string>
     <string name="closed_on_fmt">Closed %1$s</string>
     <string name="choose_week">Choose a week</string>
     <string name="no_archived_weeks">No archived weeks yet.</string>

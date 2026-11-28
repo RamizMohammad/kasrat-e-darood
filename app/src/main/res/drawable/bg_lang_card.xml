@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Language card: Stitch elevated card (white, hairline, 28dp); chosen = teal-soft with a teal/40 hairline. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/secondary_container" />
+            <stroke android:width="@dimen/hairline" android:color="@color/k_teal_40" />
+            <corners android:radius="@dimen/k_radius_lg" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/surface_lowest" />
+            <stroke android:width="@dimen/hairline" android:color="@color/hairline" />
+            <corners android:radius="@dimen/k_radius_lg" />
+        </shape>
+    </item>
+</selector>

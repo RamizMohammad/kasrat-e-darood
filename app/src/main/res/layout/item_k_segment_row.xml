@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings segmented row (Stitch Theme / Language): label, then a three-way ivory track
+     with the white pill on the chosen one. Several rows share these ids, so nothing here saves
+     its own state: SettingsActivity sets the choice from the saved settings every time
+     (otherwise a theme recreate restores Language's choice onto Theme and flips it back). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="16dp">
+
+    <TextView
+        android:id="@+id/seg_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.K.BodyMd"
+        android:textColor="@color/text_primary"
+        tools:text="Language" />
+
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.SegmentedToggle
+        android:id="@+id/seg_group"
+        android:saveEnabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/seg_0"
+            android:saveEnabled="false"
+            style="@style/Widget.Kasrat.Button.Segment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/seg_1"
+            android:saveEnabled="false"
+            style="@style/Widget.Kasrat.Button.Segment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/seg_2"
+            android:saveEnabled="false"
+            style="@style/Widget.Kasrat.Button.Segment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.SegmentedToggle>
+
+    <TextView
+        android:id="@+id/seg_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.K.LabelSm"
+        android:textColor="@color/text_muted"
+        android:visibility="gone" />
+</LinearLayout>

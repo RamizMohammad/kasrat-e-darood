@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 5 · Ranks + Hall of Fame (Stitch ranks_teal, hall_of_fame_teal). -->
+<resources>
+    <string name="ranks_title_k">Ranks</string>
+    <string name="ranks_tab_week">This week</string>
+    <string name="ranks_tab_all">All time</string>
+    <string name="ranks_prefix_global">The ummah recited</string>
+    <string name="ranks_prefix_group">Your circle recited</string>
+    <string name="ranks_suffix_week">darood this week</string>
+    <string name="ranks_suffix_all">darood all time</string>
+    <string name="ranks_closes_k">Week closes %1$s · %2$s</string>
+    <string name="ranks_left_dh">%1$dd %2$dh</string>
+    <string name="ranks_left_hm">%1$dh %2$dm</string>
+    <string name="ranks_left_m">%1$dm</string>
+    <string name="ranks_hall_cd">Hall of Fame</string>
+    <string name="ranks_close_cd">Close the week</string>
+    <string name="rank_up">↑%d</string>
+    <string name="rank_down">↓%d</string>
+    <string name="ranks_pinned_rank">#%s</string>
+    <string name="hall_sub">Champions of every week</string>
+    <string name="hall_week_dates">Week %1$d · %2$s</string>
+    <string name="hall_first_place">1st place</string>
+    <string name="hall_person_line">%1$s · %2$s</string>
+</resources>

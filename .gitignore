@@ -14,4 +14,11 @@
 .cxx
 local.properties
 
+# Secrets: never commit these
+secrets.properties
 service-account.json
+*.jks
+*.keystore
+
+# Scratch area for files moved aside instead of deleted
+_to_delete/

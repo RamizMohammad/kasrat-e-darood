@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Goal suggestion chip: ivory + hairline; chosen = deep-ink capsule. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/text_primary" />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ink" />
+            <stroke android:width="@dimen/hairline" android:color="@color/hairline" />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+</selector>

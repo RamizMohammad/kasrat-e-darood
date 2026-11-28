@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circle settings → Emblem: the same builder as New circle, then Save. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingTop="12dp"
+    android:paddingBottom="32dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_k_sheet_handle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/circle_emblem"
+        android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+        android:textColor="@color/text_primary" />
+
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.groups.GroupAvatarPicker
+        android:id="@+id/emblem_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/emblem_save"
+        style="@style/Widget.K.Button.Hero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/action_save" />
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 28dp minus disc: white, hairline. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/surface_lowest" />
+    <stroke android:width="@dimen/hairline" android:color="@color/hairline" />
+</shape>

@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Component styles (Stitch DESIGN.md "Components"). Applied as theme defaults in
+    themes.xml, so plain <MaterialButton>, <TextInputLayout>, <Chip>, etc.
+    pick them up automatically. Variants are applied with style="@style/…".
+-->
+<resources>
+
+    <!-- ── Shapes ─────────────────────────────────────────────────────── -->
+    <style name="ShapeAppearance.Kasrat.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="ShapeAppearance.Kasrat.Input" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_input</item>
+    </style>
+    <!-- GIFs (picker tiles, cards, responses): softly rounded. -->
+    <style name="ShapeAppearance.Kasrat.Gif" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Kasrat.Card" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_card</item>
+    </style>
+    <style name="ShapeAppearance.Kasrat.Sheet" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_sheet</item>
+        <item name="cornerSizeTopRight">@dimen/radius_sheet</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+    <style name="ShapeAppearance.Kasrat.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- ── Buttons ────────────────────────────────────────────────────── -->
+
+    <!-- Primary pill (Stitch): deep teal, white label-lg, 48dp (py-3.5 + 20 line). -->
+    <style name="Widget.Kasrat.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/sl_button_primary_bg</item>
+        <item name="android:textColor">@color/sl_button_primary_text</item>
+        <item name="iconTint">@color/sl_button_primary_text</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.Button</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Pill</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">@dimen/space_lg</item>
+        <item name="android:paddingEnd">@dimen/space_lg</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/space_sm</item>
+        <item name="iconSize">@dimen/icon_size</item>
+        <item name="rippleColor">@color/amber_pressed</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!-- Light: paper pill (e.g. "Continue with Google"). -->
+    <style name="Widget.Kasrat.Button.Light">
+        <item name="backgroundTint">@color/paper</item>
+        <item name="android:textColor">@color/paper_ink</item>
+        <item name="iconTint">@null</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">@dimen/icon_size</item>
+        <item name="iconPadding">@dimen/space_12</item>
+        <item name="rippleColor">@color/paper_rule</item>
+        <item name="strokeColor">@color/hairline</item>
+        <item name="strokeWidth">@dimen/hairline</item>
+    </style>
+
+    <!-- Secondary pill (Stitch): pure white, 1px hairline, deep-ink label. -->
+    <style name="Widget.Kasrat.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/sl_text_primary</item>
+        <item name="iconTint">@color/text_primary</item>
+        <item name="strokeColor">@color/hairline</item>
+        <item name="strokeWidth">@dimen/hairline</item>
+        <item name="backgroundTint">@color/sl_tonal_bg</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.Button</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Pill</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/space_12</item>
+        <item name="iconSize">@dimen/icon_size</item>
+        <item name="rippleColor">@color/tonal_pressed</item>
+    </style>
+
+    <!-- Segment: one option in a GlideToggleGroup — bare (no fill, no outline). The group draws the
+         one rounded track and the amber pill that glides to the chosen option, and tints the labels;
+         tighter side padding so three fit on a phone. -->
+    <style name="Widget.Kasrat.Button.Segment" parent="Widget.Kasrat.Button.Outlined">
+        <item name="backgroundTint">@color/sl_segment_bg</item>
+        <item name="android:textColor">@color/sl_segment_text</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="rippleColor">@color/transparent</item>         <!-- the gliding pill is the feedback -->
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:paddingStart">@dimen/space_xs</item>
+        <item name="android:paddingEnd">@dimen/space_xs</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- Danger: soft red pill with red text (delete account, delete group). -->
+    <style name="Widget.Kasrat.Button.Danger" parent="Widget.Kasrat.Button.Outlined">
+        <item name="android:textColor">@color/brick</item>
+        <item name="iconTint">@color/brick</item>
+        <item name="backgroundTint">@color/brick_tint</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <!-- Ghost: text-only, secondary color (Cancel, Forgot password?). -->
+    <style name="Widget.Kasrat.Button.Ghost" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="iconTint">@color/text_secondary</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.Label</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Pill</item>
+        <item name="rippleColor">@color/sl_ripple_dark</item>
+        <item name="android:minHeight">@dimen/touch_target</item>
+    </style>
+
+    <!-- Ghost in amber (inline links: "Review guidelines →"). -->
+    <style name="Widget.Kasrat.Button.Link" parent="Widget.Kasrat.Button.Ghost">
+        <item name="android:textColor">@color/amber</item>
+        <item name="iconTint">@color/amber</item>
+        <item name="iconGravity">textEnd</item>
+    </style>
+
+    <!-- Floating action (Quick tap, New circle): deep-teal pill, white label. -->
+    <style name="Widget.Kasrat.Fab" parent="Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
+        <item name="backgroundTint">@color/amber</item>
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="iconTint">@color/on_primary</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.Button</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Kasrat.Pill</item>
+        <item name="rippleColor">@color/amber_pressed</item>
+        <item name="android:minHeight">56dp</item>
+    </style>
+
+    <!-- Round icon button (toolbar back / close / overflow). -->
+    <style name="Widget.Kasrat.IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="iconTint">@color/text_primary</item>
+        <item name="iconSize">@dimen/icon_size</item>
+        <item name="rippleColor">@color/sl_ripple_dark</item>
+        <item name="android:minWidth">@dimen/touch_target</item>
+        <item name="android:minHeight">@dimen/touch_target</item>
+        <!-- Icon-only: exactly 12 + 24 + 12 = 48dp, no hidden text padding or insets
+             (otherwise each button grew to ~80dp and toolbars looked gappy). -->
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+    </style>
+
+    <!-- Stitch "Icon Button (44px)": white circle, 1px hairline, deep-ink 20dp icon. -->
+    <style name="Widget.Kasrat.IconButton.Outlined">
+        <item name="backgroundTint">@color/surface_lowest</item>
+        <item name="strokeColor">@color/hairline</item>
+        <item name="strokeWidth">@dimen/hairline</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Circle</item>
+        <item name="iconSize">@dimen/k_icon</item>
+        <item name="android:minWidth">@dimen/k_icon_button</item>
+        <item name="android:minHeight">@dimen/k_icon_button</item>
+        <item name="android:width">@dimen/k_icon_button</item>
+        <item name="android:height">@dimen/k_icon_button</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+    <!-- ── Text fields ────────────────────────────────────────────────── -->
+    <style name="Widget.Kasrat.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxBackgroundColor">@color/ink</item>
+        <item name="boxStrokeColor">@color/sl_input_stroke</item>
+        <item name="boxStrokeWidth">@dimen/hairline</item>
+        <item name="boxStrokeWidthFocused">@dimen/hairline</item>
+        <item name="boxStrokeErrorColor">@color/brick</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Input</item>
+        <item name="hintEnabled">false</item>
+        <item name="android:textColorHint">@color/text_muted</item>
+        <item name="placeholderTextColor">@color/text_muted</item>
+        <item name="counterTextAppearance">@style/TextAppearance.Kasrat.Meta</item>
+        <item name="counterTextColor">@color/text_muted</item>
+        <item name="counterOverflowTextColor">@color/brick</item>
+        <item name="helperTextTextAppearance">@style/TextAppearance.Kasrat.Meta</item>
+        <item name="helperTextTextColor">@color/text_secondary</item>
+        <item name="errorTextAppearance">@style/TextAppearance.Kasrat.Meta</item>
+        <item name="errorTextColor">@color/brick</item>
+        <item name="errorIconTint">@color/brick</item>
+        <item name="endIconTint">@color/text_secondary</item>
+        <item name="startIconTint">@color/text_secondary</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Kasrat.TextInput</item>
+    </style>
+
+    <style name="ThemeOverlay.Kasrat.TextInput" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+        <item name="editTextStyle">@style/Widget.Kasrat.EditText</item>
+    </style>
+
+    <style name="Widget.Kasrat.EditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.Body</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+    <!-- ── Chips ──────────────────────────────────────────────────────── -->
+    <style name="Widget.Kasrat.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/sl_chip_bg</item>
+        <item name="chipStrokeColor">@color/sl_chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/hairline</item>
+        <item name="android:textColor">@color/sl_chip_text</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Pill</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipIconVisible">false</item>
+        <item name="rippleColor">@color/sl_ripple_dark</item>
+        <item name="chipMinHeight">32dp</item>
+        <item name="chipStartPadding">6dp</item>
+        <item name="chipEndPadding">6dp</item>
+        <item name="ensureMinTouchTargetSize">true</item>
+    </style>
+
+    <!-- Tasbih target chip: ivory + hairline, teal-soft when chosen (redrawn in the Tasbih phase). -->
+    <style name="Widget.Kasrat.Chip.Segment">
+        <item name="chipBackgroundColor">@color/sl_chip_bg</item>
+        <item name="chipStrokeColor">@color/sl_chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/hairline</item>
+        <item name="android:textColor">@color/sl_chip_text</item>
+        <item name="android:minWidth">76dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.Label</item>
+    </style>
+
+    <!-- ── Selection controls ─────────────────────────────────────────── -->
+    <style name="Widget.Kasrat.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="trackTint">@color/sl_switch_track</item>
+        <item name="thumbTint">@color/sl_switch_thumb</item>
+        <item name="trackDecorationTint">@color/transparent</item>
+        <item name="thumbIconTint">@color/transparent</item>
+    </style>
+
+    <style name="Widget.Kasrat.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/sl_checkbox</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.BodyMedium</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- Full-width radio row (report reasons). -->
+    <style name="Widget.Kasrat.Radio" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/touch_target</item>
+        <item name="buttonTint">@color/sl_checkbox</item>
+        <item name="android:paddingStart">@dimen/space_sm</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.BodyMedium</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- ── Progress ───────────────────────────────────────────────────── -->
+    <style name="Widget.Kasrat.Progress.Circular" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="indicatorColor">@color/amber</item>
+        <item name="trackColor">@color/transparent</item>
+        <item name="indicatorSize">28dp</item>
+        <item name="trackThickness">@dimen/k_ring_stroke</item>
+        <item name="indicatorTrackGapSize">0dp</item>
+    </style>
+
+    <style name="Widget.Kasrat.Progress.Linear" parent="Widget.Material3.LinearProgressIndicator">
+        <item name="indicatorColor">@color/amber</item>
+        <item name="trackColor">@color/hairline</item>
+        <item name="trackThickness">@dimen/k_progress_bar</item>
+        <item name="trackCornerRadius">3dp</item>
+        <item name="trackStopIndicatorSize">0dp</item>
+        <item name="indicatorTrackGapSize">0dp</item>
+    </style>
+
+    <!-- ── Snackbar ───────────────────────────────────────────────────── -->
+    <style name="Widget.Kasrat.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="backgroundTint">@color/inverse_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Input</item>
+    </style>
+    <style name="Widget.Kasrat.Snackbar.Text" parent="Widget.Material3.Snackbar.TextView">
+        <item name="android:textColor">@color/inverse_on_surface</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.BodyMedium</item>
+    </style>
+    <style name="Widget.Kasrat.Snackbar.Button" parent="Widget.Material3.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/primary_fixed_dim</item>
+    </style>
+
+    <!-- ── Sheets + dialogs ───────────────────────────────────────────── -->
+    <style name="ThemeOverlay.Kasrat.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Kasrat.BottomSheet</item>
+        <item name="android:navigationBarColor">@color/surface_lowest</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="enableEdgeToEdge">true</item>
+    </style>
+    <style name="Widget.Kasrat.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/surface_lowest</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Kasrat.Sheet</item>
+    </style>
+
+    <style name="ThemeOverlay.Kasrat.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/surface_lowest</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_lowest</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/Kasrat.DialogTitle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Kasrat.DialogBody</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Kasrat.Button.Link</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Kasrat.Button.Ghost</item>
+        <item name="shapeAppearanceCornerExtraLarge">@style/ShapeAppearance.Kasrat.Card</item>
+    </style>
+    <style name="Kasrat.DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.HeadlineSmall</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="Kasrat.DialogBody" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.BodyMedium</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <!-- ── Navigation ─────────────────────────────────────────────────── -->
+    <style name="Widget.Kasrat.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/ink</item>
+        <item name="itemIconTint">@color/sl_nav_item</item>
+        <item name="itemTextColor">@color/sl_nav_item</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.Kasrat.MetaSmall</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.Kasrat.MetaSmall</item>
+        <item name="itemActiveIndicatorStyle">@null</item>
+        <item name="itemRippleColor">@color/sl_ripple_dark</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Widget.Kasrat.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/transparent</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Kasrat.HeadlineSmall</item>
+        <item name="titleTextColor">@color/text_primary</item>
+        <item name="navigationIconTint">@color/text_primary</item>
+    </style>
+
+    <!-- ── Text helpers used directly in layouts ──────────────────────── -->
+    <!-- Pill tag: neutral by default ("Private Circle"); .Mint / .Primary / .Gold variants. -->
+    <style name="Kasrat.Tag" parent="">
+        <item name="android:background">@drawable/bg_tag</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.MetaSmall</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="Kasrat.Tag.Mint">
+        <item name="android:background">@drawable/bg_tag_mint</item>
+        <item name="android:textColor">@color/on_secondary_container</item>
+    </style>
+    <style name="Kasrat.Tag.Primary">
+        <item name="android:background">@drawable/bg_tag_primary</item>
+        <item name="android:textColor">@color/amber</item>
+    </style>
+    <style name="Kasrat.Tag.Gold">
+        <item name="android:background">@drawable/bg_tag_gold</item>
+        <item name="android:textColor">@color/on_tertiary_fixed</item>
+    </style>
+
+    <!-- Section title: "Prayer Milestones", "Top Contributors" (title-md, bold). -->
+    <!-- Section heading, now the Stitch eyebrow (uppercase, ink/70). -->
+    <style name="Kasrat.SectionLabel" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.K.Eyebrow</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:paddingTop">@dimen/space_lg</item>
+        <item name="android:paddingBottom">@dimen/space_sm</item>
+        <item name="android:accessibilityHeading">true</item>
+    </style>
+
+    <!-- Small uppercase eyebrow above a value ("CURRENT ROUND"). -->
+    <style name="Kasrat.Eyebrow" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.Kasrat.Eyebrow</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+
+    <!-- ── Stitch kit helpers (Phase 2+) ─────────────────────────────────── -->
+    <!-- Elevated card: white, hairline, 28dp, soft warm shadow (0 12 32 rgba(60,40,20,.06)). -->
+    <style name="K.Card" parent="">
+        <item name="android:background">@drawable/bg_k_card</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:outlineSpotShadowColor">@color/k_shadow_card</item>
+        <item name="android:outlineAmbientShadowColor">@color/transparent</item>
+    </style>
+    <!-- Hero primary pill (py-4): 52dp, teal glow (0 12 28 rgba(15,94,85,.22)). -->
+    <style name="Widget.K.Button.Hero" parent="Widget.Kasrat.Button">
+        <item name="android:minHeight">52dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="elevation">10dp</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:outlineSpotShadowColor">@color/k_deep_teal</item>
+        <item name="android:outlineAmbientShadowColor">@color/transparent</item>
+    </style>
+    <!-- White pill with hairline (Google, "Join with code"), py-3.5. -->
+    <style name="Widget.K.Button.Paper" parent="Widget.Kasrat.Button.Light">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelLg</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:outlineSpotShadowColor">@color/k_shadow_card</item>
+        <item name="android:outlineAmbientShadowColor">@color/transparent</item>
+    </style>
+    <!-- Quiet text button: label-lg, deep-ink/70 ("Skip", "Create account"). -->
+    <style name="Widget.K.Button.Quiet" parent="Widget.Kasrat.Button.Ghost">
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelLg</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+    <!-- Field label above an input: label-sm, deep-ink/80, 4dp inset. -->
+    <style name="K.FieldLabel" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+    <!-- White top pill with a teal dot ("Bismillah"). -->
+    <style name="Kasrat.Tag.Paper">
+        <item name="android:background">@drawable/bg_k_pill_paper</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:drawableStart">@drawable/dot_k_teal</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+    <!-- Soft-ivory input → pure-white variant (sign-in). -->
+    <style name="Widget.K.TextInputLayout.White" parent="Widget.Kasrat.TextInputLayout">
+        <item name="boxBackgroundColor">@color/surface_lowest</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.K.TextInput.Tall</item>
+    </style>
+    <style name="ThemeOverlay.K.TextInput.Tall" parent="ThemeOverlay.Kasrat.TextInput">
+        <item name="editTextStyle">@style/Widget.K.EditText.Tall</item>
+    </style>
+    <!-- py-3.5 px-4 -->
+    <style name="Widget.K.EditText.Tall" parent="Widget.Kasrat.EditText">
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+    <!-- 32dp overlapping member avatar (initials stand in for photos). -->
+    <style name="K.AvatarStack" parent="">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:background">@drawable/bg_k_avatar_stack</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="android:textColor">@color/on_secondary_container</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+    <!-- 28dp stepper discs (Stitch w-7 h-7) with a 14dp icon. -->
+    <style name="K.StepMinus" parent="">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:background">@drawable/bg_k_step_minus</item>
+        <item name="android:padding">7dp</item>
+        <item name="android:src">@drawable/ic_ph_minus</item>
+        <item name="tint">@color/text_primary</item>
+    </style>
+    <style name="K.StepPlus" parent="">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:background">@drawable/bg_k_step_plus</item>
+        <item name="android:padding">7dp</item>
+        <item name="android:src">@drawable/ic_ph_plus</item>
+        <item name="tint">@color/surface_lowest</item>
+    </style>
+    <!-- Text tab ("33 · 100 · 1,000 · Custom"): label-sm, underline when chosen (set in code). -->
+    <style name="K.TextTab" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:gravity">bottom|center_horizontal</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <style name="K.TextTabDot" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">12dp</item>
+        <item name="android:text">·</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="android:textColor">@color/k_deep_ink_40</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+    <!-- Stats strip cell (Stitch detail: 3 columns, Fraunces headline-sm over label-sm). -->
+    <style name="K.StatCell" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingHorizontal">8dp</item>
+    </style>
+    <style name="K.StatValue" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">—</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.HeadlineSm</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="K.StatLabel" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+    <!-- Emblem picker rows (Stitch new_circle_teal). -->
+    <style name="K.PickerLabel" parent="">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+    <style name="K.PickerRow" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <!-- Circle home tabs (Stitch: pb-2.5, label-sm, ink/70; current one ink with 2dp teal underline). -->
+    <style name="K.CircleTab" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:gravity">bottom|center_horizontal</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingHorizontal">2dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.LabelSm</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+    <!-- Settings section heading (eyebrow, ink/70, px-1, gap-2.5 above its card). -->
+    <style name="K.SectionEyebrow" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingHorizontal">4dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:accessibilityHeading">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.K.Eyebrow</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+</resources>

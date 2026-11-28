@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 5 · Ranks + Hall of Fame (Stitch ranks_teal, hall_of_fame_teal). -->
+<resources>
+    <string name="ranks_title_k">درجے</string>
+    <string name="ranks_tab_week">اس ہفتے</string>
+    <string name="ranks_tab_all">اب تک</string>
+    <string name="ranks_prefix_global">امت نے پڑھے</string>
+    <string name="ranks_prefix_group">آپ کے حلقے نے پڑھے</string>
+    <string name="ranks_suffix_week">درود اس ہفتے</string>
+    <string name="ranks_suffix_all">درود اب تک</string>
+    <string name="ranks_closes_k">ہفتہ بند ہوگا %1$s · %2$s</string>
+    <string name="ranks_left_dh">%1$dد %2$dگ</string>
+    <string name="ranks_left_hm">%1$dگ %2$dم</string>
+    <string name="ranks_left_m">%1$dم</string>
+    <string name="ranks_hall_cd">ہال آف فیم</string>
+    <string name="ranks_close_cd">ہفتہ بند کریں</string>
+    <string name="rank_up">↑%d</string>
+    <string name="rank_down">↓%d</string>
+    <string name="ranks_pinned_rank">#%s</string>
+    <string name="hall_sub">ہر ہفتے کے چیمپئن</string>
+    <string name="hall_week_dates">ہفتہ %1$d · %2$s</string>
+    <string name="hall_first_place">پہلی پوزیشن</string>
+    <string name="hall_person_line">%1$s · %2$s</string>
+</resources>

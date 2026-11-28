@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_circles">حلقے</string>
+    <string name="home_date_line">%1$s · %2$s</string>
+    <string name="home_today_caption">آج کے درود</string>
+    <string name="home_vs_yesterday_up">کل سے +%1$d%%</string>
+    <string name="home_vs_yesterday_down">کل سے −%1$d%%</string>
+    <string name="home_vs_yesterday_same">کل جتنا</string>
+    <string name="home_intention">روزانہ کی نیت</string>
+    <string name="home_intention_title">روزانہ کی نیت</string>
+    <string name="home_intention_sub">آپ روزانہ کتنے درود پڑھنا چاہتے ہیں۔ یہ صرف آپ کو دکھتا ہے۔</string>
+    <string name="home_intention_cd">روزانہ کی نیت %1$s، آج %2$s پڑھے۔ بدلنے کے لیے ٹیپ کریں۔</string>
+    <string name="home_your_circles">آپ کے حلقے</string>
+    <string name="home_weekly_goal">ہفتہ وار ہدف</string>
+    <string name="home_circle_of">%1$s / %2$s</string>
+    <string name="home_circle_week">اس ہفتے %1$s</string>
+    <string name="home_circles_empty_title">مل کر پڑھیں</string>
+    <string name="home_circles_empty_body">ایک حلقہ شروع کریں یا کوڈ سے شامل ہوں اور ہفتہ وار ہدف بانٹیں۔</string>
+    <string name="home_circles_empty_action">حلقوں پر جائیں</string>
+    <string name="home_continue">پڑھنا جاری رکھیں</string>
+    <string name="home_continue_progress">%1$s / %2$s</string>
+    <string name="home_open_tasbih">تسبیح کھولیں</string>
+    <string name="home_streak_cd">مسلسل %1$d دن</string>
+    <plurals name="home_members">
+        <item quantity="one">%d رکن</item>
+        <item quantity="other">%d اراکین</item>
+    </plurals>
+    <string name="home_see_all">سب دیکھیں</string>
+    <string name="home_circle_of_week">اس ہفتے %1$s میں سے</string>
+    <string name="home_circle_this_week">اس ہفتے</string>
+    <string name="home_circle_pct">%1$d%%</string>
+</resources>

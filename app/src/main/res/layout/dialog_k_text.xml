@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One text field for a dialog (circle name / description). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/space_lg"
+    android:paddingTop="@dimen/space_sm">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_layout"
+        style="@style/Widget.Kasrat.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences"
+            android:textDirection="firstStrong" />
+    </com.google.android.material.textfield.TextInputLayout>
+</FrameLayout>

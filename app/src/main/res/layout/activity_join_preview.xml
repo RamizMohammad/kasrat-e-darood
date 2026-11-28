@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 6 · Circle invite (Stitch join_circle_preview_teal): back · "CIRCLE INVITE", a card with
+     the 80dp emblem, name, "14 members · Private", member faces (+N), this week vs the goal,
+     "Started Mar 2026", then "Join circle" and "Your logs will count here from today". -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Kasrat.IconButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_back"
+            android:elevation="3dp"
+            app:icon="@drawable/ic_ph_arrow_left"
+            app:iconTint="@color/text_primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/circles_invite_eyebrow"
+            android:textAppearance="@style/TextAppearance.K.Eyebrow"
+            android:textColor="@color/text_secondary" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingVertical="24dp">
+
+        <LinearLayout
+            style="@style/K.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.GroupAvatarView
+                android:id="@+id/preview_avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/bg_k_emblem_white"
+                android:elevation="5dp"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/k_shadow_card" />
+
+            <TextView
+                android:id="@+id/preview_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary"
+                tools:text="Karachi &amp; Lahore Family" />
+
+            <TextView
+                android:id="@+id/preview_meta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="@style/TextAppearance.K.BodySm"
+                android:textColor="@color/text_muted"
+                tools:text="14 members · Private" />
+
+            <LinearLayout
+                android:id="@+id/preview_faces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hairline"
+                android:layout_marginTop="20dp"
+                android:background="@color/hairline" />
+
+            <LinearLayout
+                android:id="@+id/preview_week_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ranks_tab_week"
+                        android:textAppearance="@style/TextAppearance.K.BodySm"
+                        android:textColor="@color/text_muted" />
+
+                    <TextView
+                        android:id="@+id/preview_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.K.SerifLabel"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        tools:text="84,250 of 1,00,000" />
+                </LinearLayout>
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/preview_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:max="1000" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/preview_started"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.K.BodySm"
+                android:textColor="@color/text_muted"
+                tools:text="Started Mar 2026" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/preview_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_error_plate"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:textAppearance="@style/TextAppearance.K.BodySm"
+        android:textColor="@color/brick"
+        android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/preview_join"
+        style="@style/Widget.K.Button.Hero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/circles_join_button" />
+
+    <TextView
+        android:id="@+id/preview_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/circles_join_note"
+        android:textAppearance="@style/TextAppearance.K.LabelSm"
+        android:textColor="@color/text_secondary" />
+</LinearLayout>

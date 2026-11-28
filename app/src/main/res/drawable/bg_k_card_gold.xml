@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circle card whose weekly goal is reached: white, 1px gold, 28dp. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/surface_lowest" />
+    <stroke android:width="@dimen/hairline" android:color="@color/k_gold" />
+    <corners android:radius="@dimen/k_radius_lg" />
+</shape>

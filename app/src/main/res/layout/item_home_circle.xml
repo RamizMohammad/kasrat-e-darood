@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Home "Your circles" card: 40dp emblem · bold name · "6 members" · % capsule; then the week's
+     total in the serif with "of 1,00,000 this week", and the ticked goal bar. Full width when
+     you're in one circle; 280dp cards that scroll sideways when you're in more. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/K.Card"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="14dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.GroupAvatarView
+            android:id="@+id/circle_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:importantForAccessibility="no" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/circle_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.K.TitleMd"
+                android:textColor="@color/text_primary"
+                android:textDirection="firstStrong"
+                tools:text="Khan Household" />
+
+            <TextView
+                android:id="@+id/circle_members"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                android:textColor="@color/text_muted"
+                tools:text="6 members" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/circle_pct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_k_pct_pill"
+            android:fontFeatureSettings="tnum"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/on_secondary_container"
+            android:textStyle="bold"
+            tools:text="62%" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/circle_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+            android:textColor="@color/text_primary"
+            tools:text="18,600" />
+
+        <TextView
+            android:id="@+id/circle_progress_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFeatureSettings="tnum"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_muted"
+            tools:text="of 30,000 this week" />
+    </LinearLayout>
+
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.KTickBarView
+        android:id="@+id/circle_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" />
+</LinearLayout>

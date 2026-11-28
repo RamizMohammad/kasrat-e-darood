@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Phase 6b · Circle settings (Stitch circle_settings_teal): back + serif title, then cards of
+    hairline-divided rows: Details (emblem · name · description), Goal &amp; Privacy (goal ·
+    privacy · who can join · board), Invite (code, Regenerate, share), Members (role · dots),
+    Announcement (pinned note, Update note), Danger zone (Leave · Delete).
+    Members who can't manage see Invite, Members and Leave. Driven by GroupSettingsActivity.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Kasrat.IconButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_back"
+            app:icon="@drawable/ic_ph_arrow_left"
+            app:iconTint="@color/text_primary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:text="@string/circle_settings_title"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/gs_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/k_page_margin"
+            android:paddingBottom="40dp">
+
+        <LinearLayout
+            android:id="@+id/gs_details_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:text="@string/circle_section_details" />
+
+            <LinearLayout
+                android:id="@+id/gs_details"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gs_goal_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:text="@string/circle_section_goal" />
+
+            <LinearLayout
+                android:id="@+id/gs_goal"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gs_invite_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:text="@string/circle_section_invite" />
+
+            <LinearLayout
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/circle_code_label"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/text_muted" />
+
+                    <TextView
+                        android:id="@+id/gs_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFeatureSettings="tnum"
+                        android:letterSpacing="0.1"
+                        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                        android:textColor="@color/text_primary"
+                        android:textDirection="ltr"
+                        android:textIsSelectable="true"
+                        tools:text="K7Q2XM" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/gs_regenerate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_k_ivory_pill"
+                    android:drawablePadding="6dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="14dp"
+                    android:text="@string/circle_regenerate"
+                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                    android:textColor="@color/text_primary"
+                    app:drawableStartCompat="@drawable/ic_ph_arrows_clockwise"
+                    app:drawableTint="@color/text_primary" />
+
+                <ImageButton
+                    android:id="@+id/gs_share"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_k_ivory_pill"
+                    android:contentDescription="@string/circle_share_code"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_ph_share_network"
+                    app:tint="@color/text_primary" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gs_members_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="4dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:accessibilityHeading="true"
+                    android:text="@string/circle_section_members"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/gs_members_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFeatureSettings="tnum"
+                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                    android:textColor="@color/text_secondary"
+                    tools:text="14 total" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gs_members"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gs_note_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:text="@string/circle_section_note" />
+
+            <LinearLayout
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/gs_note"
+                    android:text="@string/circle_note_label"
+                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                    android:textColor="@color/text_muted" />
+
+                <EditText
+                    android:id="@+id/gs_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_k_note_field"
+                    android:gravity="top|start"
+                    android:hint="@string/circle_note_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="280"
+                    android:minLines="3"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:textAppearance="@style/TextAppearance.K.SerifItalic"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_muted"
+                    android:textDirection="firstStrong" />
+
+                <TextView
+                    android:id="@+id/gs_note_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_k_pill_paper"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:text="@string/circle_note_update"
+                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gs_danger_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:text="@string/circle_section_danger" />
+
+            <LinearLayout
+                android:id="@+id/gs_danger"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+        </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

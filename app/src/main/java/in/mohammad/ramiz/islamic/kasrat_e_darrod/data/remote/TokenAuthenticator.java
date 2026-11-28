@@ -30,9 +30,13 @@ public class TokenAuthenticator implements Authenticator {
     private final TokenStore store;
     private final String baseUrl;
     private volatile ApiService refreshApi;
+    private int lastRefreshCode;
+
+    private final Context app;
 
     public TokenAuthenticator(Context context, String baseUrl) {
-        this.store = new TokenStore(context.getApplicationContext());
+        this.app = context.getApplicationContext();
+        this.store = new TokenStore(app);
         this.baseUrl = baseUrl;
     }
 
@@ -62,6 +66,7 @@ public class TokenAuthenticator implements Authenticator {
             try {
                 retrofit2.Response<dto.TokenPair> r =
                         refreshApi().refresh(new dto.RefreshRequest(refresh)).execute();
+                lastRefreshCode = r.code();
                 if (r.isSuccessful() && r.body() != null && r.body().accessToken != null) {
                     store.save(r.body().accessToken, r.body().refreshToken);
                     return retryWith(response.request(), r.body().accessToken);
@@ -71,8 +76,9 @@ public class TokenAuthenticator implements Authenticator {
                 return null;
             }
 
-            // Refresh token rejected: the session is over.
-            store.clear();
+            // Refresh token rejected (401/403): the session is over. A server
+            // hiccup (5xx, 429) keeps the session; the request just fails.
+            if (lastRefreshCode == 401 || lastRefreshCode == 403) store.clear();
             return null;
         }
     }
@@ -86,7 +92,8 @@ public class TokenAuthenticator implements Authenticator {
     /** A bare client with no auth interceptor/authenticator (avoids recursion). */
     private ApiService refreshApi() {
         if (refreshApi == null) {
-            OkHttpClient bare = new OkHttpClient.Builder().build();
+            // Same timeouts and certificate pins as the main client.
+            OkHttpClient bare = ApiClient.base(app).build();
             refreshApi = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .client(bare)

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Urdu: Noto Nastaliq Urdu (see font-ur/) needs about 1.5x the line height. -->
+<resources>
+    <style name="TextAppearance.Kasrat.Display" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:fontFamily">@font/newsreader_headline</item>
+        <item name="fontFamily">@font/newsreader_headline</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:lineHeight">60sp</item>
+        <item name="lineHeight">60sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/newsreader_headline</item>
+        <item name="fontFamily">@font/newsreader_headline</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:lineHeight">54sp</item>
+        <item name="lineHeight">54sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">@font/newsreader</item>
+        <item name="fontFamily">@font/newsreader</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">45sp</item>
+        <item name="lineHeight">45sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.Recitation" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/newsreader</item>
+        <item name="fontFamily">@font/newsreader</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">48sp</item>
+        <item name="lineHeight">48sp</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.Recitation.Card">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineHeight">44sp</item>
+        <item name="lineHeight">44sp</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.Quote" parent="TextAppearance.Kasrat.Recitation">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">36sp</item>
+        <item name="lineHeight">36sp</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontFamily">@font/manrope</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">39sp</item>
+        <item name="lineHeight">39sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontFamily">@font/manrope</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">33sp</item>
+        <item name="lineHeight">33sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontFamily">@font/manrope</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineHeight">33sp</item>
+        <item name="lineHeight">33sp</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="TextAppearance.Kasrat.Arabic.Large">
+        <item name="android:textSize">34sp</item>
+        <item name="android:lineHeight">90sp</item>
+        <item name="lineHeight">90sp</item>
+    </style>
+
+</resources>

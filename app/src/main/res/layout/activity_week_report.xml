@@ -1,54 +1,487 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    Phase 7b · Weekly report (Stitch weekly_report_teal): the faint 8-point star pattern and a
+    teal/gold glow behind the hero; back + "WEEKLY CERTIFICATE"; "‹ Week 47 · 15–21 Nov 2026 ›";
+    "A blessed week, Ramiz"; 6,420 darood; the gold "Top 8% of the ummah" pill; Daily rhythm;
+    Best day · Streak · Most recited; Circle results; Share as image · Download PDF.
+    Driven by ui/profile/WeekReportActivity.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/surface">
+    android:background="@color/ink"
+    android:clipChildren="false">
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:gravity="center_vertical" android:orientation="horizontal"
-        android:paddingHorizontal="20dp" android:paddingTop="50dp" android:paddingBottom="4dp">
-        <TextView android:id="@+id/btn_back"
-            android:layout_width="40dp" android:layout_height="40dp"
-            android:gravity="center" android:text="‹" android:textSize="28sp"
-            android:textColor="@color/on_surface" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" android:text="@string/week_report"
-            android:textSize="22sp" android:textStyle="bold"
-            android:fontFamily="serif" android:textColor="@color/primary" />
-    </LinearLayout>
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:paddingHorizontal="24dp" android:paddingBottom="8dp"
-        android:text="@string/week_report_subtitle"
-        android:textColor="@color/on_surface_variant" android:textSize="14sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_weeks"
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.KStarPatternView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingHorizontal="24dp"
-        android:paddingBottom="20dp" />
+        android:layout_height="340dp"
+        android:alpha="0.04" />
 
-    <TextView
-        android:id="@+id/weeks_empty"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="24dp"
-        android:text="@string/no_archived_weeks"
-        android:textColor="@color/on_surface_variant"
-        android:visibility="gone" />
-
-    <ProgressBar
-        android:id="@+id/weeks_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <View
+        android:layout_width="320dp"
+        android:layout_height="240dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="24dp"
-        android:visibility="gone" />
-</LinearLayout>
+        android:layout_marginTop="-48dp"
+        android:alpha="0.7"
+        android:background="@drawable/bg_k_report_glow"
+        android:importantForAccessibility="no" />
+
+    <LinearLayout
+        android:id="@+id/report_column"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/report_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/k_page_margin"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_back"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/action_back"
+                app:icon="@drawable/ic_ph_arrow_left"
+                app:iconTint="@color/text_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:accessibilityHeading="true"
+                android:text="@string/report_k_certificate"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                android:textColor="@color/text_secondary" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/report_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:visibility="invisible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/k_page_margin"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="32dp">
+
+                    <!-- Hero -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingVertical="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/report_prev"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/report_k_prev"
+                                android:padding="9dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_ph_caret_left"
+                                app:tint="@color/text_secondary" />
+
+                            <TextView
+                                android:id="@+id/report_week"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="4dp"
+                                android:fontFeatureSettings="tnum"
+                                android:gravity="center"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                                android:textColor="@color/text_secondary"
+                                tools:text="Week 47 · 15–21 Nov 2026" />
+
+                            <ImageButton
+                                android:id="@+id/report_next"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/report_k_next"
+                                android:padding="9dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_ph_caret_right"
+                                app:tint="@color/text_secondary" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/report_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:breakStrategy="balanced"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                            android:textColor="@color/text_primary"
+                            android:textDirection="firstStrong"
+                            tools:text="A blessed week, Ramiz" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:baselineAligned="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/report_total"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFeatureSettings="tnum"
+                                android:textAppearance="@style/TextAppearance.K.DisplayLg"
+                                android:textColor="@color/text_primary"
+                                tools:text="6,420" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/report_k_darood"
+                                android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                                android:textColor="@color/text_secondary" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/report_rank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_k_gold_pill"
+                            android:elevation="2dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:outlineAmbientShadowColor="@color/transparent"
+                            android:outlineSpotShadowColor="@color/k_shadow_card"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="6dp"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_ph_sparkle"
+                                app:tint="@color/k_gold" />
+
+                            <TextView
+                                android:id="@+id/report_rank_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:fontFeatureSettings="tnum"
+                                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                                android:textColor="@color/text_primary"
+                                tools:text="Top 8% of the ummah" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Daily rhythm -->
+                    <LinearLayout
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:accessibilityHeading="true"
+                                android:text="@string/report_k_rhythm"
+                                android:textAppearance="@style/TextAppearance.K.TitleMd"
+                                android:textColor="@color/text_primary" />
+
+                            <TextView
+                                android:id="@+id/report_avg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFeatureSettings="tnum"
+                                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                                android:textColor="@color/text_muted"
+                                tools:text="Avg 917 / day" />
+                        </LinearLayout>
+
+                        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.KDayBarsView
+                            android:id="@+id/report_bars"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp" />
+                    </LinearLayout>
+
+                    <!-- Highlights -->
+                    <LinearLayout
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:divider="@drawable/k_divider"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="20dp"
+                        android:showDividers="middle">
+
+                    <LinearLayout
+                        android:id="@+id/report_best_label_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="14dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_ph_sun"
+                            app:tint="@color/k_gold" />
+
+                        <TextView
+                            android:id="@+id/report_best_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/report_k_best_day"
+                            android:textAppearance="@style/TextAppearance.K.BodySm"
+                            android:textColor="@color/text_muted" />
+
+                        <TextView
+                            android:id="@+id/report_best"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:fontFeatureSettings="tnum"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:text="—"
+                            android:textAlignment="viewEnd"
+                            android:textAppearance="@style/TextAppearance.K.LabelLg"
+                            android:textColor="@color/text_primary"
+                            android:textDirection="firstStrong" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/report_streak_label_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="14dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_ph_flame"
+                            app:tint="@color/amber" />
+
+                        <TextView
+                            android:id="@+id/report_streak_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/report_k_streak"
+                            android:textAppearance="@style/TextAppearance.K.BodySm"
+                            android:textColor="@color/text_muted" />
+
+                        <TextView
+                            android:id="@+id/report_streak"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:fontFeatureSettings="tnum"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:text="—"
+                            android:textAlignment="viewEnd"
+                            android:textAppearance="@style/TextAppearance.K.LabelLg"
+                            android:textColor="@color/text_primary"
+                            android:textDirection="firstStrong" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/report_most_label_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="14dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_ph_book_open"
+                            app:tint="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/report_most_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/report_k_most"
+                            android:textAppearance="@style/TextAppearance.K.BodySm"
+                            android:textColor="@color/text_muted" />
+
+                        <TextView
+                            android:id="@+id/report_most"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:fontFeatureSettings="tnum"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:text="—"
+                            android:textAlignment="viewEnd"
+                            android:textAppearance="@style/TextAppearance.K.LabelLg"
+                            android:textColor="@color/text_primary"
+                            android:textDirection="firstStrong" />
+                    </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Circle results (this week only) -->
+                    <LinearLayout
+                        android:id="@+id/report_circles_card"
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:accessibilityHeading="true"
+                            android:text="@string/report_k_circles"
+                            android:textAppearance="@style/TextAppearance.K.TitleMd"
+                            android:textColor="@color/text_primary" />
+
+                        <LinearLayout
+                            android:id="@+id/report_circles"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:divider="@drawable/k_divider"
+                            android:orientation="vertical"
+                            android:showDividers="middle" />
+                    </LinearLayout>
+
+                    <!-- Actions -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/report_share"
+                        style="@style/Widget.K.Button.Hero"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/report_k_share"
+                        app:icon="@drawable/ic_ph_share_network"
+                        app:iconGravity="textStart" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/report_pdf"
+                        style="@style/Widget.K.Button.Quiet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/report_k_pdf"
+                        app:icon="@drawable/ic_ph_file_pdf"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/report_loading"
+                style="@style/Widget.Kasrat.Progress.Circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+
+            <LinearLayout
+                android:id="@+id/report_state"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/k_page_margin"
+                android:layout_marginTop="16dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/report_state_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/week_error_title"
+                    android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/week_error_hint"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_muted" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/report_retry"
+                    style="@style/Widget.K.Button.Paper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_try_again" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

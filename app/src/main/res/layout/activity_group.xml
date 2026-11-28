@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Phase 6b · Circle home (Stitch circle_home_board_teal / circle_home_activity_teal).
+    Top bar: back · (emblem + name once the hero scrolls away) · dots-three.
+    Hero (scrolls away): 64dp emblem, name, "14 members · Private", the invite-code capsule
+    (copy · share), the weekly goal card. Pinned under it: Board · Activity · About text tabs.
+    Not a member → JoinPreviewActivity. Deleted / banned / not found → a plain status.
+    Driven by ui/groups/GroupActivity.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/group_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Kasrat.IconButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_back"
+            app:icon="@drawable/ic_ph_arrow_left"
+            app:iconTint="@color/text_primary" />
+
+        <LinearLayout
+            android:id="@+id/group_mini"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:alpha="0"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.GroupAvatarView
+                android:id="@+id/group_mini_avatar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:id="@+id/group_mini_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.K.TitleMd"
+                android:textColor="@color/text_primary"
+                android:textDirection="firstStrong"
+                tools:text="Karachi &amp; Lahore Family" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/group_settings_btn"
+            style="@style/Widget.Kasrat.IconButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/circle_options"
+            android:visibility="invisible"
+            app:icon="@drawable/ic_ph_dots_three"
+            app:iconTint="@color/text_primary" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Member view -->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/group_member"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/group_appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/ink"
+                android:stateListAnimator="@null"
+                app:elevation="0dp"
+                app:liftOnScroll="false">
+
+                <LinearLayout
+                    android:id="@+id/group_hero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/k_page_margin"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="24dp"
+                    app:layout_scrollFlags="scroll">
+
+                    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.GroupAvatarView
+                        android:id="@+id/group_avatar"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:elevation="6dp"
+                        android:outlineAmbientShadowColor="@color/transparent"
+                        android:outlineSpotShadowColor="@color/k_shadow_card"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:id="@+id/group_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:accessibilityHeading="true"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                        android:textColor="@color/text_primary"
+                        android:textDirection="firstStrong"
+                        tools:text="Karachi &amp; Lahore Family" />
+
+                    <TextView
+                        android:id="@+id/group_meta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.K.BodySm"
+                        android:textColor="@color/text_secondary"
+                        tools:text="14 members · Private" />
+
+                    <!-- Invite code capsule: CODE | copy · share -->
+                    <LinearLayout
+                        android:id="@+id/group_code_row"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_k_pill_paper"
+                        android:elevation="3dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:outlineAmbientShadowColor="@color/transparent"
+                        android:outlineSpotShadowColor="@color/k_shadow_card"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="8dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/group_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFeatureSettings="tnum"
+                            android:letterSpacing="0.1"
+                            android:textAppearance="@style/TextAppearance.K.LabelSm"
+                            android:textColor="@color/text_primary"
+                            android:textDirection="ltr"
+                            tools:text="K7Q2XM" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="14dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@color/hairline" />
+
+                        <ImageButton
+                            android:id="@+id/group_copy"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/circle_copy_code"
+                            android:padding="8dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_ph_copy"
+                            app:tint="@color/text_muted" />
+
+                        <ImageButton
+                            android:id="@+id/group_share"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/circle_share_code"
+                            android:padding="8dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_ph_share_network"
+                            app:tint="@color/text_muted" />
+                    </LinearLayout>
+
+                    <!-- Weekly goal card -->
+                    <LinearLayout
+                        android:id="@+id/group_goal_card"
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/group_goal_total"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFeatureSettings="tnum"
+                                android:textAppearance="@style/TextAppearance.K.DisplayLgMobile"
+                                android:textColor="@color/text_primary"
+                                tools:text="84,250" />
+
+                            <TextView
+                                android:id="@+id/group_goal_of"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_weight="1"
+                                android:fontFeatureSettings="tnum"
+                                android:textAppearance="@style/TextAppearance.K.BodySm"
+                                android:textColor="@color/text_muted"
+                                tools:text="of 1,00,000 this week" />
+
+                            <TextView
+                                android:id="@+id/group_goal_pct"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFeatureSettings="tnum"
+                                android:textAppearance="@style/TextAppearance.K.TitleMd"
+                                android:textColor="@color/amber"
+                                tools:text="84%" />
+                        </LinearLayout>
+
+                        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.KTickBarView
+                            android:id="@+id/group_goal_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp" />
+
+                        <TextView
+                            android:id="@+id/group_goal_left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:textAppearance="@style/TextAppearance.K.LabelSm"
+                            android:textColor="@color/text_muted"
+                            tools:text="2 days left · closes Friday after Maghrib" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Board · Activity · About (stays pinned) -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ink"
+                    android:paddingHorizontal="@dimen/k_page_margin">
+
+                    <LinearLayout
+                        android:id="@+id/group_tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_k_hairline_bottom"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/group_tab_board"
+                            style="@style/K.CircleTab"
+                            android:text="@string/groups_tab_board" />
+
+                        <TextView
+                            android:id="@+id/group_tab_activity"
+                            style="@style/K.CircleTab"
+                            android:layout_marginHorizontal="32dp"
+                            android:text="@string/groups_tab_activity" />
+
+                        <TextView
+                            android:id="@+id/group_tab_about"
+                            style="@style/K.CircleTab"
+                            android:text="@string/groups_tab_about" />
+                    </LinearLayout>
+                </FrameLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+                <include
+                    android:id="@+id/group_board"
+                    layout="@layout/view_board_pane" />
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/group_activity_refresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/group_activity_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="@dimen/k_page_margin"
+                        android:paddingTop="24dp"
+                        android:paddingBottom="40dp" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/group_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id="@+id/group_about_column"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/k_page_margin"
+                        android:paddingTop="24dp"
+                        android:paddingBottom="40dp" />
+                </androidx.core.widget.NestedScrollView>
+            </FrameLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <!-- Deleted / banned / not found / couldn't load -->
+        <include
+            android:id="@+id/group_status"
+            layout="@layout/view_ranks_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/group_skeleton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/k_page_margin">
+
+            <View android:layout_width="64dp" android:layout_height="64dp" android:background="@drawable/bg_k_skeleton_line" />
+            <View android:layout_width="220dp" android:layout_height="28dp" android:layout_marginTop="12dp" android:background="@drawable/bg_k_skeleton_line" />
+            <View android:layout_width="140dp" android:layout_height="14dp" android:layout_marginTop="8dp" android:background="@drawable/bg_k_skeleton_line" />
+            <View android:layout_width="match_parent" android:layout_height="132dp" android:layout_marginTop="24dp" android:background="@drawable/bg_k_skeleton_line" />
+            <View android:layout_width="match_parent" android:layout_height="220dp" android:layout_marginTop="24dp" android:background="@drawable/bg_k_skeleton_line" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

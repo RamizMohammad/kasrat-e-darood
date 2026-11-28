@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One log in a day's card: name, "11:46 AM · After Fajr", serif count; while the 5-minute
+     undo window is open, a teal-soft "Undo · 4:12" capsule after the count. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_k_row_single"
+    android:minHeight="72dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="16dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sub_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAppearance="@style/TextAppearance.K.TitleMd"
+                android:textColor="@color/text_primary"
+                android:textDirection="firstStrong"
+                tools:text="Darood-e-Ibrahimi" />
+
+            <TextView
+                android:id="@+id/sub_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textAppearance="@style/TextAppearance.K.BodySm"
+                android:textColor="@color/text_muted"
+                tools:text="11:46 AM · After Fajr" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sub_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFeatureSettings="tnum"
+            android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+            android:textColor="@color/text_primary"
+            tools:text="133" />
+
+        <LinearLayout
+            android:id="@+id/sub_undo"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/bg_k_undo_pill"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_ph_arrow_counter_clockwise"
+                app:tint="@color/on_secondary_container" />
+
+            <TextView
+                android:id="@+id/sub_undo_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:fontFeatureSettings="tnum"
+                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                android:textColor="@color/on_secondary_container"
+                tools:text="Undo · 4:12" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

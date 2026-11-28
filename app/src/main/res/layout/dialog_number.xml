@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Custom tasbih target: one number field. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/space_lg"
+    android:paddingTop="@dimen/space_sm">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/number_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:placeholderText="@string/tasbih_custom_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/number_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="5"
+            android:textAppearance="@style/TextAppearance.Kasrat.Count.Small" />
+    </com.google.android.material.textfield.TextInputLayout>
+</FrameLayout>

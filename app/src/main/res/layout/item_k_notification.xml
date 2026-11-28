@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification row (Stitch notifications_teal): 44dp tinted disc with an icon, text, time,
+     and an 8dp teal dot while unread. Full-bleed, hairline dividers, no card. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_k_line_bottom"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingVertical="16dp">
+
+    <FrameLayout
+        android:id="@+id/nt_disc"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_k_notif_disc_teal">
+
+        <ImageView
+            android:id="@+id/nt_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/amber" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nt_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.K.BodyMd"
+            android:textColor="@color/text_primary"
+            android:textDirection="firstStrong"
+            tools:text="Your Week 47 report is ready to view" />
+
+        <TextView
+            android:id="@+id/nt_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_secondary"
+            tools:text="18 min ago" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/nt_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/bg_k_unread_dot"
+        android:visibility="invisible" />
+</LinearLayout>

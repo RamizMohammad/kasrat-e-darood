@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Weekly report circle result: name, "14 members · 3,840 darood", your place (#1 in teal). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="12dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/rc_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.LabelLg"
+            android:textColor="@color/text_primary"
+            android:textDirection="firstStrong"
+            tools:text="Karachi &amp; Lahore Family" />
+
+        <TextView
+            android:id="@+id/rc_meta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFeatureSettings="tnum"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_muted"
+            tools:text="14 members · 3,840 darood" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rc_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFeatureSettings="tnum"
+        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+        android:textColor="@color/text_primary"
+        tools:text="#3" />
+</LinearLayout>

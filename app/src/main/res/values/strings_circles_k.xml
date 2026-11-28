@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 6a · Circles list, new circle, join (Stitch). -->
+<resources>
+    <string name="groups_avatar_shape">Shape</string>
+    <string name="groups_avatar_color">Color</string>
+    <string name="circles_create">Create a circle</string>
+    <string name="circles_empty_body">Gather your family in a private circle to share a weekly salawat goal and encourage one another gently.</string>
+    <string name="circles_summary">Your circles recited %1$s together</string>
+    <string name="circles_new_title">New circle</string>
+    <string name="circles_name_label">Circle name</string>
+    <string name="circles_name_hint">Khan &amp; Siddiqui Family</string>
+    <string name="circles_desc_label">Description</string>
+    <string name="circles_optional">(optional)</string>
+    <string name="circles_desc_hint">Daily salawat before Maghrib together</string>
+    <string name="circles_goal_resets">Resets every Friday after Maghrib</string>
+    <string name="circles_goal_lakh">%d lakh</string>
+    <string name="circles_goal_k">%dk</string>
+    <string name="circles_private_sub">Join by invite code only</string>
+    <string name="circles_public_sub">Anyone in the community can find</string>
+    <string name="circles_create_button">Create circle</string>
+    <string name="circles_join_title">Join a circle</string>
+    <string name="circles_join_body">Enter the 6-character invite code shared by your family.</string>
+    <string name="circles_join_code_cd">Invite code, 6 letters or numbers</string>
+    <string name="circles_paste">Paste</string>
+    <string name="circles_join_not_found">No circle has that code. Check it and try again.</string>
+    <string name="circles_join_looking">Looking…</string>
+    <string name="circles_invite_eyebrow">Circle invite</string>
+    <string name="circles_join_button">Join circle</string>
+    <string name="circles_join_note">Your logs will count here from today</string>
+    <string name="circles_members_privacy">%1$s · %2$s</string>
+    <string name="circles_of_goal">%1$s of %2$s</string>
+    <string name="circles_started">Started %1$s</string>
+    <string name="circles_open">Open circle</string>
+    <string name="circles_more">+%d</string>
+    <string name="circles_joining">Joining…</string>
+    <string name="circles_requested">Request sent</string>
+    <string name="circles_requested_note">An admin will let you in. You\'ll get a notification.</string>
+</resources>

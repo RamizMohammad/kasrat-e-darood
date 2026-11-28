@@ -1,16 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Layout -->
+    <dimen name="margin_screen">24dp</dimen>
+    <!-- Lets a horizontal row scroll edge to edge while its first item lines up with the margin. -->
+    <dimen name="neg_margin_screen">-24dp</dimen>
+    <dimen name="gutter">16dp</dimen>
+
+    <!-- Spacing scale -->
+    <dimen name="space_xxs">2dp</dimen>
     <dimen name="space_xs">4dp</dimen>
     <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_12">12dp</dimen>
     <dimen name="space_md">16dp</dimen>
     <dimen name="space_lg">24dp</dimen>
-    <dimen name="space_xl">32dp</dimen>
-    <dimen name="container_padding">24dp</dimen>
+    <dimen name="space_32">32dp</dimen>
+    <dimen name="space_xl">40dp</dimen>
 
-    <dimen name="radius_button">16dp</dimen>
-    <dimen name="radius_input">12dp</dimen>
-    <dimen name="radius_card">24dp</dimen>
+    <!-- Radii -->
+    <dimen name="radius_card">28dp</dimen>
+    <dimen name="radius_plate">28dp</dimen>
+    <dimen name="radius_input">20dp</dimen>
+    <dimen name="radius_sheet">28dp</dimen>
+    <!-- Stitch kit radii: sm 12 (code boxes), md 20 (inputs, rows), lg 28 (cards, sheets), pills full. -->
+    <dimen name="radius_sm">12dp</dimen>
+    <dimen name="radius_md">20dp</dimen>
+    <dimen name="radius_lg">28dp</dimen>
+    <!-- Soft warm elevation for cards (Stitch "Layer 1"). -->
+    <dimen name="tasbih_dial">184dp</dimen>
+    <dimen name="tasbih_ring">256dp</dimen>
 
-    <dimen name="card_elevation">2dp</dimen>
-    <dimen name="touch_min">48dp</dimen>
+    <!-- Components -->
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="icon_size">20dp</dimen>
+    <dimen name="icon_size_sm">15dp</dimen>
+    <dimen name="touch_target">48dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="bottom_nav_height">64dp</dimen>
+    <dimen name="hairline">1dp</dimen>
+    <dimen name="paper_padding">20dp</dimen>
+    <dimen name="paper_elevation">10dp</dimen>
+
+    <!-- Avatars -->
+    <dimen name="avatar_xs">28dp</dimen>
+    <dimen name="avatar_sm">36dp</dimen>
+    <dimen name="avatar_md">48dp</dimen>
+    <dimen name="avatar_lg">72dp</dimen>
+    <dimen name="avatar_xl">112dp</dimen>
+
+    <!-- Kasrat-only -->
+    <dimen name="counter_ring">240dp</dimen>
+    <dimen name="podium_first">120dp</dimen>
+    <dimen name="podium_second">96dp</dimen>
+    <dimen name="podium_third">80dp</dimen>
+    <!-- The block each podium place stands on (P4). -->
+    <dimen name="podium_step_first">120dp</dimen>
+    <dimen name="podium_step_second">96dp</dimen>
+    <dimen name="podium_step_third">44dp</dimen>
+    <!-- Room left under the Ranks list so the pinned row never covers the last row. -->
+    <dimen name="ranks_pinned_space">84dp</dimen>
+
+    <!-- ── Stitch kit (spacing / components) ─────────────────────────── -->
+    <dimen name="k_gutter_xs">4dp</dimen>
+    <dimen name="k_gutter_sm">8dp</dimen>
+    <dimen name="k_gutter_md">16dp</dimen>
+    <dimen name="k_gutter_lg">24dp</dimen>
+    <dimen name="k_gutter_xl">32dp</dimen>
+    <dimen name="k_section">40dp</dimen>
+    <dimen name="k_page_margin">24dp</dimen>
+    <dimen name="k_radius_sm">12dp</dimen>
+    <dimen name="k_radius_md">20dp</dimen>
+    <dimen name="k_radius_lg">28dp</dimen>
+    <dimen name="k_icon_button">44dp</dimen>
+    <dimen name="k_icon">20dp</dimen>
+    <dimen name="k_icon_sm">15dp</dimen>
+    <dimen name="k_code_box">44dp</dimen>
+    <dimen name="k_progress_bar">6dp</dimen>
+    <dimen name="k_ring_stroke">4dp</dimen>
+    <dimen name="k_nav_dot">4dp</dimen>
 </resources>

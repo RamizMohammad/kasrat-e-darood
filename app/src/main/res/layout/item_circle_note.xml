@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circle activity: an admin's announcement as a quote card (Fraunces italic) on the timeline. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <View
+        android:id="@+id/ev_rail"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:background="@color/hairline" />
+
+    <FrameLayout
+        android:id="@+id/ev_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            style="@style/K.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+                    android:id="@+id/ev_avatar"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:id="@+id/ev_author"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                    android:textColor="@color/text_muted"
+                    tools:text="Ayesha · Admin" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:alpha="0.7"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_ph_quotes"
+                    app:tint="@color/amber" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ev_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/TextAppearance.K.SerifItalic"
+                android:textColor="@color/text_primary"
+                android:textDirection="firstStrong"
+                tools:text="“Let’s dedicate this Friday’s salawat for Dadi’s shifa.”" />
+
+            <TextView
+                android:id="@+id/ev_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                android:textColor="@color/text_muted"
+                tools:text="Today, 11:10 AM" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/ev_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="7.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_k_dot_teal"
+        android:elevation="11dp" />
+</FrameLayout>

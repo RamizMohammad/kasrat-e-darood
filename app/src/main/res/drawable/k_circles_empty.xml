@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stitch circles_empty_teal illustration: three overlapping rings on a hairline circle. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="176dp" android:height="176dp" android:viewportWidth="180" android:viewportHeight="180">
+    <path android:pathData="M90,90m-68,0a68,68 0,1 1,136 0a68,68 0,1 1,-136 0" android:strokeColor="@color/k_hairline" android:strokeWidth="1" />
+    <path android:pathData="M72,84m-34,0a34,34 0,1 1,68 0a34,34 0,1 1,-68 0" android:strokeColor="@color/k_deep_teal" android:strokeWidth="1.25" android:strokeAlpha="0.75" />
+    <path android:pathData="M108,84m-34,0a34,34 0,1 1,68 0a34,34 0,1 1,-68 0" android:strokeColor="@color/k_deep_teal" android:strokeWidth="1.25" android:strokeAlpha="0.75" />
+    <path android:pathData="M90,112m-34,0a34,34 0,1 1,68 0a34,34 0,1 1,-68 0" android:strokeColor="@color/k_deep_ink" android:strokeWidth="1.25" android:strokeAlpha="0.45" />
+    <path android:pathData="M90,94m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0" android:fillColor="@color/k_deep_teal" android:fillAlpha="0.8" />
+</vector>

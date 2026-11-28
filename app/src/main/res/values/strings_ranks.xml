@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- P4: Ranks, Hall of Fame, closing the week. -->
+<resources>
+    <string name="ranks_title">Leaderboard</string>
+    <string name="ranks_global">Global</string>
+    <string name="ranks_groups">Groups</string>
+    <string name="ranks_scope_week">This week</string>
+    <string name="ranks_scope_all">All time</string>
+    <string name="ranks_label_week">Everyone this week</string>
+    <string name="ranks_label_all">Everyone, all time</string>
+    <string name="ranks_week_n">Week %1$d</string>
+    <string name="ranks_week_closes">Week %1$d · closes %2$s</string>
+    <string name="ranks_week_everyone">Recitations by everyone this week</string>
+    <string name="ranks_all_everyone">Every recitation logged so far</string>
+    <string name="ranks_you">You</string>
+    <string name="ranks_hidden_name">A member</string>
+    <string name="ranks_podium_cd">Place %1$s: %2$s, %3$s</string>
+    <string name="ranks_row_cd">Rank %1$s, %2$s, %3$s recitations</string>
+    <string name="ranks_change_up">up from %1$d last week</string>
+    <string name="ranks_change_down">down from %1$d last week</string>
+    <string name="ranks_next_up">Next up: %1$s, %2$s ahead</string>
+    <string name="ranks_your_rank">You\'re #%1$s</string>
+    <string name="ranks_empty_week_title">No recitations yet this week</string>
+    <string name="ranks_empty_all_title">Nothing logged yet</string>
+    <string name="ranks_empty_hint">Log one and you start the board.</string>
+    <string name="ranks_error_title">Couldn\'t load ranks</string>
+    <string name="ranks_error_hint">Check your connection and try again.</string>
+    <string name="ranks_close_week">Close the week</string>
+    <string name="ranks_close_title">Close this week now?</string>
+    <string name="ranks_close_summary">Week %1$d: %2$s recitations from %3$s people.</string>
+    <string name="ranks_close_top">Top: %1$s</string>
+    <string name="ranks_close_body">It moves into Hall of Fame and a new week starts now. Otherwise it closes by itself on Friday evening.</string>
+    <string name="ranks_close_confirm">Close week</string>
+    <string name="ranks_close_failed">Couldn\'t close the week. Try again.</string>
+    <string name="ranks_closed">Week %1$d closed</string>
+    <string name="hall_title">Hall of Fame</string>
+    <string name="hall_total_label">recitations together</string>
+    <string name="hall_nobody">Nobody logged this week.</string>
+    <string name="hall_week_cd">Week %1$d, %2$s recitations together</string>
+    <string name="hall_empty_title">No past weeks yet</string>
+    <string name="hall_empty_hint">Each week lands here when it closes on Friday evening.</string>
+    <string name="hall_error_title">Couldn\'t load Hall of Fame</string>
+</resources>

@@ -1,0 +1,15 @@
+app/src/main/java/in/mohammad/ramiz/islamic/kasrat_e_darrod/data/model/ActivityItem.java
+app/src/main/java/in/mohammad/ramiz/islamic/kasrat_e_darrod/data/model/Recitation.java
+app/src/main/java/in/mohammad/ramiz/islamic/kasrat_e_darrod/ui/adapter/ActivityAdapter.java
+app/src/main/java/in/mohammad/ramiz/islamic/kasrat_e_darrod/ui/adapter/CatalogAdapter.java
+app/src/main/java/in/mohammad/ramiz/islamic/kasrat_e_darrod/ui/adapter/RecitationAdapter.java
+app/src/main/java/in/mohammad/ramiz/islamic/kasrat_e_darrod/ui/adapter/SkeletonAdapter.java
+app/src/main/java/in/mohammad/ramiz/islamic/kasrat_e_darrod/util/RecitationIcons.java
+app/src/main/res/layout/item_activity.xml
+app/src/main/res/layout/item_catalog.xml
+app/src/main/res/layout/item_catalog_header.xml
+app/src/main/res/layout/item_quick_add.xml
+app/src/main/res/layout/item_recitation.xml
+app/src/main/res/layout/item_skeleton_row.xml
+app/src/main/res/layout/row_prayer.xml
+app/src/main/res/layout/row_prayer_skeleton.xml

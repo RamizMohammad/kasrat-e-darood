@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 7c · Settings and Notifications (Stitch). -->
+<resources>
+    <string name="set_k_account">खाता</string>
+    <string name="set_k_recitation">तिलावत</string>
+    <string name="set_k_reminders">रिमाइंडर</string>
+    <string name="set_k_appearance">दिखावट</string>
+    <string name="set_k_prayer">नमाज़ के समय</string>
+    <string name="set_k_notifications">सूचनाएं</string>
+    <string name="set_k_privacy">प्राइवेसी</string>
+    <string name="set_k_about">के बारे में</string>
+    <string name="set_k_sign_out">साइन आउट</string>
+    <string name="set_k_load_error">सर्वर से आपकी सेटिंग्स लोड नहीं हुईं।</string>
+    <string name="set_k_intention">रोज़ की नीयत</string>
+    <string name="set_k_tasbih_target">तस्बीह का डिफ़ॉल्ट लक्ष्य</string>
+    <string name="set_k_tasbih_sub">नई तस्बीह शुरू करने पर</string>
+    <string name="set_k_sound">आवाज़</string>
+    <string name="set_k_haptics">कंपन</string>
+    <string name="set_k_keep_on">स्क्रीन चालू रखें</string>
+    <string name="set_k_reminder_time">रोज़ के रिमाइंडर का समय</string>
+    <string name="set_k_pick_time">समय चुनें</string>
+    <string name="set_k_friday">जुमे का रिमाइंडर</string>
+    <string name="set_k_nudges">नमाज़ के समय याद दिलाएं</string>
+    <string name="set_k_on">चालू</string>
+    <string name="set_k_off">बंद</string>
+    <string name="set_k_theme">थीम</string>
+    <string name="set_k_light">लाइट</string>
+    <string name="set_k_dark">डार्क</string>
+    <string name="set_k_system">सिस्टम</string>
+    <string name="set_k_theme_note">डार्क थीम बाद के अपडेट में आएगी।</string>
+    <string name="set_k_language">भाषा</string>
+    <string name="set_k_show_me">ग्लोबल रैंक में मुझे दिखाएं</string>
+    <string name="set_k_show_me_sub">उम्मत लीडरबोर्ड पर अपना नाम दिखाएं</string>
+    <string name="set_k_version">वर्ज़न</string>
+    <string name="set_k_rate">ऐप को रेट करें</string>
+    <string name="set_k_number_range">%1$s से %2$s तक कोई संख्या लिखें</string>
+    <string name="notif_k_mark_all">सब पढ़ा हुआ करें</string>
+    <string name="notif_k_earlier">पहले</string>
+    <string name="notif_k_unread">अनपढ़ा</string>
+    <string name="notif_k_empty_title">सब देख लिया</string>
+    <string name="notif_k_empty_hint">रिपोर्ट, रिमाइंडर और सर्कल की ख़बरें यहां दिखेंगी।</string>
+</resources>

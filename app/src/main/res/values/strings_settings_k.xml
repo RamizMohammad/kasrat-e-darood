@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 7c · Settings and Notifications (Stitch). -->
+<resources>
+    <string name="set_k_account">Account</string>
+    <string name="set_k_recitation">Recitation</string>
+    <string name="set_k_reminders">Reminders</string>
+    <string name="set_k_appearance">Appearance</string>
+    <string name="set_k_prayer">Prayer times</string>
+    <string name="set_k_notifications">Notifications</string>
+    <string name="set_k_privacy">Privacy</string>
+    <string name="set_k_about">About</string>
+    <string name="set_k_sign_out">Sign out</string>
+    <string name="set_k_load_error">Couldn\'t load your settings from the server.</string>
+    <string name="set_k_intention">Daily intention</string>
+    <string name="set_k_tasbih_target">Default tasbih target</string>
+    <string name="set_k_tasbih_sub">Used when you start a new tasbih</string>
+    <string name="set_k_sound">Sound</string>
+    <string name="set_k_haptics">Haptics</string>
+    <string name="set_k_keep_on">Keep screen on</string>
+    <string name="set_k_reminder_time">Daily reminder time</string>
+    <string name="set_k_pick_time">Choose a time</string>
+    <string name="set_k_friday">Friday reminder</string>
+    <string name="set_k_nudges">Prayer-time nudges</string>
+    <string name="set_k_on">On</string>
+    <string name="set_k_off">Off</string>
+    <string name="set_k_theme">Theme</string>
+    <string name="set_k_light">Light</string>
+    <string name="set_k_dark">Dark</string>
+    <string name="set_k_system">System</string>
+    <string name="set_k_theme_note">Dark theme is coming in a later update.</string>
+    <string name="set_k_language">Language</string>
+    <string name="set_k_show_me">Show me on global ranks</string>
+    <string name="set_k_show_me_sub">Display your name on ummah leaderboards</string>
+    <string name="set_k_version">Version</string>
+    <string name="set_k_rate">Rate the app</string>
+    <string name="set_k_number_range">Enter a number from %1$s to %2$s</string>
+    <string name="notif_k_mark_all">Mark all read</string>
+    <string name="notif_k_earlier">Earlier</string>
+    <string name="notif_k_unread">Unread</string>
+    <string name="notif_k_empty_title">You\'re all caught up</string>
+    <string name="notif_k_empty_hint">Reports, reminders and circle news show up here.</string>
+</resources>

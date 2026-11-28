@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recite_title_k">पढ़ें</string>
+    <string name="recite_search_k">सलवात, दुआ या तस्बीह खोजें</string>
+    <string name="recite_favourites">पसंदीदा</string>
+    <string name="recite_in_session">%1$s · जारी</string>
+    <string name="recite_fav_add">पसंदीदा में जोड़ें</string>
+    <string name="recite_fav_remove">पसंदीदा से हटाएँ</string>
+    <string name="recite_no_favourites">अभी कोई पसंदीदा नहीं</string>
+    <string name="recite_no_favourites_hint">किसी तिलावत पर दिल दबाएँ, वह यहाँ दिखेगी।</string>
+    <string name="recite_add_new">तिलावत जोड़ें</string>
+    <string name="cart_bar_log">दर्ज करें</string>
+    <string name="cart_ready">दर्ज करने के लिए तैयार</string>
+    <plurals name="cart_counts_toward">
+        <item quantity="one">आपके सर्कल में गिना जाएगा</item>
+        <item quantity="other">आपके सभी %d सर्कल में गिना जाएगा</item>
+    </plurals>
+    <string name="cart_log_n">%s दुरूद दर्ज करें</string>
+    <string name="cart_undo_note">आप 5 मिनट के अंदर वापस ले सकते हैं</string>
+    <string name="cart_success_title">जज़ाकल्लाह ख़ैर</string>
+    <string name="cart_success_line">+%1$s · लगातार %2$s</string>
+    <plurals name="streak_days">
+        <item quantity="one">%d दिन</item>
+        <item quantity="other">%d दिन</item>
+    </plurals>
+    <string name="cart_added_to">%s में जोड़ा गया</string>
+    <string name="list_and">%1$s और %2$s</string>
+    <string name="cart_done_k">हो गया</string>
+    <string name="detail_stat_total">आपका कुल</string>
+    <string name="detail_stat_recent">पिछले 100 लॉग</string>
+    <string name="detail_stat_week">इस हफ़्ते</string>
+    <string name="detail_stat_best">सबसे अच्छा दिन</string>
+    <string name="detail_source">स्रोत</string>
+    <string name="detail_start_tasbih">तस्बीह शुरू करें</string>
+    <string name="detail_add_log">लॉग में जोड़ें</string>
+    <string name="detail_add_log_n">लॉग में जोड़ें · लॉग में %s</string>
+    <string name="tasbih_of_lap">%1$s में से · चक्कर %2$d</string>
+    <string name="tasbih_save_n">%s दुरूद सेव करें</string>
+    <string name="tasbih_save_empty">गिनती शुरू करने के लिए टैप करें</string>
+    <string name="tasbih_view">दिखावट</string>
+    <string name="tasbih_day">दिन</string>
+    <string name="tasbih_day_sub">हल्का आइवरी और टील</string>
+    <string name="tasbih_night">रात</string>
+    <string name="tasbih_night_sub">गहरा रंग और सुनहरा, आँखों को आराम</string>
+    <string name="tasbih_settings_cd">दिखावट सेटिंग</string>
+    <string name="tasbih_laps_cd">%d चक्कर पूरे</string>
+</resources>

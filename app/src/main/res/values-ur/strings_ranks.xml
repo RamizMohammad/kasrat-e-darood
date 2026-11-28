@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- P4: Ranks, Hall of Fame, closing the week. -->
+<resources>
+    <string name="ranks_title">لیڈر بورڈ</string>
+    <string name="ranks_global">عالمی</string>
+    <string name="ranks_groups">گروپس</string>
+    <string name="ranks_scope_week">اس ہفتے</string>
+    <string name="ranks_scope_all">اب تک</string>
+    <string name="ranks_label_week">سب مل کر، اس ہفتے</string>
+    <string name="ranks_label_all">سب مل کر، اب تک</string>
+    <string name="ranks_week_n">ہفتہ %1$d</string>
+    <string name="ranks_week_closes">ہفتہ %1$d · بند ہوگا %2$s</string>
+    <string name="ranks_week_everyone">اس ہفتے سب کے ورد</string>
+    <string name="ranks_all_everyone">اب تک درج ہر ورد</string>
+    <string name="ranks_you">آپ</string>
+    <string name="ranks_hidden_name">ایک رکن</string>
+    <string name="ranks_podium_cd">مقام %1$s: %2$s، %3$s</string>
+    <string name="ranks_row_cd">درجہ %1$s، %2$s، %3$s ورد</string>
+    <string name="ranks_change_up">پچھلے ہفتے %1$d سے اوپر</string>
+    <string name="ranks_change_down">پچھلے ہفتے %1$d سے نیچے</string>
+    <string name="ranks_next_up">آگے: %1$s، %2$s آگے</string>
+    <string name="ranks_your_rank">آپ #%1$s پر ہیں</string>
+    <string name="ranks_empty_week_title">اس ہفتے ابھی کوئی ورد نہیں</string>
+    <string name="ranks_empty_all_title">ابھی کچھ درج نہیں</string>
+    <string name="ranks_empty_hint">ایک درج کریں اور بورڈ شروع ہو جائے گا۔</string>
+    <string name="ranks_error_title">درجہ بندی لوڈ نہیں ہو سکی</string>
+    <string name="ranks_error_hint">کنکشن چیک کریں اور دوبارہ کوشش کریں۔</string>
+    <string name="ranks_close_week">ہفتہ بند کریں</string>
+    <string name="ranks_close_title">یہ ہفتہ ابھی بند کریں؟</string>
+    <string name="ranks_close_summary">ہفتہ %1$d: %3$s لوگوں کے %2$s ورد۔</string>
+    <string name="ranks_close_top">سب سے آگے: %1$s</string>
+    <string name="ranks_close_body">یہ ہال آف فیم میں چلا جائے گا اور نیا ہفتہ ابھی شروع ہوگا۔ ورنہ یہ جمعہ کی شام خود بند ہو جاتا ہے۔</string>
+    <string name="ranks_close_confirm">ہفتہ بند کریں</string>
+    <string name="ranks_close_failed">ہفتہ بند نہیں ہو سکا۔ دوبارہ کوشش کریں۔</string>
+    <string name="ranks_closed">ہفتہ %1$d بند ہوا</string>
+    <string name="hall_title">ہال آف فیم</string>
+    <string name="hall_total_label">مل کر ورد</string>
+    <string name="hall_nobody">اس ہفتے کسی نے درج نہیں کیا۔</string>
+    <string name="hall_week_cd">ہفتہ %1$d، مل کر %2$s ورد</string>
+    <string name="hall_empty_title">ابھی کوئی پچھلا ہفتہ نہیں</string>
+    <string name="hall_empty_hint">ہر ہفتہ جمعہ کی شام بند ہو کر یہاں آتا ہے۔</string>
+    <string name="hall_error_title">ہال آف فیم لوڈ نہیں ہو سکا</string>
+</resources>

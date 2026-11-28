@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stitch re-theme: header, Home, Tasbih and group board copy. -->
+<resources>
+    <string name="header_title">کثرتِ درود</string>
+    <string name="header_profile_cd">آپ کی پروفائل</string>
+    <string name="header_streak_cd">%d دن مسلسل</string>
+    <string name="header_sub_recite">پڑھیں / تسبیح</string>
+    <string name="home_greeting">السلام علیکم، %1$s</string>
+    <string name="home_verse_ref">سورۃ الاحزاب · 33:56</string>
+    <string name="home_verse_tr">”بیشک اللہ اور اس کے فرشتے نبی پر درود بھیجتے ہیں۔“</string>
+    <string name="home_tile_today">آج کا کل</string>
+    <string name="home_tile_today_sub">درود پڑھے</string>
+    <string name="home_tile_week">اس ہفتے</string>
+    <string name="home_tile_week_sub">کل %1$s</string>
+    <string name="home_tile_goal_of">%1$s ہدف میں سے</string>
+    <string name="home_tile_goal_pct">%1$d%% مکمل</string>
+    <string name="home_section_milestones">نماز کے مراحل</string>
+    <string name="home_prayer_next">اگلی</string>
+    <string name="home_prayer_in">%1$s میں</string>
+    <string name="home_section_deck">روزانہ صلوات ڈیک</string>
+    <string name="home_section_deck_sub">سب سے زیادہ پڑھے گئے، ایک ٹیپ میں درج کریں</string>
+    <string name="home_deck_add">لاگ میں شامل کریں</string>
+    <string name="home_deck_view_all">سب دیکھیں</string>
+    <string name="home_section_circles">مشترکہ حلقے</string>
+    <string name="home_section_circles_sub">آپ کے حلقوں میں مشترکہ برکت</string>
+    <string name="home_circles_manage">انتظام</string>
+    <string name="home_circle_reached">%1$d%% مکمل</string>
+    <string name="home_quick_tap">فوری ٹیپ</string>
+    <string name="group_private_tag">نجی حلقہ</string>
+    <string name="group_public_tag">عوامی حلقہ</string>
+    <string name="tasbih_current_round">موجودہ دور</string>
+    <string name="tasbih_tap_hint">گننے کے لیے کہیں بھی ٹیپ کریں</string>
+    <string name="group_log_to_group">گروپ میں درود درج کریں</string>
+    <string name="group_week_goal">ہفتہ وار خاندانی ہدف</string>
+    <string name="group_days_left">%1$d دن باقی</string>
+    <string name="group_recited_pct">%1$d%%\nپڑھا گیا</string>
+    <string name="group_closes">جمعہ مغرب کے بعد بند ہوتا ہے</string>
+    <string name="rank_you_badge">آپ</string>
+    <string name="rank_unit">درود</string>
+    <string name="ranks_top_contributors">سب سے زیادہ حصہ</string>
+    <string name="group_code_label">کوڈ: %1$s</string>
+    <string name="tasbih_reset_lap">دور ری سیٹ</string>
+    <string name="action_share">شیئر</string>
+    <string name="group_share_text">کثرتِ درود پر میرے حلقے \"%1$s\" میں شامل ہوں۔ کوڈ: %2$s\n%3$s</string>
+</resources>

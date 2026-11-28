@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Board list, only row: a whole hairline card. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/hairline" />
+            <corners android:topLeftRadius="@dimen/k_radius_lg" android:topRightRadius="@dimen/k_radius_lg"
+                android:bottomLeftRadius="@dimen/k_radius_lg" android:bottomRightRadius="@dimen/k_radius_lg" />
+        </shape>
+    </item>
+    <item android:left="1dp" android:right="1dp" android:top="1dp" android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/surface_lowest" />
+            <corners android:topLeftRadius="27dp" android:topRightRadius="27dp"
+                android:bottomLeftRadius="27dp" android:bottomRightRadius="27dp" />
+        </shape>
+    </item>
+</layer-list>

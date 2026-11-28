@@ -1,54 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Review line (Stitch review_log_teal): name (title-md) over Arabic (arabic-md, warm grey),
+     ivory stepper on the right. Rows are split by hairlines (see sheet_cart). -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingVertical="12dp">
+    android:paddingVertical="16dp">
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/line_urdu"
-            android:layout_width="wrap_content"
+            android:id="@+id/line_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="سورۃ یٰسین"
-            android:textSize="17sp"
-            android:fontFamily="serif"
-            android:textDirection="rtl"
-            android:textColor="@color/on_surface" />
+            android:textAppearance="@style/TextAppearance.K.TitleMd"
+            android:textColor="@color/text_primary"
+            tools:text="Darood-e-Ibrahimi" />
 
         <TextView
-            android:id="@+id/line_english"
-            android:layout_width="wrap_content"
+            android:id="@+id/line_arabic"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Surah Ya-Sin"
-            android:textSize="13sp"
-            android:textColor="@color/on_surface_variant" />
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.ArabicMd"
+            android:textColor="@color/text_muted" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/line_count"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="14dp"
-        android:text="×33"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/primary" />
+        android:layout_marginStart="12dp"
+        android:background="@drawable/bg_k_stepper"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp">
 
-    <TextView
+        <ImageView
+            android:id="@+id/line_minus"
+            style="@style/K.StepMinus"
+            android:contentDescription="@string/cart_remove" />
+
+        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.CountRollTextView
+            android:id="@+id/line_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:minWidth="28dp"
+            android:textAppearance="@style/TextAppearance.K.SerifLabel"
+            android:textColor="@color/text_primary"
+            tools:text="100" />
+
+        <ImageView
+            android:id="@+id/line_plus"
+            style="@style/K.StepPlus"
+            android:contentDescription="@string/quick_add" />
+    </LinearLayout>
+
+    <!-- Kept for CartLineAdapter; the stepper's minus removes at zero (no X in Stitch). -->
+    <View
         android:id="@+id/line_remove"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:gravity="center"
-        android:text="✕"
-        android:textSize="16sp"
-        android:textColor="@color/on_surface_variant"
-        android:contentDescription="@string/remove" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 </LinearLayout>

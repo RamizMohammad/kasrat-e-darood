@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A row in a hairline-divided card (Stitch circle_settings_teal): label (+ sub), value or
+     emblem, caret. Also the About tab's rows. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="16dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/row_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.K.BodyMd"
+            android:textColor="@color/text_primary"
+            tools:text="Weekly goal" />
+
+        <TextView
+            android:id="@+id/row_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/text_muted"
+            android:visibility="gone"
+            tools:text="Resets Friday after Maghrib"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/row_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:fontFeatureSettings="tnum"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.K.BodyMd"
+        android:textColor="@color/text_primary"
+        android:textDirection="firstStrong"
+        tools:text="1,00,000" />
+
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.GroupAvatarView
+        android:id="@+id/row_emblem"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:importantForAccessibility="no"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/row_caret"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_ph_caret_right"
+        app:tint="@color/text_muted" />
+</LinearLayout>

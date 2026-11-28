@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circle activity: "Weekly goal reached" / week winners — a gold-hairline card on the timeline. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <View
+        android:id="@+id/ev_rail"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:background="@color/hairline" />
+
+    <FrameLayout
+        android:id="@+id/ev_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:id="@+id/ev_card"
+            style="@style/K.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_k_card_gold"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <FrameLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_k_gold_disc">
+
+                <ImageView
+                    android:id="@+id/ev_icon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_ph_sparkle"
+                    app:tint="@color/k_gold" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ev_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.K.SerifTitle"
+                    android:textColor="@color/text_primary"
+                    tools:text="Weekly goal reached" />
+
+                <TextView
+                    android:id="@+id/ev_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFeatureSettings="tnum"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_muted"
+                    tools:text="1,00,000 salawat completed" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ev_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                android:textColor="@color/text_muted"
+                tools:text="9:40 PM" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/ev_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="7.5dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/bg_k_dot_gold"
+        android:elevation="11dp" />
+</FrameLayout>

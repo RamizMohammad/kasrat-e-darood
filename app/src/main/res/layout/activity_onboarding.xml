@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 2 · Onboarding (Stitch onboarding_1–3_teal): top pill + Skip, a white quote
+     card (reference · Arabic · gold rule · translation), a small emblem, the headline
+     and body, page dots and a full-width teal Continue pill. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingTop="32dp"
+    android:paddingBottom="40dp">
+
+    <!-- Header: pill + Skip -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/slide_tag"
+            style="@style/Kasrat.Tag.Paper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            tools:text="Bismillah" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_skip"
+            style="@style/Widget.K.Button.Quiet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="-12dp"
+            android:minHeight="40dp"
+            android:text="@string/onb_skip" />
+    </FrameLayout>
+
+    <!-- Centre -->
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingVertical="16dp">
+
+        <!-- Quote card -->
+        <LinearLayout
+            android:id="@+id/quote_card"
+            style="@style/K.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/quote_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                android:textColor="@color/amber"
+                tools:text="AL-AHZAB 33:56" />
+
+            <TextView
+                android:id="@+id/quote_ar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.K.ArabicMd"
+                android:textColor="@color/text_primary"
+                tools:text="@string/onb_1_ar" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="@dimen/hairline"
+                android:layout_marginTop="16dp"
+                android:alpha="0.6"
+                android:background="@color/gold"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:id="@+id/quote_en"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.K.BodyMd"
+                android:textColor="@color/text_strong"
+                android:textStyle="italic"
+                tools:text="@string/onb_1_trans" />
+
+            <!-- Slide 3 only: members strip -->
+            <LinearLayout
+                android:id="@+id/members_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hairline"
+                    android:background="@color/hairline" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView style="@style/K.AvatarStack" android:text="R" />
+                        <TextView style="@style/K.AvatarStack" android:layout_marginStart="-8dp" android:text="A" />
+                        <TextView style="@style/K.AvatarStack" android:layout_marginStart="-8dp" android:text="B" />
+                        <TextView style="@style/K.AvatarStack" android:layout_marginStart="-8dp" android:text="Z" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/onb_members"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/amber" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Emblem: Open Quran (slide 1) or a "33" tasbih disc (slide 2); none on slide 3. -->
+        <FrameLayout
+            android:id="@+id/art"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_k_emblem_soft">
+
+            <ImageView
+                android:id="@+id/art_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_k_quran" />
+
+            <TextView
+                android:id="@+id/art_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="33"
+                android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                android:textColor="@color/amber"
+                android:visibility="gone"
+                tools:ignore="HardcodedText" />
+        </FrameLayout>
+
+        <!-- Copy -->
+        <LinearLayout
+            android:id="@+id/copy"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/slide_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary"
+                tools:text="@string/onb_1_title" />
+
+            <TextView
+                android:id="@+id/slide_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.K.BodyMd"
+                android:textColor="@color/text_secondary"
+                tools:text="@string/onb_1_body" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Footer: dots + Continue -->
+    <LinearLayout
+        android:id="@+id/dots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <View android:id="@+id/dot_0" android:layout_width="24dp" android:layout_height="6dp" android:background="@drawable/bg_k_page_dot" />
+        <View android:id="@+id/dot_1" android:layout_width="6dp" android:layout_height="6dp" android:layout_marginStart="8dp" android:background="@drawable/bg_k_page_dot" />
+        <View android:id="@+id/dot_2" android:layout_width="6dp" android:layout_height="6dp" android:layout_marginStart="8dp" android:background="@drawable/bg_k_page_dot" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next"
+        style="@style/Widget.K.Button.Hero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/onb_next" />
+</LinearLayout>

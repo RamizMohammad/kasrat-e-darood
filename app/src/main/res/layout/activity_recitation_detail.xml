@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 4 · Recitation detail (Stitch darood_e_ibrahimi_teal): back / eyebrow / heart,
+     star pattern, Fraunces title on a soft glow, the text card (Arabic · rule ·
+     transliteration · meaning), your stats (total · this week · best day), the source,
+     and a sticky footer with "Start tasbih" + "Add to log". -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="440dp"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/k_star_pattern" />
+
+            <LinearLayout
+                android:id="@+id/detail_column"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/k_page_margin"
+                android:paddingBottom="32dp">
+
+                <!-- Header -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="12dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_back"
+                        style="@style/Widget.Kasrat.IconButton.Outlined"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:contentDescription="@string/action_back"
+                        android:minWidth="40dp"
+                        android:minHeight="40dp"
+                        android:padding="10dp"
+                        app:icon="@drawable/ic_ph_arrow_left"
+                        app:iconTint="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/detail_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                        android:textColor="@color/text_secondary"
+                        tools:text="SALAWAT" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/detail_heart"
+                        style="@style/Widget.Kasrat.IconButton.Outlined"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:contentDescription="@string/recite_fav_add"
+                        android:minWidth="40dp"
+                        android:minHeight="40dp"
+                        android:padding="10dp"
+                        app:icon="@drawable/ic_ph_heart"
+                        app:iconTint="@color/amber" />
+                </FrameLayout>
+
+                <!-- Title + text card on a soft glow -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clipChildren="false">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="-12dp"
+                        android:layout_marginTop="48dp"
+                        android:layout_marginEnd="-12dp"
+                        android:layout_marginBottom="-12dp"
+                        android:alpha="0.25"
+                        android:background="@drawable/bg_k_hero_glow"
+                        android:importantForAccessibility="no" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/detail_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:accessibilityHeading="true"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                            android:textColor="@color/text_primary"
+                            tools:text="Darood-e-Ibrahimi" />
+
+                        <LinearLayout
+                            style="@style/K.Card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="24dp"
+                            android:paddingVertical="28dp">
+
+                            <TextView
+                                android:id="@+id/detail_arabic"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/TextAppearance.K.ArabicLg"
+                                android:textColor="@color/text_primary" />
+
+                            <View
+                                android:layout_width="64dp"
+                                android:layout_height="@dimen/hairline"
+                                android:layout_marginTop="24dp"
+                                android:background="@color/hairline" />
+
+                            <TextView
+                                android:id="@+id/detail_transliteration"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:gravity="center"
+                                android:textAppearance="@style/TextAppearance.K.SerifItalic"
+                                android:textColor="@color/text_muted" />
+
+                            <TextView
+                                android:id="@+id/detail_meaning"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:gravity="center"
+                                android:textAppearance="@style/TextAppearance.K.BodyMd"
+                                android:textColor="@color/text_primary" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Stats -->
+                <LinearLayout
+                    style="@style/K.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:baselineAligned="false"
+                    android:divider="@drawable/k_divider_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="20dp"
+                    android:showDividers="middle">
+
+                    <LinearLayout style="@style/K.StatCell">
+                        <TextView android:id="@+id/detail_stat_total" style="@style/K.StatValue" tools:text="12,480" />
+                        <TextView android:id="@+id/detail_stat_total_label" style="@style/K.StatLabel" android:text="@string/detail_stat_total" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/K.StatCell">
+                        <TextView android:id="@+id/detail_stat_week" style="@style/K.StatValue" tools:text="940" />
+                        <TextView style="@style/K.StatLabel" android:text="@string/detail_stat_week" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/K.StatCell">
+                        <TextView android:id="@+id/detail_stat_best" style="@style/K.StatValue" tools:text="1,100" />
+                        <TextView style="@style/K.StatLabel" android:text="@string/detail_stat_best" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Source -->
+                <LinearLayout
+                    android:id="@+id/detail_reference_card"
+                    style="@style/K.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_source"
+                        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                        android:textColor="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/detail_reference"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAppearance="@style/TextAppearance.K.BodySm"
+                        android:textColor="@color/text_muted" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Sticky footer -->
+    <LinearLayout
+        android:id="@+id/detail_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_k_footer_bar"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingVertical="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_tasbih"
+            style="@style/Widget.K.Button.Hero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/button_height"
+            android:text="@string/detail_start_tasbih" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_add"
+            style="@style/Widget.K.Button.Quiet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="36dp"
+            android:text="@string/detail_add_log"
+            android:textColor="@color/text_primary" />
+    </LinearLayout>
+</LinearLayout>

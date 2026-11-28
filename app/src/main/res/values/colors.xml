@@ -1,52 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Kasrat-e-Darood colour tokens, from the Stitch "Quiet Luxury" teal kit
+    (stitch_kasrat_e_darood_app_design/design_system_board_teal). Warm ivory paper,
+    1px hairlines, deep teal for every action, gold for milestones.
+    Old names are kept so every screen picks the new values up:
+      ink = warm-ivory canvas · paper/surface_raised = pure-white cards ·
+      amber = primary (deep teal) · sage/noor_emerald = teal · brick = muted red ·
+      text_secondary = deep-ink/70 · text_muted = warm-grey.
+    values-night/colors.xml holds the night-* palette (gold accent).
+-->
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Canvas -->
+    <!-- Brand: the original Confess logo, in the app's own palette -->
+    <color name="brand_tile">#FFFFFF</color>      <!-- = surface_high -->
+    <color name="brand_mark">#0F5E55</color>      <!-- = amber -->
+    <!-- Launcher / Play icon and splash: deep-amber CONFESS on warm cream (matches the store listing). -->
+    <color name="icon_tile">#FFFFFF</color>
+    <color name="icon_mark">#0F5E55</color>
 
-    <!-- Noor design system (from Stitch DESIGN.md) -->
-    <color name="surface">#fafaf5</color>
-    <color name="surface_dim">#dadad5</color>
-    <color name="surface_container_lowest">#ffffff</color>
-    <color name="surface_container_low">#f4f4ef</color>
-    <color name="surface_container">#eeeee9</color>
-    <color name="surface_container_high">#e8e8e3</color>
-    <color name="surface_container_highest">#e3e3de</color>
+    <color name="story_night">#0F5E55</color>         <!-- story background 0 (deep plum) -->
+    <color name="story_gold">#C9A24B</color>          <!-- story ring highlight (amber → gold sweep) -->
+    <color name="ink">#FAF7F2</color>                 <!-- level 0: app background -->
+    <color name="surface_raised">#FFFFFF</color>      <!-- level 1: plates, inputs, sheets, nav -->
+    <color name="surface_high">#EFEAE2</color>        <!-- pressed / highlighted rows -->
+    <color name="hairline">#EFEAE2</color>            <!-- borders + dividers -->
 
-    <color name="on_surface">#1a1c19</color>
-    <color name="on_surface_variant">#3f4944</color>
-    <color name="inverse_surface">#2f312e</color>
-    <color name="inverse_on_surface">#f1f1ec</color>
-    <color name="outline">#6f7973</color>
-    <color name="outline_variant">#bec9c2</color>
+    <!-- Paper (the confession card) -->
+    <color name="paper">#FFFFFF</color>
+    <color name="paper_ink">#1C1A17</color>           <!-- text on paper -->
+    <color name="paper_meta">#7A716A</color>        <!-- 65% paper_ink: metadata on paper -->
+    <color name="paper_rule">#EFEAE2</color>        <!-- 15% paper_ink: dividers on paper -->
 
-    <color name="primary">#004532</color>
-    <color name="on_primary">#ffffff</color>
-    <color name="primary_container">#065f46</color>
-    <color name="on_primary_container">#8bd6b7</color>
-    <color name="primary_fixed">#a6f2d1</color>
+    <!-- Text -->
+    <color name="text_primary">#1C1A17</color>
+    <color name="text_secondary">#B31C1A17</color>
+    <color name="text_muted">#7A716A</color>
 
-    <color name="secondary">#735c00</color>
-    <color name="on_secondary">#ffffff</color>
-    <color name="secondary_container">#fed65b</color>
-    <color name="on_secondary_container">#745c00</color>
-    <color name="gold">#e9c349</color>
-    <color name="gold_dim">#c9a227</color>
+    <!-- Accent + semantics -->
+    <color name="amber">#0F5E55</color>
+    <color name="mention_yellow">#C9A24B</color>     <!-- @alias in a confession: bold yellow -->
+    <color name="amber_pressed">#0B4A43</color>
+    <color name="amber_disabled">#590F5E55</color>    <!-- 35% -->
+    <color name="amber_tint">#E6F3F1</color>        <!-- 8%: active chip background -->
+    <color name="brick">#9E3B33</color>
+    <color name="brick_tint">#FFEDE6</color>        <!-- 12%: error card background -->
+    <color name="sage">#0F5E55</color>
+    <color name="sage_tint">#E6F3F1</color>
 
-    <color name="tertiary">#004533</color>
-    <color name="tertiary_container">#1d5d49</color>
-    <color name="on_tertiary_container">#95d4ba</color>
+    <!-- Misc -->
+    <color name="scrim">#661C1A17</color>
+    <color name="transparent">#00000000</color>
+    <!-- Push templates: muted body text on the compact cards -->
+    <color name="push_muted_night">#E6F3F1</color>
+    <color name="push_muted_paper">#7A716A</color>
+    <color name="push_muted_amber">#552000</color>
+    <!-- Confession graph (Me page): empty day → most confessions -->
+    <color name="graph_level_0">#EFEAE2</color>
+    <color name="graph_level_1">#E6F3F1</color>
+    <color name="graph_level_2">#660F5E55</color>
+    <color name="graph_level_3">#B30F5E55</color>
+    <color name="graph_level_4">#0F5E55</color>
 
-    <color name="error">#ba1a1a</color>
-    <color name="on_error">#ffffff</color>
-    <color name="error_container">#ffdad6</color>
+    <!-- Kasrat-only additions -->
+    <color name="noor_emerald">#0F5E55</color>        <!-- prayer times, Jumu'ah, "fasting" chip -->
+    <color name="noor_emerald_tint">#E6F3F1</color> <!-- 12%: emerald chip background -->
+    <color name="silver">#990F5E55</color>              <!-- podium rank 2 -->
+    <color name="bronze">#EFEAE2</color>              <!-- podium rank 3 -->
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_bright">#0F5E55</color>
+    <color name="primary_container">#0F5E55</color>
+    <color name="primary_fixed">#E6F3F1</color>
+    <color name="primary_fixed_dim">#660F5E55</color>
+    <color name="on_primary_fixed">#003731</color>
+    <color name="secondary">#0F5E55</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary_container">#E6F3F1</color>
+    <color name="on_secondary_container">#003731</color>
+    <color name="tertiary">#C9A24B</color>
+    <color name="tertiary_fixed">#FFEFD4</color>
+    <color name="tertiary_fixed_dim">#C9A24B</color>
+    <color name="on_tertiary_fixed">#1C1A17</color>
+    <color name="gold">#C9A24B</color>
+    <color name="success">#0F5E55</color>
+    <color name="warning">#C2560F</color>
+    <color name="surface_lowest">#FFFFFF</color>
+    <color name="surface_container">#FAF7F2</color>
+    <color name="surface_container_high">#EFEAE2</color>
+    <color name="surface_container_highest">#EFEAE2</color>
+    <color name="tonal">#FFFFFF</color>
+    <color name="tonal_pressed">#EFEAE2</color>
+    <color name="outline">#7A716A</color>
+    <color name="outline_variant">#EFEAE2</color>
+    <color name="podium_first">#FFEFD4</color>
+    <color name="podium_other">#EFEAE2</color>
+    <color name="me_row">#E6F3F1</color>
+    <color name="shadow_warm">#0F3C2814</color>
+    <color name="nav_indicator">#E6F3F1</color>
 
-    <color name="background">#fafaf5</color>
-    <color name="on_background">#1a1c19</color>
+    <!-- ── Stitch kit, by its own names (fixed: same in light and night) ──────── -->
+    <color name="k_warm_ivory">#FAF7F2</color>
+    <color name="k_pure_white">#FFFFFF</color>
+    <color name="k_hairline">#EFEAE2</color>
+    <color name="k_deep_ink">#1C1A17</color>
+    <color name="k_deep_ink_80">#CC1C1A17</color>
+    <color name="k_deep_ink_70">#B31C1A17</color>
+    <color name="k_deep_ink_75">#BF1C1A17</color>
+    <color name="k_deep_ink_40">#661C1A17</color>
+    <color name="k_warm_grey">#7A716A</color>
+    <color name="k_deep_teal">#0F5E55</color>
+    <color name="k_teal_soft">#E6F3F1</color>
+    <color name="k_teal_40">#660F5E55</color>
+    <color name="k_on_teal_soft">#003731</color>
+    <color name="k_gold">#C9A24B</color>
+    <color name="k_gold_50">#80C9A24B</color>
+    <color name="k_gold_soft">#FFEFD4</color>
+    <color name="k_saffron">#C2560F</color>
+    <color name="k_saffron_soft">#FFEDE6</color>
+    <color name="k_muted_red">#9E3B33</color>
+    <color name="k_night_ink">#141210</color>
+    <color name="k_night_surface">#1E1B18</color>
+    <color name="k_night_hairline">#2E2A25</color>
+    <color name="k_night_muted">#A89F96</color>
+    <!-- Shadows: rgba(60,40,20,.06) cards · rgba(15,94,85,.22) teal buttons -->
+    <color name="k_shadow_card">#0F3C2814</color>
+    <color name="k_shadow_teal">#380F5E55</color>
+    <!-- deep-ink/80: quote translations, field labels -->
+    <color name="text_strong">#CC1C1A17</color>
 
-    <color name="heat_0">#e3e3de</color>
-    <color name="heat_1">#cfe3d6</color>
-    <color name="heat_2">#a6cdb6</color>
-    <color name="heat_3">#5e9e7e</color>
-    <color name="heat_4">#1d5d49</color>
-    <color name="heat_5">#004532</color>
+    <!-- Phase D: colours views used to hard-code, so the dark theme can change them. -->
+    <color name="k_emblem_disc_0">#E6F3F1</color>
+    <color name="k_emblem_disc_1">#FFF7EA</color>
+    <color name="k_emblem_disc_2">#FAF7F2</color>
+    <color name="k_emblem_disc_3">#FFFFFF</color>
+    <color name="k_emblem_mark">#0F5E55</color>
+    <color name="k_heat_0">#FAF7F2</color>
+    <color name="k_heat_1">#E6F3F1</color>
+    <color name="k_heat_2">#8C0F5E55</color>
+    <color name="k_heat_3">#0F5E55</color>
+    <color name="k_milestone">#C9A24B</color>
+    <color name="k_tick">#CCFFFFFF</color>
+    <color name="k_gold_soft_50">#80FFEFD4</color>
 </resources>

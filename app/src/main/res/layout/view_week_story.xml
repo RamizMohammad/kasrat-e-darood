@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Phase 7b · Share story (Stitch weekly_report_9_16_share_story_teal), 390 × 693dp, drawn
+    off-screen into a 1080 × 1920 PNG: ivory, the star pattern, a soft glow, a gold certificate
+    frame; "WEEK 47 · 15–21 NOV 2026" and your name; the salawat in Arabic, a gold rule,
+    6,420 / "darood recited", "Top 8% · 14-day streak"; "Kasrat-e-Darood" at the foot.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="390dp"
+    android:layout_height="693dp"
+    android:background="@color/ink">
+
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.KStarPatternView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.04" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:alpha="0.6"
+        android:background="@drawable/bg_k_report_glow" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_k_story_frame" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <TextView
+            android:id="@+id/story_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFeatureSettings="tnum"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.K.Eyebrow"
+            android:textColor="@color/text_secondary"
+            tools:text="Week 47 · 15–21 Nov 2026" />
+
+        <TextView
+            android:id="@+id/story_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_muted"
+            android:textDirection="firstStrong"
+            tools:text="Mohammad Ramiz" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/report_k_salawat_ar"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.K.ArabicLg"
+            android:textColor="@color/text_primary" />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="#99C9A24B" />
+
+        <TextView
+            android:id="@+id/story_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textAppearance="@style/TextAppearance.K.StoryHero"
+            android:textColor="@color/text_primary"
+            tools:text="6,420" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/report_k_recited"
+            android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+            android:textColor="@color/amber" />
+
+        <TextView
+            android:id="@+id/story_pill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_k_story_pill"
+            android:fontFeatureSettings="tnum"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/k_deep_ink_80"
+            tools:text="Top 8% · 14-day streak" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@string/report_k_wordmark"
+            android:textAppearance="@style/TextAppearance.K.SerifTitle"
+            android:textColor="@color/k_deep_ink_80" />
+    </LinearLayout>
+</FrameLayout>

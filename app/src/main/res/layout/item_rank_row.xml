@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Board row (Stitch ranks_teal): rank (Fraunces label-sm, warm grey) · 32dp avatar · name
+     (body-md) … movement ("↑2", teal) · total (Fraunces body-md). BoardAdapter gives list rows
+     their card segment (top / middle / bottom); RankRows gives the pinned copy its teal-soft plate. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rank_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/k_page_margin"
+    android:background="@drawable/bg_k_row_mid"
+    android:gravity="center_vertical"
+    android:minHeight="60dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="14dp">
+
+    <TextView
+        android:id="@+id/rank_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minWidth="24dp"
+        android:textAppearance="@style/TextAppearance.K.SerifLabel"
+        android:textColor="@color/text_muted"
+        tools:text="4" />
+
+    <FrameLayout
+        android:id="@+id/rank_avatar_frame"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/bg_k_avatar_disc"
+        android:padding="1dp">
+
+        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+            android:id="@+id/rank_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/rank_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.K.BodyMd"
+        android:textColor="@color/text_primary"
+        tools:text="Khadija" />
+
+    <TextView
+        android:id="@+id/rank_you"
+        style="@style/Kasrat.Tag.Mint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/ranks_you"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/rank_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFeatureSettings="tnum"
+        android:textAppearance="@style/TextAppearance.K.LabelSm"
+        android:textColor="@color/amber"
+        android:visibility="gone"
+        tools:text="↑2"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/rank_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textAppearance="@style/TextAppearance.K.SerifLabel"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        tools:text="29,410" />
+</LinearLayout>

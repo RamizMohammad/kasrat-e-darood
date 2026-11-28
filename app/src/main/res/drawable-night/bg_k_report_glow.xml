@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark theme copy (Phase D): teal → gold, light fills → night surfaces. -->
+<!-- Weekly report / story: soft teal → gold glow, fading out (opacity set on the view). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient android:type="radial" android:gradientRadius="50%"
+        android:startColor="#38C9A24B" android:centerColor="#2EC9A24B" android:endColor="#00C9A24B" />
+</shape>

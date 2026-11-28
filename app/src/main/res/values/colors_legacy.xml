@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Older names still used by a few drawables (logo, pills, bars). Same Stitch palette. -->
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="surface">#FAF7F2</color>
+    <color name="surface_dim">#EFEAE2</color>
+    <color name="surface_container_lowest">#FFFFFF</color>
+    <color name="surface_container_low">#FFFFFF</color>
+
+    <color name="on_surface">#1C1A17</color>
+    <color name="on_surface_variant">#7A716A</color>
+    <color name="inverse_surface">#1C1A17</color>
+    <color name="inverse_on_surface">#FAF7F2</color>
+
+    <color name="primary">#0F5E55</color>
+    <color name="on_primary_container">#FFFFFF</color>
+
+    <color name="gold_dim">#C9A24B</color>
+    <color name="tertiary_container">#C9A24B</color>
+    <color name="on_tertiary_container">#1C1A17</color>
+
+    <color name="error">#9E3B33</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="error_container">#FFEDE6</color>
+
+    <color name="background">#FAF7F2</color>
+    <color name="on_background">#1C1A17</color>
+
+    <color name="heat_0">#EFEAE2</color>
+    <color name="heat_1">#E6F3F1</color>
+    <color name="heat_2">#400F5E55</color>
+    <color name="heat_3">#800F5E55</color>
+    <color name="heat_4">#BF0F5E55</color>
+    <color name="heat_5">#0F5E55</color>
+</resources>

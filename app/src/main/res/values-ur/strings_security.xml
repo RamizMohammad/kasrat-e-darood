@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="security_rooted_title">یہ فون روٹ کیا ہوا ہے</string>
+    <string name="security_rooted_body">روٹ کیے ہوئے فون پر دوسری ایپس، ایپ کا ڈیٹا پڑھ سکتی ہیں۔ کثرتِ درود آپ کا سائن اِن خفیہ (انکرپٹ) رکھتی ہے، پھر بھی بغیر روٹ والے فون پر آپ کا اکاؤنٹ زیادہ محفوظ ہے۔</string>
+    <string name="security_rooted_continue">سمجھ گیا، جاری رکھیں</string>
+    <string name="security_tampered_title">ایپ کی یہ کاپی نہیں چل سکتی</string>
+    <string name="security_tampered_body">کثرتِ درود کی اس کاپی میں تبدیلی کی گئی ہے، یا کوئی چیز اس میں مداخلت کر رہی ہے۔ آپ کے اکاؤنٹ کی حفاظت کے لیے آپ کو سائن آؤٹ کر دیا گیا ہے۔ براہِ کرم ایپ Google Play سے انسٹال کریں۔</string>
+    <string name="security_close">بند کریں</string>
+</resources>

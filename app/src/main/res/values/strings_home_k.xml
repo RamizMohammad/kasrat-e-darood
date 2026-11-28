@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 3 · shell + Home (Stitch home_teal). -->
+<resources>
+    <string name="tab_circles">Circles</string>
+    <string name="home_date_line">%1$s · %2$s</string>
+    <string name="home_today_caption">darood today</string>
+    <string name="home_vs_yesterday_up">+%1$d%% vs yesterday</string>
+    <string name="home_vs_yesterday_down">−%1$d%% vs yesterday</string>
+    <string name="home_vs_yesterday_same">Same as yesterday</string>
+    <string name="home_intention">Daily intention</string>
+    <string name="home_intention_title">Daily intention</string>
+    <string name="home_intention_sub">How many darood you aim for each day. Only you see it.</string>
+    <string name="home_intention_cd">Daily intention %1$s, %2$s recited today. Tap to change.</string>
+    <string name="home_your_circles">Your circles</string>
+    <string name="home_weekly_goal">Weekly goal</string>
+    <string name="home_circle_of">%1$s / %2$s</string>
+    <string name="home_circle_week">%1$s this week</string>
+    <string name="home_circles_empty_title">Recite together</string>
+    <string name="home_circles_empty_body">Start a circle or join one with a code to share a weekly goal.</string>
+    <string name="home_circles_empty_action">Go to Circles</string>
+    <string name="home_continue">Continue reciting</string>
+    <string name="home_continue_progress">%1$s / %2$s</string>
+    <string name="home_open_tasbih">Open tasbih</string>
+    <string name="home_streak_cd">%1$d day streak</string>
+    <plurals name="home_members">
+        <item quantity="one">%d member</item>
+        <item quantity="other">%d members</item>
+    </plurals>
+    <string name="home_see_all">See all</string>
+    <string name="home_circle_of_week">of %1$s this week</string>
+    <string name="home_circle_this_week">this week</string>
+    <string name="home_circle_pct">%1$d%%</string>
+</resources>

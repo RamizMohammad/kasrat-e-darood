@@ -1,0 +1,44 @@
+package in.mohammad.ramiz.islamic.kasrat_e_darrod.core;
+
+import android.content.Context;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.os.VibratorManager;
+
+/**
+ * Subtle haptic feedback (minSdk 31, so VibratorManager is always available).
+ * Ported from the old haptics/VibManager.
+ */
+public final class Haptics {
+
+    private Haptics() { }
+
+    /** A light tick — selections, toggles, "felt". */
+    public static void tick(Context context) {
+        play(context, VibrationEffect.EFFECT_TICK);
+    }
+
+    /** A slightly firmer click — confirmations (post released, account created). */
+    public static void click(Context context) {
+        play(context, VibrationEffect.EFFECT_CLICK);
+    }
+
+    /** Double buzz — errors (wrong password, flagged content). */
+    public static void reject(Context context) {
+        play(context, VibrationEffect.EFFECT_DOUBLE_CLICK);
+    }
+
+    private static void play(Context context, int effect) {
+        if (context == null) return;
+        if (!new in.mohammad.ramiz.islamic.kasrat_e_darrod.util.AppPrefs(context).haptics()) return;   // Settings → Haptics
+        VibratorManager vm = (VibratorManager) context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+        if (vm == null) return;
+        Vibrator vibrator = vm.getDefaultVibrator();
+        if (!vibrator.hasVibrator()) return;
+        try {
+            vibrator.vibrate(VibrationEffect.createPredefined(effect));
+        } catch (SecurityException | IllegalStateException e) {
+            // A buzz is never worth a crash (e.g. some ROMs restrict the vibrator).
+        }
+    }
+}

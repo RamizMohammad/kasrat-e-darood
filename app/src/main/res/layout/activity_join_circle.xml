@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 6 · Join a circle (Stitch join_circle_enter_code_teal): back, "Join a circle", six
+     white code boxes in Fraunces (typing goes to a hidden field), Paste, Continue. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back"
+        style="@style/Widget.Kasrat.IconButton.Outlined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/action_back"
+        android:elevation="3dp"
+        app:icon="@drawable/ic_ph_arrow_left"
+        app:iconTint="@color/text_primary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="48dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:accessibilityHeading="true"
+            android:text="@string/circles_join_title"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/circles_join_body"
+            android:textAppearance="@style/TextAppearance.K.BodyMd"
+            android:textColor="@color/k_deep_ink_75" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
+
+            <LinearLayout
+                android:id="@+id/code_boxes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="noHideDescendants"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/code_0"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                
+                android:background="@drawable/bg_k_code_box"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/k_shadow_card"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+            <TextView
+                android:id="@+id/code_1"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_k_code_box"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/k_shadow_card"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+            <TextView
+                android:id="@+id/code_2"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_k_code_box"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/k_shadow_card"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+            <TextView
+                android:id="@+id/code_3"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_k_code_box"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/k_shadow_card"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+            <TextView
+                android:id="@+id/code_4"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_k_code_box"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/k_shadow_card"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+            <TextView
+                android:id="@+id/code_5"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_k_code_box"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:outlineAmbientShadowColor="@color/transparent"
+                android:outlineSpotShadowColor="@color/k_shadow_card"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/code_input"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:contentDescription="@string/circles_join_code_cd"
+                android:cursorVisible="false"
+                android:importantForAutofill="no"
+                android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+                android:maxLength="6"
+                android:textColor="@color/transparent" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/code_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/brick"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/code_paste"
+            style="@style/Widget.Kasrat.Button.Link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/circles_paste"
+            android:textAppearance="@style/TextAppearance.K.LabelLg"
+            app:icon="@drawable/ic_ph_clipboard_text"
+            app:iconGravity="textStart"
+            app:iconSize="18dp" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/code_continue"
+        style="@style/Widget.K.Button.Hero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/action_continue" />
+</LinearLayout>

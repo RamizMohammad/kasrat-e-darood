@@ -33,12 +33,12 @@ public final class WeekReportPdf {
     private static final int PAGE_H = 842;
     private static final int MARGIN = 48;
 
-    private static final int EMERALD = Color.parseColor("#1B5E4B");
-    private static final int EMERALD_LIGHT = Color.parseColor("#D8EFE6");
-    private static final int GOLD = Color.parseColor("#B8860B");
-    private static final int INK = Color.parseColor("#1A1A1A");
-    private static final int MUTED = Color.parseColor("#6B7280");
-    private static final int TRACK = Color.parseColor("#ECECEC");
+    private static final int EMERALD = Color.parseColor("#0F5E55");
+    private static final int EMERALD_LIGHT = Color.parseColor("#E6F3F1");
+    private static final int GOLD = Color.parseColor("#C9A24B");
+    private static final int INK = Color.parseColor("#1C1A17");
+    private static final int MUTED = Color.parseColor("#7A716A");
+    private static final int TRACK = Color.parseColor("#EFEAE2");
 
     private WeekReportPdf() {}
 

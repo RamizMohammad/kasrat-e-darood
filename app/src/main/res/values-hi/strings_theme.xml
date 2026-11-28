@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stitch re-theme: header, Home, Tasbih and group board copy. -->
+<resources>
+    <string name="header_title">कसरत-ए-दरूद</string>
+    <string name="header_profile_cd">आपकी प्रोफ़ाइल</string>
+    <string name="header_streak_cd">%d दिन की लगातार</string>
+    <string name="header_sub_recite">पढ़ें / तस्बीह</string>
+    <string name="home_greeting">अस्सलामु अलैकुम, %1$s</string>
+    <string name="home_verse_ref">सूरह अल-अहज़ाब · 33:56</string>
+    <string name="home_verse_tr">“बेशक अल्लाह और उसके फ़रिश्ते नबी पर दरूद भेजते हैं।”</string>
+    <string name="home_tile_today">आज का कुल</string>
+    <string name="home_tile_today_sub">दरूद पढ़े</string>
+    <string name="home_tile_week">इस हफ़्ते</string>
+    <string name="home_tile_week_sub">कुल %1$s</string>
+    <string name="home_tile_goal_of">%1$s लक्ष्य में से</string>
+    <string name="home_tile_goal_pct">%1$d%% पूरा</string>
+    <string name="home_section_milestones">नमाज़ के पड़ाव</string>
+    <string name="home_prayer_next">अगली</string>
+    <string name="home_prayer_in">%1$s में</string>
+    <string name="home_section_deck">रोज़ का सलवात डेक</string>
+    <string name="home_section_deck_sub">सबसे ज़्यादा पढ़े, एक टैप में दर्ज करें</string>
+    <string name="home_deck_add">लॉग में जोड़ें</string>
+    <string name="home_deck_view_all">सब देखें</string>
+    <string name="home_section_circles">साझा मंडल</string>
+    <string name="home_section_circles_sub">आपके मंडलों में साझा बरकत</string>
+    <string name="home_circles_manage">प्रबंधित करें</string>
+    <string name="home_circle_reached">%1$d%% पहुँचे</string>
+    <string name="home_quick_tap">क्विक टैप</string>
+    <string name="group_private_tag">निजी मंडल</string>
+    <string name="group_public_tag">सार्वजनिक मंडल</string>
+    <string name="tasbih_current_round">मौजूदा दौर</string>
+    <string name="tasbih_tap_hint">गिनने के लिए कहीं भी टैप करें</string>
+    <string name="group_log_to_group">ग्रुप में दरूद दर्ज करें</string>
+    <string name="group_week_goal">हफ़्ते का पारिवारिक लक्ष्य</string>
+    <string name="group_days_left">%1$d दिन बाकी</string>
+    <string name="group_recited_pct">%1$d%%\nपढ़ा गया</string>
+    <string name="group_closes">शुक्रवार मग़रिब के बाद बंद होता है</string>
+    <string name="rank_you_badge">आप</string>
+    <string name="rank_unit">दरूद</string>
+    <string name="ranks_top_contributors">सबसे ज़्यादा योगदान</string>
+    <string name="group_code_label">कोड: %1$s</string>
+    <string name="tasbih_reset_lap">दौर रीसेट</string>
+    <string name="action_share">शेयर</string>
+    <string name="group_share_text">कसरत-ए-दरूद पर मेरे मंडल \"%1$s\" से जुड़ें। कोड: %2$s\n%3$s</string>
+</resources>

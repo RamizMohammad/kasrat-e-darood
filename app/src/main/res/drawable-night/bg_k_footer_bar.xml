@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark theme copy (Phase D): teal → gold, light fills → night surfaces. -->
+<!-- Sticky footer: warm ivory/95 with a top hairline. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item><shape android:shape="rectangle"><solid android:color="#F2141210" /></shape></item>
+    <item android:gravity="top|fill_horizontal" android:height="1dp">
+        <shape android:shape="rectangle"><solid android:color="@color/hairline" /></shape>
+    </item>
+</layer-list>

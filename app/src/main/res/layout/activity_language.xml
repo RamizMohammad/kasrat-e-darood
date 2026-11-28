@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Language (first run only; no Stitch screen): styled with the kit, matching onboarding —
+     emblem disc, Fraunces headline, three elevated cards (chosen = teal-soft), teal pill. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/k_page_margin">
+
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_k_emblem_soft">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_k_quran" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/lang_title"
+        android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+        android:textColor="@color/text_primary" />
+
+    <TextView
+        android:id="@+id/title_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:text="@string/lang_all_title"
+        android:textAppearance="@style/TextAppearance.K.BodySm"
+        android:textColor="@color/text_muted" />
+
+    <LinearLayout
+        android:id="@+id/cards"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_lg"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lang_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/bg_lang_card"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="72dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="@dimen/space_md"
+            android:stateListAnimator="@animator/press_scale">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lang_en_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lang_en"
+                    android:textAppearance="@style/TextAppearance.K.TitleMd"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/lang_en_sub"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_muted" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/lang_en_check"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible"
+                app:tint="@color/amber" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lang_hi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/bg_lang_card"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="72dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="@dimen/space_md"
+            android:stateListAnimator="@animator/press_scale">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lang_hi_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lang_hi"
+                    android:textAppearance="@style/TextAppearance.K.TitleMd"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/lang_hi_sub"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_muted" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/lang_hi_check"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible"
+                app:tint="@color/amber" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lang_ur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/bg_lang_card"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="72dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="@dimen/space_md"
+            android:stateListAnimator="@animator/press_scale">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lang_ur_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lang_ur"
+                    android:textAppearance="@style/TextAppearance.K.TitleMd"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/lang_ur_sub"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_muted" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/lang_ur_check"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible"
+                app:tint="@color/amber" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:text="@string/lang_sub"
+            android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium"
+            android:textColor="@color/text_secondary" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_continue"
+        style="@style/Widget.K.Button.Hero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:enabled="false"
+        android:text="@string/action_continue" />
+</LinearLayout>

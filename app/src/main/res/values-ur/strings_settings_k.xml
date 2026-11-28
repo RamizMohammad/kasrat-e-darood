@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 7c · Settings and Notifications (Stitch). -->
+<resources>
+    <string name="set_k_account">اکاؤنٹ</string>
+    <string name="set_k_recitation">تلاوت</string>
+    <string name="set_k_reminders">یاد دہانیاں</string>
+    <string name="set_k_appearance">ظاہری شکل</string>
+    <string name="set_k_prayer">نماز کے اوقات</string>
+    <string name="set_k_notifications">اطلاعات</string>
+    <string name="set_k_privacy">رازداری</string>
+    <string name="set_k_about">بارے میں</string>
+    <string name="set_k_sign_out">سائن آؤٹ</string>
+    <string name="set_k_load_error">سرور سے آپ کی ترتیبات لوڈ نہیں ہوئیں۔</string>
+    <string name="set_k_intention">روزانہ کی نیت</string>
+    <string name="set_k_tasbih_target">تسبیح کا طے شدہ ہدف</string>
+    <string name="set_k_tasbih_sub">نئی تسبیح شروع کرنے پر</string>
+    <string name="set_k_sound">آواز</string>
+    <string name="set_k_haptics">تھرتھراہٹ</string>
+    <string name="set_k_keep_on">اسکرین آن رکھیں</string>
+    <string name="set_k_reminder_time">روزانہ یاد دہانی کا وقت</string>
+    <string name="set_k_pick_time">وقت چنیں</string>
+    <string name="set_k_friday">جمعہ کی یاد دہانی</string>
+    <string name="set_k_nudges">نماز کے وقت یاد دہانی</string>
+    <string name="set_k_on">آن</string>
+    <string name="set_k_off">بند</string>
+    <string name="set_k_theme">تھیم</string>
+    <string name="set_k_light">لائٹ</string>
+    <string name="set_k_dark">ڈارک</string>
+    <string name="set_k_system">سسٹم</string>
+    <string name="set_k_theme_note">ڈارک تھیم بعد کی اپ ڈیٹ میں آئے گی۔</string>
+    <string name="set_k_language">زبان</string>
+    <string name="set_k_show_me">عالمی درجہ بندی میں مجھے دکھائیں</string>
+    <string name="set_k_show_me_sub">امت لیڈر بورڈ پر اپنا نام دکھائیں</string>
+    <string name="set_k_version">ورژن</string>
+    <string name="set_k_rate">ایپ کی درجہ بندی کریں</string>
+    <string name="set_k_number_range">%1$s سے %2$s تک کوئی عدد لکھیں</string>
+    <string name="notif_k_mark_all">سب پڑھا ہوا کریں</string>
+    <string name="notif_k_earlier">پہلے</string>
+    <string name="notif_k_unread">غیر پڑھا</string>
+    <string name="notif_k_empty_title">سب دیکھ لیا</string>
+    <string name="notif_k_empty_hint">رپورٹیں، یاد دہانیاں اور حلقوں کی خبریں یہاں دکھیں گی۔</string>
+</resources>

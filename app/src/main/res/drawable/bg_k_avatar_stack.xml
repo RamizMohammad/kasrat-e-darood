@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Overlapping member avatar: teal-soft disc with a 2dp white ring (border-2 border-pure-white). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/secondary_container" />
+    <stroke android:width="2dp" android:color="@color/surface_lowest" />
+</shape>

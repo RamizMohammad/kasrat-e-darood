@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Splash icon (SplashScreen API, 240dp canvas, inner 160dp circle shown):
+     white disc with a hairline and the teal Open-Quran emblem. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="96dp" android:height="96dp" android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/surface_lowest" />
+            <stroke android:width="1dp" android:color="@color/hairline" />
+        </shape>
+    </item>
+    <item android:width="48dp" android:height="48dp" android:gravity="center" android:drawable="@drawable/ic_k_quran" />
+</layer-list>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_circles">सर्कल</string>
+    <string name="home_date_line">%1$s · %2$s</string>
+    <string name="home_today_caption">आज के दुरूद</string>
+    <string name="home_vs_yesterday_up">कल से +%1$d%%</string>
+    <string name="home_vs_yesterday_down">कल से −%1$d%%</string>
+    <string name="home_vs_yesterday_same">कल जितना</string>
+    <string name="home_intention">रोज़ की नीयत</string>
+    <string name="home_intention_title">रोज़ की नीयत</string>
+    <string name="home_intention_sub">आप रोज़ कितने दुरूद पढ़ना चाहते हैं। यह सिर्फ़ आपको दिखता है।</string>
+    <string name="home_intention_cd">रोज़ की नीयत %1$s, आज %2$s पढ़े। बदलने के लिए टैप करें।</string>
+    <string name="home_your_circles">आपके सर्कल</string>
+    <string name="home_weekly_goal">साप्ताहिक लक्ष्य</string>
+    <string name="home_circle_of">%1$s / %2$s</string>
+    <string name="home_circle_week">इस हफ़्ते %1$s</string>
+    <string name="home_circles_empty_title">साथ मिलकर पढ़ें</string>
+    <string name="home_circles_empty_body">एक सर्कल शुरू करें या कोड से जुड़ें और साप्ताहिक लक्ष्य साझा करें।</string>
+    <string name="home_circles_empty_action">सर्कल पर जाएँ</string>
+    <string name="home_continue">पढ़ना जारी रखें</string>
+    <string name="home_continue_progress">%1$s / %2$s</string>
+    <string name="home_open_tasbih">तस्बीह खोलें</string>
+    <string name="home_streak_cd">लगातार %1$d दिन</string>
+    <plurals name="home_members">
+        <item quantity="one">%d सदस्य</item>
+        <item quantity="other">%d सदस्य</item>
+    </plurals>
+    <string name="home_see_all">सब देखें</string>
+    <string name="home_circle_of_week">इस हफ़्ते %1$s में से</string>
+    <string name="home_circle_this_week">इस हफ़्ते</string>
+    <string name="home_circle_pct">%1$d%%</string>
+</resources>

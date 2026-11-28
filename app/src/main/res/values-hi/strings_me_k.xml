@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 7a · Me and History (Stitch). -->
+<resources>
+    <string name="me_k_avatar_cd">आपका अवतार। बदलने के लिए दो बार टैप करें</string>
+    <string name="me_k_since">%1$s से सदस्य</string>
+    <string name="me_k_error">आपकी गिनती लोड नहीं हुई।</string>
+    <string name="me_k_active_streak">चालू सिलसिला</string>
+    <string name="me_k_start_streak">शुरू करने के लिए आज दर्ज करें</string>
+    <string name="me_k_lifetime">अब तक</string>
+    <string name="me_k_this_week">इस हफ़्ते</string>
+    <string name="me_k_best_streak">सबसे लंबा सिलसिला</string>
+    <string name="me_k_circles">सर्कल</string>
+    <string name="me_k_last_12">पिछले 12 हफ़्ते</string>
+    <string name="me_k_less">कम</string>
+    <string name="me_k_more">ज़्यादा</string>
+    <string name="me_k_history">इतिहास</string>
+    <string name="me_k_reports">साप्ताहिक रिपोर्ट</string>
+    <string name="me_k_notifications">सूचनाएं</string>
+    <string name="me_k_settings">सेटिंग्स</string>
+    <string name="me_k_day_done">%1$s, दर्ज</string>
+    <string name="me_k_day_today">%1$s, आज</string>
+    <string name="me_k_day_today_done">%1$s, आज, दर्ज</string>
+    <string name="me_k_day_missed">%1$s, कुछ दर्ज नहीं</string>
+    <string name="me_k_day_upcoming">%1$s, आने वाला</string>
+    <string name="history_prev_month">पिछला महीना</string>
+    <string name="history_next_month">अगला महीना</string>
+    <string name="history_this_month">इस महीने</string>
+    <string name="history_summary">%1$s · %2$s</string>
+    <string name="history_day_total">%1$s दरूद</string>
+    <string name="history_after">%1$s के बाद</string>
+    <string name="history_before">%1$s से पहले</string>
+    <string name="history_month_empty">%1$s में कुछ दर्ज नहीं</string>
+    <string name="history_month_empty_hint">दूसरा महीना देखने के लिए तीर इस्तेमाल करें।</string>
+    <plurals name="me_k_days">
+        <item quantity="one">%d दिन</item>
+        <item quantity="other">%d दिन</item>
+    </plurals>
+    <plurals name="me_k_active_days">
+        <item quantity="one">%d सक्रिय दिन</item>
+        <item quantity="other">%d सक्रिय दिन</item>
+    </plurals>
+</resources>

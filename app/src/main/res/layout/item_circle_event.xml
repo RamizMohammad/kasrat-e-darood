@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circle activity line on the timeline: dot, 32dp face, "Bilal joined the circle", time. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/ev_rail"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:background="@color/hairline" />
+
+    <View
+        android:id="@+id/ev_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="7.5dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/bg_k_dot_quiet" />
+
+    <LinearLayout
+        android:id="@+id/ev_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="24dp">
+
+        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+            android:id="@+id/ev_avatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:id="@+id/ev_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.K.BodyMd"
+            android:textColor="@color/text_primary"
+            android:textDirection="firstStrong"
+            tools:text="Bilal joined the circle" />
+
+        <TextView
+            android:id="@+id/ev_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFeatureSettings="tnum"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/text_secondary"
+            tools:text="4h" />
+    </LinearLayout>
+</FrameLayout>

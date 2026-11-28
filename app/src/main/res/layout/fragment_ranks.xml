@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 5 · Ranks (Stitch ranks_teal): star pattern behind the top, "Ranks" + Hall of Fame
+     trophy (and, for admins, close-the-week), then the global board (tabs · total card ·
+     podium · rows), your row pinned above the floating bottom bar. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/k_star_pattern" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ranks_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/k_page_margin"
+            android:paddingTop="32dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:accessibilityHeading="true"
+                android:text="@string/ranks_title_k"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ranks_close_week"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/ranks_close_cd"
+                android:visibility="gone"
+                app:icon="@drawable/ic_archive"
+                app:iconTint="@color/text_primary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ranks_hall"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ranks_hall_cd"
+                android:elevation="3dp"
+                app:icon="@drawable/ic_ph_trophy"
+                app:iconTint="@color/k_gold" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/ranks_board"
+            layout="@layout/view_board_pane"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</FrameLayout>

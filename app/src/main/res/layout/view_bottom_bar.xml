@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Floating bottom bar (Stitch home_teal "tabs-with-icon"): a white hairline capsule,
+     22dp Phosphor Light icons spread edge to edge. The current tab shows its icon, a
+     deep-teal label and a 4dp dot; the others show the warm-grey icon only.
+     MainActivity places it 24dp from the sides and 20dp above the nav bar. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_bar_pill"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:layout_marginHorizontal="@dimen/k_page_margin"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/bg_k_nav"
+    android:baselineAligned="false"
+    android:elevation="12dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:outlineAmbientShadowColor="@color/transparent"
+    android:outlineSpotShadowColor="@color/k_shadow_card"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp">
+
+    <LinearLayout
+        android:id="@+id/tab_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/tab_home"
+        android:gravity="center"
+        android:minWidth="44dp"
+        android:minHeight="44dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/icon_home"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_ph_house" />
+
+        <TextView
+            android:id="@+id/label_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:lineHeight="12sp"
+            android:text="@string/tab_home"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/amber"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/dot_home"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dot_k_nav"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/tab_recite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/tab_recite"
+        android:gravity="center"
+        android:minWidth="44dp"
+        android:minHeight="44dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/icon_recite"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_ph_hands_praying" />
+
+        <TextView
+            android:id="@+id/label_recite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:lineHeight="12sp"
+            android:text="@string/tab_recite"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/amber"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/dot_recite"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dot_k_nav"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/tab_groups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/tab_circles"
+        android:gravity="center"
+        android:minWidth="44dp"
+        android:minHeight="44dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/icon_groups"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_ph_users_three" />
+
+        <TextView
+            android:id="@+id/label_groups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:lineHeight="12sp"
+            android:text="@string/tab_circles"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/amber"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/dot_groups"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dot_k_nav"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/tab_ranks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/tab_ranks"
+        android:gravity="center"
+        android:minWidth="44dp"
+        android:minHeight="44dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/icon_ranks"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_ph_chart_bar" />
+
+        <TextView
+            android:id="@+id/label_ranks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:lineHeight="12sp"
+            android:text="@string/tab_ranks"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/amber"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/dot_ranks"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dot_k_nav"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/tab_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/tab_me"
+        android:gravity="center"
+        android:minWidth="44dp"
+        android:minHeight="44dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/icon_me"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_ph_user" />
+
+        <TextView
+            android:id="@+id/label_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:lineHeight="12sp"
+            android:text="@string/tab_me"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/amber"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/dot_me"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/dot_k_nav"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 5 · Hall of Fame (Stitch hall_of_fame_teal): back, "Hall of Fame" + "Champions of
+     every week", then the newest closed week in a gold-framed card and older weeks below. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="32dp"
+        android:paddingBottom="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Kasrat.IconButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_back"
+            android:elevation="3dp"
+            app:icon="@drawable/ic_ph_arrow_left"
+            app:iconTint="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:accessibilityHeading="true"
+            android:text="@string/hall_title"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/hall_sub"
+            android:textAppearance="@style/TextAppearance.K.BodyMd"
+            android:textColor="@color/k_deep_ink_75" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/hall_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hall_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/k_page_margin"
+                android:paddingBottom="40dp" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/hall_skeleton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/k_page_margin"
+            android:visibility="gone">
+
+            <View android:layout_width="match_parent" android:layout_height="300dp" android:background="@drawable/bg_k_gold_frame" />
+            <View android:layout_width="match_parent" android:layout_height="150dp" android:layout_marginTop="20dp" android:background="@drawable/bg_k_card" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/hall_state"
+            layout="@layout/view_ranks_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circles summary trend line (decorative), Stitch circles_teal. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp" android:height="32dp" android:viewportWidth="64" android:viewportHeight="32">
+    <path android:pathData="M2,25 C10,24 14,18 22,19 C30,20 34,11 42,12 C50,13 55,5 62,4"
+        android:strokeColor="@color/k_deep_teal" android:strokeWidth="1.75"
+        android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M62,4m-2.25,0a2.25,2.25 0,1 1,4.5 0a2.25,2.25 0,1 1,-4.5 0" android:fillColor="@color/k_deep_teal" />
+</vector>

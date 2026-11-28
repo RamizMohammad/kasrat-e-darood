@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- v3 entry screens, tab bar and shared UI (P0 + P1). -->
+<resources>
+    <!-- Shown in its own script on every locale. -->
+    <string name="lang_en" translatable="false">English</string>
+    <string name="lang_hi" translatable="false">हिन्दी</string>
+    <string name="lang_ur" translatable="false">اردو</string>
+    <string name="lang_en_sub" translatable="false">Continue in English</string>
+    <string name="lang_hi_sub" translatable="false">हिन्दी में जारी रखें</string>
+    <string name="lang_ur_sub" translatable="false">اردو میں جاری رکھیں</string>
+    <string name="lang_all_title" translatable="false">Choose your language · अपनी भाषा चुनें · اپنی زبان منتخب کریں</string>
+
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_continue">Continue</string>
+    <string name="edit_discard_confirm">Discard</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_recite">Recite</string>
+    <string name="tab_groups">Groups</string>
+    <string name="tab_ranks">Ranks</string>
+    <string name="tab_me">Me</string>
+    <string name="groups_soon_tag">Coming soon</string>
+    <string name="groups_soon_title">Circles are coming.</string>
+    <string name="groups_soon_body">Create a circle, invite your family or masjid, set a weekly goal and recite together. It arrives in the next update.</string>
+    <string name="ranks_board">Board</string>
+    <string name="ranks_stats">Stats</string>
+    <string name="lang_title">Choose your language</string>
+    <string name="lang_sub">You can change it any time in Settings.</string>
+    <string name="login_tag">Assalamu Alaikum</string>
+    <string name="login_title">Every durood</string>
+    <string name="login_title_accent">counts.</string>
+    <string name="login_sub">Sign in to log your recitations and recite with your circle.</string>
+    <string name="hint_email_address">Email address</string>
+    <string name="hint_password_entry">Password</string>
+    <string name="login_forgot">Forgot password?</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="login_signing_in">Signing in…</string>
+    <string name="login_or">or</string>
+    <string name="login_google">Continue with Google</string>
+    <string name="login_new_here">New here?</string>
+    <string name="login_create">Create account</string>
+    <string name="reg_tag">New account</string>
+    <string name="reg_title">Join the</string>
+    <string name="reg_title_accent">circle.</string>
+    <string name="reg_sub">Your name shows on leaderboards. You can hide it any time.</string>
+    <string name="hint_name">Your name</string>
+    <string name="hint_new_password">Password (8+ characters)</string>
+    <string name="pw_strength_0">Too short</string>
+    <string name="pw_strength_1">Weak</string>
+    <string name="pw_strength_2">Okay</string>
+    <string name="pw_strength_3">Strong</string>
+    <string name="reg_create">Create account</string>
+    <string name="reg_creating">Creating account…</string>
+    <string name="reg_have_account">Already have an account?</string>
+    <string name="reg_sign_in">Sign in</string>
+    <string name="fp_step">STEP %1$d OF 3</string>
+    <string name="fp_title_1">Reset your password</string>
+    <string name="fp_sub_1">We\'ll email you a 6-digit code.</string>
+    <string name="fp_send">Send code</string>
+    <string name="fp_sending">Sending…</string>
+    <string name="fp_title_2">Enter the code</string>
+    <string name="fp_sub_2">We sent it to %1$s. It expires in 10 minutes.</string>
+    <string name="fp_resend">Send a new code</string>
+    <string name="fp_resend_in">New code in %1$ds</string>
+    <string name="fp_title_3">Choose a new password</string>
+    <string name="fp_sub_3">Use at least 8 characters.</string>
+    <string name="fp_reset">Reset password</string>
+    <string name="fp_resetting">Resetting…</string>
+    <string name="fp_done">Password changed. Sign in with your new password.</string>
+    <string name="err_email">Enter a valid email address.</string>
+    <string name="err_password_required">Enter your password.</string>
+    <string name="err_name">Enter your name.</string>
+    <string name="err_password_short">Use at least 8 characters.</string>
+    <string name="err_network">Can\'t reach the server. Check your connection and try again.</string>
+    <string name="err_google">Google sign-in didn\'t work. Please try again.</string>
+    <string name="err_wrong_password">Wrong email or password.</string>
+    <string name="err_email_taken">An account with this email already exists.</string>
+    <string name="err_email_unverified">This email already has an account. Sign in with your password.</string>
+    <string name="err_too_many">Too many tries. Wait a minute and try again.</string>
+    <string name="err_generic">Something went wrong. Please try again.</string>
+    <string name="err_code_required">Enter the 6-digit code.</string>
+    <string name="err_code_wrong">That code isn\'t right.</string>
+    <string name="err_code_expired">That code has expired. Send a new one.</string>
+    <string name="err_code_too_many">Too many wrong tries. Send a new code.</string>
+    <string name="onb_skip">Skip</string>
+    <string name="onb_next">Continue</string>
+    <string name="onb_start">Continue</string>
+    <string name="onb_1_tag">Bismillah</string>
+    <string name="onb_1_title">Recite with intention</string>
+    <string name="onb_1_body">Set a quiet daily rhythm for salawat and build a steady habit.</string>
+    <string name="onb_2_tag">Tasbih Counter</string>
+    <string name="onb_2_title">Never lose count</string>
+    <string name="onb_2_body">Tap anywhere with gentle haptics and log every session in seconds.</string>
+    <string name="onb_3_tag">Family Circles</string>
+    <string name="onb_3_title">Recite together</string>
+    <string name="onb_3_body">Join private family circles with shared weekly goals and gentle encouragement.</string>
+    <string name="onb_saving">Saving your avatar…</string>
+    <string name="onb_avatar_failed">Couldn\'t save your avatar. You can change it later from Me.</string>
+    <string name="onb_1_ref">Al-Ahzab 33:56</string>
+    <string name="onb_1_trans">“Indeed, Allah and His angels send blessings upon the Prophet.”</string>
+    <string name="onb_2_ref">Sahih Muslim</string>
+    <string name="onb_2_trans">“Whoever sends blessings upon me once, Allah will send blessings upon him tenfold.”</string>
+    <string name="onb_3_ref">Al-Imran 3:103</string>
+    <string name="onb_3_trans">“And hold firmly to the rope of Allah all together and do not become divided.”</string>
+    <string name="onb_members">14 members</string>
+    <string name="hint_email_label">Email</string>
+    <string name="hint_password_label">Password</string>
+    <!-- Arabic text and the brand name: the same on every locale. -->
+    <string name="brand_title" translatable="false">Kasrat-e-Darood</string>
+    <string name="onb_1_ar" translatable="false">إِنَّ ٱللَّهَ وَمَلَٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِيِّ</string>
+    <string name="onb_2_ar" translatable="false">مَنْ صَلَّى عَلَيَّ وَاحِدَةً صَلَّى ٱللَّهُ عَلَيْهِ عَشْرًا</string>
+    <string name="onb_3_ar" translatable="false">وَٱعْتَصِمُوا۟ بِحَبْلِ ٱللَّهِ جَمِيعًۭا</string>
+</resources>

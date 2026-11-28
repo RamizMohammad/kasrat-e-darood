@@ -1,85 +1,132 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Kasrat-e-Darood theme (Stitch design system): light "morning sunlight" by
+    default, a warm dark "Isha" theme at night (values-night/colors.xml), both
+    following the phone's setting.
+-->
+<resources>
 
-    <!-- Base Noor theme: Material3 light, no action bar. -->
-    <style name="Base.Theme.KasrateDarrod" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
+    <style name="Base.Theme.Kasrat" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Color roles -->
+        <item name="colorPrimary">@color/amber</item>
         <item name="colorOnPrimary">@color/on_primary</item>
-        <item name="colorPrimaryContainer">@color/primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorPrimaryContainer">@color/primary_fixed</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_fixed</item>
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorOnSecondary">@color/on_secondary</item>
         <item name="colorSecondaryContainer">@color/secondary_container</item>
         <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
         <item name="colorTertiary">@color/tertiary</item>
-        <item name="colorTertiaryContainer">@color/tertiary_container</item>
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorOnBackground">@color/on_background</item>
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/on_surface</item>
-        <item name="colorSurfaceVariant">@color/surface_container_highest</item>
-        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+        <item name="colorError">@color/brick</item>
+        <item name="colorOnError">@color/on_primary</item>
+        <item name="colorErrorContainer">@color/brick_tint</item>
+        <item name="colorOnErrorContainer">@color/brick</item>
+
+        <item name="android:colorBackground">@color/ink</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorSurface">@color/ink</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorSurfaceVariant">@color/surface_raised</item>
+        <item name="colorSurfaceContainerLowest">@color/surface_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/surface_raised</item>
+        <item name="colorSurfaceContainer">@color/surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_container_highest</item>
+        <item name="colorSurfaceInverse">@color/inverse_surface</item>
+        <item name="colorOnSurfaceInverse">@color/inverse_on_surface</item>
         <item name="colorOutline">@color/outline</item>
         <item name="colorOutlineVariant">@color/outline_variant</item>
-        <item name="colorError">@color/error</item>
+        <item name="colorControlHighlight">@color/sl_ripple_dark</item>
+        <item name="colorControlActivated">@color/amber</item>
 
-        <item name="android:statusBarColor">@color/surface</item>
-        <item name="android:navigationBarColor">@color/surface_container_lowest</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <!-- Window -->
+        <item name="android:windowBackground">@color/ink</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
+        <item name="android:windowLightNavigationBar">@bool/light_system_bars</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
 
-        <!-- Shape system: large generous radii -->
-        <item name="shapeAppearanceCornerSmall">@style/Shape.Noor.Small</item>
-        <item name="shapeAppearanceCornerMedium">@style/Shape.Noor.Medium</item>
-        <item name="shapeAppearanceCornerLarge">@style/Shape.Noor.Large</item>
+        <!-- Type -->
+        <item name="android:fontFamily">@font/jakarta</item>
+        <item name="fontFamily">@font/jakarta</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_muted</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_amber</item>
+        <item name="android:textColorHighlight">@color/amber_disabled</item>
+        <item name="android:textSelectHandle">@drawable/select_handle_amber</item>
+        <item name="android:textSelectHandleLeft">@drawable/select_handle_amber</item>
+        <item name="android:textSelectHandleRight">@drawable/select_handle_amber</item>
 
-        <!-- App-wide activity transition animations -->
-        <item name="android:windowAnimationStyle">@style/Animation.Noor.Activity</item>
+        <!-- Material type roles → Kasrat type scale -->
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Kasrat.Title</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.Kasrat.Display</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.Kasrat.Headline</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Kasrat.HeadlineSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Kasrat.Body</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Kasrat.BodyMedium</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Kasrat.Button</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.Kasrat.Meta</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.Kasrat.MetaSmall</item>
+
+        <!-- Shapes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Kasrat.Input</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Kasrat.Card</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Kasrat.Sheet</item>
+
+        <!-- Default component styles -->
+        <item name="materialButtonStyle">@style/Widget.Kasrat.Button</item>
+        <item name="borderlessButtonStyle">@style/Widget.Kasrat.Button.Ghost</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Kasrat.Button.Outlined</item>
+        <item name="textInputStyle">@style/Widget.Kasrat.TextInputLayout</item>
+        <item name="chipStyle">@style/Widget.Kasrat.Chip</item>
+        <item name="materialSwitchStyle">@style/Widget.Kasrat.Switch</item>
+        <item name="checkboxStyle">@style/Widget.Kasrat.CheckBox</item>
+        <item name="circularProgressIndicatorStyle">@style/Widget.Kasrat.Progress.Circular</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.Kasrat.Progress.Linear</item>
+        <item name="snackbarStyle">@style/Widget.Kasrat.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.Kasrat.Snackbar.Text</item>
+        <item name="snackbarButtonStyle">@style/Widget.Kasrat.Snackbar.Button</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Kasrat.BottomSheetDialog</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Kasrat.AlertDialog</item>
+        <item name="bottomNavigationStyle">@style/Widget.Kasrat.BottomNavigation</item>
+        <item name="toolbarStyle">@style/Widget.Kasrat.Toolbar</item>
+        <!-- Screen-to-screen motion: a soft rise + fade (see anim/screen_*). -->
+        <item name="android:windowAnimationStyle">@style/Animation.Kasrat.Screen</item>
     </style>
 
-    <!-- Slide transitions between activities -->
-    <style name="Animation.Noor.Activity" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    <!-- Android 12–13 (14+ is set per activity in ui/util/ScreenMotion). -->
+    <style name="Animation.Kasrat.Screen" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/screen_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/screen_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/screen_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/screen_close_exit</item>
+        <!-- Sign-in → Home and sign-out → sign-in clear the task: fade through. -->
+        <item name="android:taskOpenEnterAnimation">@anim/screen_fade_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/screen_fade_out</item>
+        <item name="android:taskCloseEnterAnimation">@anim/screen_fade_in</item>
+        <item name="android:taskCloseExitAnimation">@anim/screen_fade_out</item>
     </style>
 
-    <style name="Theme.KasrateDarrod" parent="Base.Theme.KasrateDarrod" />
+    <style name="Theme.Kasrat" parent="Base.Theme.Kasrat" />
 
-    <!-- Splash uses a beige window background -->
-    <style name="Theme.KasrateDarrod.Splash" parent="Theme.KasrateDarrod">
-        <item name="android:windowBackground">@drawable/bg_gradient_noor</item>
-    </style>
-
-    <!-- Photo crop screen: needs an ActionBar so the library's Crop/Save
-         menu actions are visible (the base app theme is NoActionBar). -->
-    <style name="Theme.KasrateDarrod.Crop" parent="Theme.Material3.DayNight">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnPrimary">@color/on_primary</item>
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/on_surface</item>
-        <item name="android:statusBarColor">@color/surface</item>
-        <item name="android:windowLightStatusBar">true</item>
+    <!-- PostMenu popup window animation -->
+    <style name="Animation.Kasrat.Popup" parent="">
+        <item name="android:windowEnterAnimation">@anim/popup_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_out</item>
     </style>
 
-    <!-- ==== Shapes ==== -->
-    <style name="Shape.Noor.Small" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
+    <!-- Splash (Android 12+ SplashScreen API): Stitch Open-Quran emblem on a white disc, warm-ivory canvas. -->
+    <style name="Theme.Kasrat.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ink</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_k_emblem</item>
+        <item name="postSplashScreenTheme">@style/Theme.Kasrat</item>
     </style>
-    <style name="Shape.Noor.Medium" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16dp</item>
-    </style>
-    <style name="Shape.Noor.Large" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">24dp</item>
-    </style>
-    <style name="Shape.Noor.Card" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">24dp</item>
-    </style>
-    <style name="Shape.Noor.Pill" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
+
+    <!-- Names the manifest and older screens still use. -->
+    <style name="Theme.KasrateDarrod" parent="Theme.Kasrat" />
+
+    <!-- Photo crop screen (legacy, removed in P3): needs an ActionBar. -->
 </resources>

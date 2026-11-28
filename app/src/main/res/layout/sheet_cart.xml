@@ -1,65 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Phase 4 · Review & log sheet (Stitch review_log_teal / review_log_success_teal). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/surface"
-    android:paddingHorizontal="24dp"
-    android:paddingTop="18dp"
-    android:paddingBottom="24dp">
+    android:layout_height="wrap_content">
 
-    <View
-        android:layout_width="40dp"
-        android:layout_height="4dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/bg_skeleton_pill" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/your_recitations"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:fontFamily="serif"
-        android:textColor="@color/primary" />
-
-    <TextView
-        android:id="@+id/cart_summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text=""
-        android:textSize="13sp"
-        android:textColor="@color/on_surface_variant" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_cart"
+    <LinearLayout
+        android:id="@+id/cart_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:maxHeight="360dp"
-        android:overScrollMode="never" />
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="12dp"
+        android:paddingBottom="32dp">
 
-    <TextView
-        android:id="@+id/cart_empty"
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_k_sheet_handle" />
+
+        <TextView
+            android:id="@+id/cart_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/cart_ready"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/cart_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_muted"
+            tools:text="Counts toward all 3 of your circles" />
+
+        <!-- border-y + divide-y -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hairline"
+            android:layout_marginTop="24dp"
+            android:background="@color/hairline" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cart_lines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hairline"
+            android:background="@color/hairline" />
+
+        <TextView
+            android:id="@+id/cart_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:text="@string/cart_empty"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_muted"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/cart_total_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:baselineAligned="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cart_total"
+                android:textAppearance="@style/TextAppearance.K.SerifTitle"
+                android:textColor="@color/text_muted" />
+
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.CountRollTextView
+                android:id="@+id/cart_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.K.DisplayLgMobile"
+                android:textColor="@color/text_primary"
+                tools:text="133" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/cart_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_error_plate"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/brick"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cart_log"
+            style="@style/Widget.K.Button.Hero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            tools:text="Log 133 darood" />
+
+        <TextView
+            android:id="@+id/cart_undo_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/cart_undo_note"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/text_secondary" />
+    </LinearLayout>
+
+    <!-- Success -->
+    <LinearLayout
+        android:id="@+id/cart_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="24dp"
-        android:gravity="center"
-        android:text="@string/cart_empty"
-        android:textColor="@color/on_surface_variant"
-        android:visibility="gone" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="12dp"
+        android:paddingBottom="40dp"
+        android:visibility="gone">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_submit_cart"
-        style="@style/Widget.Noor.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="@string/submit_to_community"
-        app:icon="@drawable/ic_arrow_right"
-        app:iconGravity="textEnd"
-        app:iconTint="@color/on_primary" />
-</LinearLayout>
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:background="@drawable/bg_k_sheet_handle" />
+
+        <FrameLayout
+            android:layout_width="224dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:layout_width="224dp"
+                android:layout_height="112dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/k_success_sparkles" />
+
+            <FrameLayout
+                android:id="@+id/cart_done_disc"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_k_success_disc">
+
+                <ImageView
+                    android:id="@+id/cart_tick"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_k_check_lg" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/cart_done_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/cart_success_title"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/cart_done_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFeatureSettings="tnum"
+            android:textAppearance="@style/TextAppearance.K.LabelLg"
+            android:textColor="@color/amber"
+            tools:text="+133 · Streak 15 days" />
+
+        <TextView
+            android:id="@+id/cart_done_circles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_muted"
+            android:visibility="gone"
+            tools:text="Added to Khan Household, Jummah Sisters &amp; Family"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cart_done_btn"
+            style="@style/Widget.K.Button.Paper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:elevation="0dp"
+            android:text="@string/cart_done_k"
+            app:icon="@null" />
+    </LinearLayout>
+</FrameLayout>

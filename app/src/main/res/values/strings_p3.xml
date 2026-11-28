@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- P3: Me, submissions, week report, settings, delete account, about. -->
+<resources>
+    <string name="me_version" translatable="false">v%1$s</string>
+    <string name="share_card_bismillah" translatable="false">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</string>
+    <string name="about_developer_name" translatable="false">Mohammad Ramiz</string>
+    <string name="method_karachi" translatable="false">Karachi (Univ. of Islamic Sciences)</string>
+    <string name="method_isna" translatable="false">ISNA (North America)</string>
+    <string name="method_mwl" translatable="false">Muslim World League</string>
+    <string name="method_umm_al_qura" translatable="false">Umm al-Qura, Makkah</string>
+    <string name="method_egypt" translatable="false">Egyptian General Authority</string>
+    <string name="method_gulf" translatable="false">Gulf Region</string>
+    <string name="method_moonsighting" translatable="false">Moonsighting Committee</string>
+    <string name="method_dubai" translatable="false">Dubai</string>
+    <string name="method_other" translatable="false">Method %1$d</string>
+    <string name="stat_month">This month</string>
+    <string name="me_streak_with_best">%1$s · best %2$d</string>
+    <string name="me_section_year">Your year</string>
+    <string name="me_section_by_recitation">By recitation</string>
+    <string name="me_section_account">Account</string>
+    <string name="me_change_avatar">Change avatar</string>
+    <string name="me_error">Couldn\'t load your stats.</string>
+    <string name="me_empty_title">Nothing logged yet</string>
+    <string name="me_empty_hint">Your year fills in as you log recitations.</string>
+    <string name="me_empty_action">Go to Recite</string>
+    <string name="me_legend_less">Less</string>
+    <string name="me_legend_more">More</string>
+    <string name="me_show_all">Show all %1$d</string>
+    <string name="me_show_less">Show less</string>
+    <string name="me_day_total">%1$s · %2$s</string>
+    <string name="me_day_none">%1$s · nothing logged</string>
+    <string name="me_menu_submissions">Your submissions</string>
+    <string name="me_menu_week_report">Week report</string>
+    <string name="me_menu_avatar">Avatar</string>
+    <string name="me_menu_settings">Settings</string>
+    <string name="me_menu_about">About</string>
+    <string name="me_menu_logout">Log out</string>
+    <string name="me_logout_title">Log out?</string>
+    <string name="me_logout_body">Your counts stay safe on the server. You\'ll need to sign in again.</string>
+    <string name="subs_title">Your submissions</string>
+    <string name="subs_today">Today</string>
+    <string name="subs_yesterday">Yesterday</string>
+    <string name="subs_recitation">Recitation</string>
+    <string name="subs_undo_countdown">Undo · %1$s</string>
+    <string name="subs_undo_cd">Undo %1$s, %2$d seconds left</string>
+    <string name="subs_undone">Removed %1$s %2$s</string>
+    <string name="subs_undo_too_late">Too late to undo this one.</string>
+    <string name="subs_undo_failed">Couldn\'t undo. Try again.</string>
+    <string name="subs_empty_title">No submissions yet</string>
+    <string name="subs_empty_hint">Everything you log shows up here.</string>
+    <string name="subs_error_title">Couldn\'t load your submissions</string>
+    <string name="subs_error_hint">Check your connection and try again.</string>
+    <string name="week_title">Week report</string>
+    <string name="week_pdf">PDF</string>
+    <string name="week_share_image">Share as image</string>
+    <string name="week_share_text">Week %1$d of Kasrat-e-Darood: %2$s recitations</string>
+    <string name="week_share_failed">Couldn\'t make the image.</string>
+    <string name="week_empty_title">No weeks yet</string>
+    <string name="week_empty_hint">Reports appear once the first week ends.</string>
+    <string name="week_error_title">Couldn\'t load reports</string>
+    <string name="week_error_hint">Check your connection and try again.</string>
+    <string name="share_card_total_label">Recitations together</string>
+    <string name="share_card_footer">Kasrat-e-Darood</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_load_error">Couldn\'t load your settings.</string>
+    <string name="settings_save_failed">Couldn\'t save that. Changed back.</string>
+    <string name="settings_selected">selected</string>
+    <string name="settings_section_language">Language</string>
+    <string name="settings_section_prayer">Prayer times</string>
+    <string name="settings_section_privacy">Privacy</string>
+    <string name="settings_section_notifications">Notifications</string>
+    <string name="settings_section_reminders">Reminders</string>
+    <string name="settings_section_account">Account</string>
+    <string name="settings_prayer_method">Calculation method</string>
+    <string name="settings_prayer_method_sub">Pick the one your local masjid follows.</string>
+    <string name="settings_prayer_asr">Asr time</string>
+    <string name="settings_asr_hanafi">Hanafi</string>
+    <string name="settings_asr_hanafi_sub">Later Asr (shadow twice the length)</string>
+    <string name="settings_asr_shafi">Shafi\'i, Maliki, Hanbali</string>
+    <string name="settings_asr_shafi_sub">Earlier Asr (shadow equal to length)</string>
+    <string name="settings_hide_title">Hide me on leaderboards</string>
+    <string name="settings_hide_sub">Your counts still add to group totals; your name won\'t show.</string>
+    <string name="settings_notify_activity">Activity</string>
+    <string name="settings_notify_activity_sub">Milestones and replies to you</string>
+    <string name="settings_notify_groups">Groups</string>
+    <string name="settings_notify_groups_sub">Invites, joins and group goals</string>
+    <string name="settings_notify_system">Announcements</string>
+    <string name="settings_notify_system_sub">Updates about the app</string>
+    <string name="settings_notify_streak">Streak</string>
+    <string name="settings_notify_streak_sub">A nudge when today\'s streak is at risk</string>
+    <string name="settings_reminder_title">Daily reminder</string>
+    <string name="settings_reminder_sub">Choosing the time and days comes in a later update.</string>
+    <string name="settings_delete_account">Delete account</string>
+    <string name="delete_title">Delete account</string>
+    <string name="delete_headline">This removes everything</string>
+    <string name="delete_body">Your account, counts, streaks and group memberships are deleted for good. This cannot be undone.</string>
+    <string name="delete_step_1">1 · Get a code</string>
+    <string name="delete_step_2">2 · Enter it to confirm</string>
+    <string name="delete_code_sent">Code sent. Check your email.</string>
+    <string name="delete_code_hint">6-digit code</string>
+    <string name="delete_resend">Send again</string>
+    <string name="delete_keep">Keep my account</string>
+    <string name="about_title">About</string>
+    <string name="about_section_made_by">Made by</string>
+    <string name="about_section_privacy">Privacy</string>
+    <string name="about_section_credits">Credits</string>
+    <string name="about_developer">Developer</string>
+    <string name="about_website">Website</string>
+    <string name="about_no_app">No app on this phone can open that.</string>
+    <string name="about_privacy">We keep your email, name, avatar and the counts you log. Nothing is sold or shared. You can hide yourself on leaderboards or delete your account from Settings at any time.</string>
+    <string name="about_credits">Prayer times by AlAdhan. Hijri dates from the Umm al-Qura calendar. Type set in the app\'s bundled fonts.</string>
+    <plurals name="me_streak">
+        <item quantity="one">%d day streak</item>
+        <item quantity="other">%d day streak</item>
+    </plurals>
+    <plurals name="me_active_days">
+        <item quantity="one">%d active day this year</item>
+        <item quantity="other">%d active days this year</item>
+    </plurals>
+    <plurals name="me_graph_cd">
+        <item quantity="one">Recitation graph, %d day</item>
+        <item quantity="other">Recitation graph, %d days</item>
+    </plurals>
+</resources>

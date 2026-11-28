@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stitch re-theme: header, Home, Tasbih and group board copy. -->
+<resources>
+    <string name="header_title">Kasrat-e-Darood</string>
+    <string name="header_profile_cd">Your profile</string>
+    <string name="header_streak_cd">%d day streak</string>
+    <string name="header_sub_recite">Recite / Tasbih</string>
+    <string name="home_greeting">Assalamu Alaikum, %1$s</string>
+    <string name="home_verse_ref">Surah Al-Ahzab · 33:56</string>
+    <string name="home_verse_ar" translatable="false">إِنَّ ٱللَّهَ وَمَلَٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِيِّ</string>
+    <string name="home_verse_tr">“Indeed, Allah and His angels send blessings upon the Prophet.”</string>
+    <string name="home_tile_today">Today\'s total</string>
+    <string name="home_tile_today_sub">darood recited</string>
+    <string name="home_tile_week">This week</string>
+    <string name="home_tile_week_sub">Lifetime %1$s</string>
+    <string name="home_tile_goal_of">of %1$s target</string>
+    <string name="home_tile_goal_pct">%1$d%% complete</string>
+    <string name="home_section_milestones">Prayer milestones</string>
+    <string name="home_prayer_next">Next</string>
+    <string name="home_prayer_in">in %1$s</string>
+    <string name="home_section_deck">Daily salawat deck</string>
+    <string name="home_section_deck_sub">Your most-recited, one tap to log</string>
+    <string name="home_deck_add">Add to log</string>
+    <string name="home_deck_view_all">View all</string>
+    <string name="home_section_circles">Communal circles</string>
+    <string name="home_section_circles_sub">Shared blessings across your circles</string>
+    <string name="home_circles_manage">Manage</string>
+    <string name="home_circle_reached">%1$d%% reached</string>
+    <string name="home_quick_tap">Quick tap</string>
+    <string name="group_private_tag">Private circle</string>
+    <string name="group_public_tag">Public circle</string>
+    <string name="tasbih_current_round">Current round</string>
+    <string name="tasbih_tap_hint">Tap anywhere to count</string>
+    <string name="group_log_to_group">Log darood to group</string>
+    <string name="group_week_goal">Weekly family goal</string>
+    <string name="group_days_left">%1$d days left</string>
+    <string name="group_recited_pct">%1$d%%\nRecited</string>
+    <string name="group_closes">Closes on Friday after Maghrib</string>
+    <string name="rank_you_badge">You</string>
+    <string name="rank_unit">darood</string>
+    <string name="ranks_top_contributors">Top contributors</string>
+    <string name="group_code_label">Code: %1$s</string>
+    <string name="tasbih_reset_lap">Reset lap</string>
+    <string name="action_share">Share</string>
+    <string name="group_share_text">Join my circle \"%1$s\" on Kasrat-e-Darood. Code: %2$s\n%3$s</string>
+</resources>

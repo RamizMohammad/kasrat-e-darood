@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recite_title_k">پڑھیں</string>
+    <string name="recite_search_k">صلوات، دعا یا تسبیح تلاش کریں</string>
+    <string name="recite_favourites">پسندیدہ</string>
+    <string name="recite_in_session">%1$s · جاری</string>
+    <string name="recite_fav_add">پسندیدہ میں شامل کریں</string>
+    <string name="recite_fav_remove">پسندیدہ سے ہٹائیں</string>
+    <string name="recite_no_favourites">ابھی کوئی پسندیدہ نہیں</string>
+    <string name="recite_no_favourites_hint">کسی تلاوت پر دل دبائیں، وہ یہاں دکھے گی۔</string>
+    <string name="recite_add_new">تلاوت شامل کریں</string>
+    <string name="cart_bar_log">درج کریں</string>
+    <string name="cart_ready">درج کرنے کے لیے تیار</string>
+    <plurals name="cart_counts_toward">
+        <item quantity="one">آپ کے حلقے میں شمار ہوگا</item>
+        <item quantity="other">آپ کے تمام %d حلقوں میں شمار ہوگا</item>
+    </plurals>
+    <string name="cart_log_n">%s درود درج کریں</string>
+    <string name="cart_undo_note">آپ 5 منٹ کے اندر واپس لے سکتے ہیں</string>
+    <string name="cart_success_title">جزاک اللہ خیر</string>
+    <string name="cart_success_line">+%1$s · مسلسل %2$s</string>
+    <plurals name="streak_days">
+        <item quantity="one">%d دن</item>
+        <item quantity="other">%d دن</item>
+    </plurals>
+    <string name="cart_added_to">%s میں شامل کیا گیا</string>
+    <string name="list_and">%1$s اور %2$s</string>
+    <string name="cart_done_k">ہو گیا</string>
+    <string name="detail_stat_total">آپ کا کل</string>
+    <string name="detail_stat_recent">پچھلے 100 لاگ</string>
+    <string name="detail_stat_week">اس ہفتے</string>
+    <string name="detail_stat_best">بہترین دن</string>
+    <string name="detail_source">ماخذ</string>
+    <string name="detail_start_tasbih">تسبیح شروع کریں</string>
+    <string name="detail_add_log">لاگ میں شامل کریں</string>
+    <string name="detail_add_log_n">لاگ میں شامل کریں · لاگ میں %s</string>
+    <string name="tasbih_of_lap">%1$s میں سے · چکر %2$d</string>
+    <string name="tasbih_save_n">%s درود محفوظ کریں</string>
+    <string name="tasbih_save_empty">گنتی شروع کرنے کے لیے ٹیپ کریں</string>
+    <string name="tasbih_view">انداز</string>
+    <string name="tasbih_day">دن</string>
+    <string name="tasbih_day_sub">ہلکا آئیوری اور ٹیل</string>
+    <string name="tasbih_night">رات</string>
+    <string name="tasbih_night_sub">گہرا رنگ اور سنہرا، آنکھوں کو آرام</string>
+    <string name="tasbih_settings_cd">انداز کی ترتیبات</string>
+    <string name="tasbih_laps_cd">%d چکر مکمل</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Opening a screen: the new one slides in from the end edge, on top. -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="320"
+    android:interpolator="@interpolator/k_screen"
+    android:zAdjustment="top">
+    <translate android:fromXDelta="-100%" android:toXDelta="0" />
+</set>

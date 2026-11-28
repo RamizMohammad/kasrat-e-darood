@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stitch review_log_success: gold sparkles around the tick (224×112). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="224dp" android:height="112dp" android:viewportWidth="224" android:viewportHeight="112">
+    <path android:pathData="M36,22L38,28L44,30L38,32L36,38L34,32L28,30L34,28Z" android:fillColor="@color/k_gold" android:fillAlpha="0.75" />
+    <path android:pathData="M184,18L186,24L192,26L186,28L184,34L182,28L176,26L182,24Z" android:fillColor="@color/k_gold" android:fillAlpha="0.8" />
+    <path android:pathData="M62,76L63.5,80L67.5,81.5L63.5,83L62,87L60.5,83L56.5,81.5L60.5,80Z" android:fillColor="@color/k_gold" android:fillAlpha="0.6" />
+    <path android:pathData="M168,72L169.5,76L173.5,77.5L169.5,79L168,83L166.5,79L162.5,77.5L166.5,76Z" android:fillColor="@color/k_gold" android:fillAlpha="0.65" />
+    <path android:pathData="M54,46m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" android:fillColor="@color/k_gold" android:fillAlpha="0.5" />
+    <path android:pathData="M174,48m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" android:fillColor="@color/k_gold" android:fillAlpha="0.5" />
+    <path android:pathData="M112,10m-1.75,0a1.75,1.75 0,1 1,3.5 0a1.75,1.75 0,1 1,-3.5 0" android:fillColor="@color/k_gold" android:fillAlpha="0.6" />
+    <path android:pathData="M148,14L149,17L152,18L149,19L148,22L147,19L144,18L147,17Z" android:fillColor="@color/k_gold" android:fillAlpha="0.55" />
+    <path android:pathData="M78,14L79,17L82,18L79,19L78,22L77,19L74,18L77,17Z" android:fillColor="@color/k_gold" android:fillAlpha="0.55" />
+</vector>

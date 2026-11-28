@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Network security for every connection the app makes.
+    * No plain HTTP anywhere (cleartext off).
+    * Only the system's certificate authorities are trusted, never ones a user
+      (or malware, or a proxy app) installed, so traffic can't be intercepted by
+      adding a CA to the phone.
+    * The API host is additionally pinned in code (ApiClient, API_CERT_PINS).
+    * Debug builds also trust user CAs, so a debugging proxy works there only.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

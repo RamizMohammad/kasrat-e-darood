@@ -1,35 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Dark theme (Phase D): Stitch night palette (tasbih_counter_night_teal / design system board).
+    Night ink canvas, night-surface cards, night hairlines, warm-ivory text, warm-grey muted;
+    gold takes the place of deep teal as the accent, with night-ink text on gold buttons.
+    Only colours that change are here; everything else falls back to values/colors.xml.
+-->
 <resources>
-    <!-- Dark "night" palette. Surfaces go to deep ink; emerald/gold lift for contrast. -->
-    <color name="surface">#0f1411</color>
-    <color name="surface_dim">#0f1411</color>
-    <color name="surface_container_lowest">#161c18</color>
-    <color name="surface_container_low">#1a211d</color>
-    <color name="surface_container">#1e2622</color>
-    <color name="surface_container_high">#283029</color>
-    <color name="surface_container_highest">#333b35</color>
+    <color name="ink">#141210</color>
+    <color name="surface_raised">#1E1B18</color>
+    <color name="surface_high">#2E2A25</color>
+    <color name="hairline">#2E2A25</color>
+    <color name="paper">#1E1B18</color>
+    <color name="paper_ink">#FAF7F2</color>
+    <color name="paper_meta">#A89F96</color>
+    <color name="paper_rule">#2E2A25</color>
+    <color name="text_primary">#FAF7F2</color>
+    <color name="text_secondary">#B3FAF7F2</color>
+    <color name="text_muted">#A89F96</color>
+    <color name="text_strong">#CCFAF7F2</color>
+    <color name="amber">#C9A24B</color>
+    <color name="amber_pressed">#B08A38</color>
+    <color name="amber_disabled">#59C9A24B</color>
+    <color name="amber_tint">#2A2418</color>
+    <color name="brick">#E07A70</color>
+    <color name="brick_tint">#3A2320</color>
+    <color name="sage">#C9A24B</color>
+    <color name="sage_tint">#2A2418</color>
+    <color name="scrim">#99000000</color>
+    <color name="graph_level_0">#2E2A25</color>
+    <color name="graph_level_1">#2A2418</color>
+    <color name="graph_level_2">#66C9A24B</color>
+    <color name="graph_level_3">#B3C9A24B</color>
+    <color name="graph_level_4">#C9A24B</color>
+    <color name="noor_emerald">#C9A24B</color>
+    <color name="noor_emerald_tint">#2A2418</color>
+    <color name="silver">#99C9A24B</color>
+    <color name="bronze">#2E2A25</color>
+    <color name="on_primary">#141210</color>
+    <color name="primary_bright">#C9A24B</color>
+    <color name="primary_container">#C9A24B</color>
+    <color name="primary_fixed">#2A2418</color>
+    <color name="primary_fixed_dim">#66C9A24B</color>
+    <color name="on_primary_fixed">#E8D3A0</color>
+    <color name="secondary">#C9A24B</color>
+    <color name="on_secondary">#141210</color>
+    <color name="secondary_container">#2A2418</color>
+    <color name="on_secondary_container">#E8D3A0</color>
+    <color name="tertiary">#C9A24B</color>
+    <color name="tertiary_fixed">#2E2615</color>
+    <color name="tertiary_fixed_dim">#C9A24B</color>
+    <color name="on_tertiary_fixed">#FAF7F2</color>
+    <color name="gold">#C9A24B</color>
+    <color name="success">#C9A24B</color>
+    <color name="warning">#E08A4A</color>
+    <color name="surface_lowest">#1E1B18</color>
+    <color name="surface_container">#181614</color>
+    <color name="surface_container_high">#26221E</color>
+    <color name="surface_container_highest">#2E2A25</color>
+    <color name="tonal">#1E1B18</color>
+    <color name="tonal_pressed">#2E2A25</color>
+    <color name="outline">#A89F96</color>
+    <color name="outline_variant">#2E2A25</color>
+    <color name="podium_first">#2E2615</color>
+    <color name="podium_other">#2E2A25</color>
+    <color name="me_row">#2A2418</color>
+    <color name="shadow_warm">#66000000</color>
+    <color name="nav_indicator">#2A2418</color>
+    <color name="surface">#141210</color>
+    <color name="surface_dim">#2E2A25</color>
+    <color name="surface_container_lowest">#1E1B18</color>
+    <color name="surface_container_low">#1E1B18</color>
+    <color name="on_surface">#FAF7F2</color>
+    <color name="on_surface_variant">#A89F96</color>
+    <color name="inverse_surface">#FAF7F2</color>
+    <color name="inverse_on_surface">#141210</color>
+    <color name="primary">#C9A24B</color>
+    <color name="on_primary_container">#141210</color>
+    <color name="tertiary_container">#C9A24B</color>
+    <color name="on_tertiary_container">#141210</color>
+    <color name="error">#E07A70</color>
+    <color name="on_error">#141210</color>
+    <color name="error_container">#3A2320</color>
+    <color name="background">#141210</color>
+    <color name="on_background">#FAF7F2</color>
+    <color name="heat_0">#2E2A25</color>
+    <color name="heat_1">#2A2418</color>
+    <color name="heat_2">#40C9A24B</color>
+    <color name="heat_3">#80C9A24B</color>
+    <color name="heat_4">#BFC9A24B</color>
+    <color name="heat_5">#C9A24B</color>
+    <color name="k_warm_ivory">#141210</color>
+    <color name="k_pure_white">#1E1B18</color>
+    <color name="k_hairline">#2E2A25</color>
+    <color name="k_deep_ink">#FAF7F2</color>
+    <color name="k_deep_ink_80">#CCFAF7F2</color>
+    <color name="k_deep_ink_70">#B3FAF7F2</color>
+    <color name="k_deep_ink_75">#BFFAF7F2</color>
+    <color name="k_deep_ink_40">#66FAF7F2</color>
+    <color name="k_warm_grey">#A89F96</color>
+    <color name="k_deep_teal">#C9A24B</color>
+    <color name="k_teal_soft">#2A2418</color>
+    <color name="k_teal_40">#66C9A24B</color>
+    <color name="k_on_teal_soft">#E8D3A0</color>
+    <color name="k_gold_soft">#2E2615</color>
+    <color name="k_saffron">#E08A4A</color>
+    <color name="k_saffron_soft">#3A2320</color>
+    <color name="k_muted_red">#E07A70</color>
+    <color name="k_shadow_card">#66000000</color>
+    <color name="k_shadow_teal">#40C9A24B</color>
 
-    <color name="on_surface">#e2e3dd</color>
-    <color name="on_surface_variant">#bfc9c0</color>
-    <color name="inverse_surface">#e2e3dd</color>
-    <color name="inverse_on_surface">#2f312e</color>
-    <color name="outline">#8a948c</color>
-    <color name="outline_variant">#414941</color>
-
-    <color name="primary">#7ad6ab</color>
-    <color name="on_primary">#00382a</color>
-    <color name="primary_container">#065f46</color>
-    <color name="on_primary_container">#a6f2d1</color>
-
-    <color name="secondary">#e9c349</color>
-    <color name="on_secondary">#3d2f00</color>
-    <color name="secondary_container">#5a4700</color>
-    <color name="on_secondary_container">#fed65b</color>
-
-    <color name="tertiary">#95d4ba</color>
-    <color name="tertiary_container">#1d5d49</color>
-    <color name="on_tertiary_container">#b6f1d6</color>
-
-    <color name="background">#0f1411</color>
-    <color name="on_background">#e2e3dd</color>
+    <color name="k_emblem_disc_0">#1C2B28</color>
+    <color name="k_emblem_disc_1">#2E2615</color>
+    <color name="k_emblem_disc_2">#26221E</color>
+    <color name="k_emblem_disc_3">#1E1B18</color>
+    <color name="k_emblem_mark">#C9A24B</color>
+    <color name="k_heat_0">#141210</color>
+    <color name="k_heat_1">#2A2418</color>
+    <color name="k_heat_2">#8CC9A24B</color>
+    <color name="k_heat_3">#C9A24B</color>
+    <!-- Best day / milestones: a lighter gold so it stands apart from the gold accent. -->
+    <color name="k_milestone">#F0D58C</color>
+    <color name="k_tick">#99141210</color>
+    <color name="k_gold_soft_50">#802E2615</color>
 </resources>

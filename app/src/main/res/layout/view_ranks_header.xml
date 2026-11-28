@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Board header (Stitch ranks_teal): "This week · All time" text tabs, then a card on a soft
+     glow: "The ummah recited / 24,81,930 / darood this week" and "Week closes … · 1d 4h". -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingBottom="24dp">
+
+    <LinearLayout
+        android:id="@+id/board_scope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp">
+
+        <TextView android:id="@+id/board_scope_week" style="@style/K.TextTab" android:text="@string/ranks_tab_week" />
+        <TextView style="@style/K.TextTabDot" />
+        <TextView android:id="@+id/board_scope_all" style="@style/K.TextTab" android:text="@string/ranks_tab_all" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/board_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="-12dp"
+            android:alpha="0.30"
+            android:background="@drawable/bg_k_hero_glow"
+            android:importantForAccessibility="no" />
+
+        <LinearLayout
+            style="@style/K.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/board_prefix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                android:textColor="@color/text_primary"
+                tools:text="The ummah recited" />
+
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.CountRollTextView
+                android:id="@+id/board_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:textAppearance="@style/TextAppearance.K.DisplayLgMobile"
+                android:textColor="@color/amber"
+                tools:text="24,81,930" />
+
+            <TextView
+                android:id="@+id/board_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                android:textColor="@color/text_primary"
+                tools:text="darood this week" />
+
+            <TextView
+                android:id="@+id/board_meta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFeatureSettings="tnum"
+                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                android:textColor="@color/text_muted"
+                tools:text="Week closes Fri 6:05 PM · 1d 4h" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

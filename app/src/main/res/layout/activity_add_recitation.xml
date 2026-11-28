@@ -1,89 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- P2 · Add recitation (screen 14), super members only. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/surface">
+    android:background="@color/ink"
+    android:orientation="vertical">
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:gravity="center_vertical" android:orientation="horizontal"
-        android:paddingHorizontal="20dp" android:paddingTop="50dp" android:paddingBottom="4dp">
-        <TextView android:id="@+id/btn_back"
-            android:layout_width="40dp" android:layout_height="40dp"
-            android:gravity="center" android:text="‹" android:textSize="28sp"
-            android:textColor="@color/on_surface" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" android:text="@string/add_surah"
-            android:textSize="22sp" android:textStyle="bold"
-            android:fontFamily="serif" android:textColor="@color/primary" />
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/add_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:trackColor="@color/transparent" />
+
+    <LinearLayout
+        android:id="@+id/k_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_back"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/action_back"
+                app:icon="@drawable/ic_ph_arrow_left"
+                app:iconTint="@color/text_primary" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:accessibilityHeading="true"
+            android:text="@string/add_recitation_title"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent" android:layout_height="0dp"
-        android:layout_weight="1" android:fillViewport="true">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:paddingHorizontal="24dp" android:paddingTop="12dp"
-            android:paddingBottom="24dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/margin_screen"
+            android:paddingBottom="@dimen/space_lg">
 
-            <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/english_name" />
-            <EditText android:id="@+id/et_english"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                android:padding="14dp" android:hint="@string/english_name_hint"
-                android:inputType="textCapWords" android:textColor="@color/on_surface"
-                android:textColorHint="@color/on_surface_variant" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_recitation_sub"
+                android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium"
+                android:textColor="@color/text_secondary" />
 
-            <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginTop="16dp"
-                android:text="@string/arabic_name" />
-            <EditText android:id="@+id/et_arabic"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                android:padding="14dp" android:hint="@string/arabic_name_hint"
-                android:inputType="text" android:textColor="@color/on_surface"
-                android:textColorHint="@color/on_surface_variant" />
+            <TextView style="@style/Kasrat.SectionLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/add_field_arabic" />
 
-            <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginTop="16dp"
-                android:text="@string/urdu_name" />
-            <EditText android:id="@+id/et_urdu"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                android:padding="14dp" android:hint="@string/optional"
-                android:inputType="text" android:textColor="@color/on_surface"
-                android:textColorHint="@color/on_surface_variant" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_arabic_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginTop="16dp"
-                android:text="@string/category" />
-            <Spinner android:id="@+id/spinner_category"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                android:padding="6dp" android:minHeight="52dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_arabic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/amiri"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:textDirection="rtl"
+                    android:textSize="22sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginTop="16dp"
-                android:text="@string/default_count" />
-            <EditText android:id="@+id/et_count"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                android:padding="14dp" android:text="1"
-                android:inputType="number" android:textColor="@color/on_surface" />
+            <TextView style="@style/Kasrat.SectionLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/add_field_name" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_save"
-                style="@style/Widget.Noor.Button"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="28dp" android:text="@string/save_surah"
-                app:icon="@drawable/ic_check" app:iconGravity="textStart" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="80"
+                app:placeholderText="@string/add_field_name_hint">
 
-            <ProgressBar android:id="@+id/add_progress"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" android:layout_marginTop="16dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:maxLength="80" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/Kasrat.SectionLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/add_field_urdu" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_urdu_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_urdu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textDirection="rtl" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/Kasrat.SectionLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/add_field_transliteration" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_translit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:placeholderText="@string/add_field_transliteration_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_translit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/Kasrat.SectionLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/add_field_meaning" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_meaning_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_meaning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/Kasrat.SectionLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/add_field_category" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_category_layout"
+                style="@style/Widget.Kasrat.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="dropdown_menu"
+                app:endIconTint="@color/text_secondary">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/add_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textAppearance="@style/TextAppearance.Kasrat.Body" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/Kasrat.SectionLabel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/add_field_step" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_step_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperText="@string/add_field_step_help">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_step"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:text="1"
+                    android:textAppearance="@style/TextAppearance.Kasrat.Count.Small" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/add_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:background="@drawable/bg_error_plate"
+                android:padding="@dimen/space_12"
+                android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium"
+                android:textColor="@color/text_primary"
                 android:visibility="gone" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_screen"
+        android:layout_marginVertical="@dimen/space_md"
+        android:text="@string/add_save" />
 </LinearLayout>

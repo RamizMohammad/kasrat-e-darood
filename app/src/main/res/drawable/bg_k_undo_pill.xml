@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- History "Undo" capsule: teal-soft (Stitch's edit hint colour). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/k_teal_soft" />
+    <corners android:radius="100dp" />
+</shape>

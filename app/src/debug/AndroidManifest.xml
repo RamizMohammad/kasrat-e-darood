@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds only: the v3 component gallery.
+     Open with: adb shell am start -n in.mohammad.ramiz.islamic.kasrat_e_darrod/.ui.dev.GalleryActivity -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <activity
+            android:name=".ui.dev.GalleryActivity"
+            android:exported="true"
+            android:label="Kasrat gallery" />
+    </application>
+</manifest>

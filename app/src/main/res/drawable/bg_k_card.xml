@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stitch card: pure white, 1px hairline, 28dp radius. Pair with style K.Card for the warm shadow. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/surface_lowest" />
+    <stroke android:width="@dimen/hairline" android:color="@color/hairline" />
+    <corners android:radius="@dimen/k_radius_lg" />
+</shape>

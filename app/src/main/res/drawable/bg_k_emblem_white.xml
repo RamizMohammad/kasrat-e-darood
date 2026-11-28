@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Emblem disc: pure white, 1px hairline (sign-in logo, tasbih "33" preview). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/surface_lowest" />
+    <stroke android:width="@dimen/hairline" android:color="@color/hairline" />
+</shape>

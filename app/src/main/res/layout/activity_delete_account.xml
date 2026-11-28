@@ -1,92 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- P3 · Delete account (screen 32): email code, then a brick confirm button. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
-    android:fillViewport="true">
+    android:background="@color/ink"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/k_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:paddingHorizontal="24dp"
-        android:layout_marginTop="50dp"
-        android:paddingVertical="40dp">
+        android:paddingHorizontal="@dimen/k_page_margin"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_account"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textColor="@color/error" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="@string/delete_account_warning"
-            android:textColor="@color/on_surface_variant"
-            android:textSize="14sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Noor.Card"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_back"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/action_back"
+                app:icon="@drawable/ic_ph_arrow_left"
+                app:iconTint="@color/text_primary" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:contentPadding="24dp">
+            android:layout_marginTop="20dp"
+            android:accessibilityHeading="true"
+            android:text="@string/delete_title"
+            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+            android:textColor="@color/text_primary" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/delete_column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/margin_screen"
+            android:paddingBottom="@dimen/space_xl">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_error_plate"
+                android:orientation="vertical"
+                android:padding="@dimen/space_md">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_send_code"
-                    style="@style/Widget.Noor.Button.Outlined"
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_trash"
+                    app:tint="@color/brick" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/send_deletion_code" />
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:text="@string/delete_headline"
+                    android:textAppearance="@style/TextAppearance.Kasrat.HeadlineSmall"
+                    android:textColor="@color/text_primary" />
 
-                <TextView style="@style/Text.Title"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp" android:text="@string/reset_code" />
-                <EditText
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:text="@string/delete_body"
+                    android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/Kasrat.SectionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_step_1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_send_code"
+                style="@style/Widget.Kasrat.Button.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/send_deletion_code"
+                app:icon="@drawable/ic_mail"
+                app:iconGravity="textStart" />
+
+            <TextView
+                android:id="@+id/delete_sent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:text="@string/delete_code_sent"
+                android:textAppearance="@style/TextAppearance.Kasrat.MetaSmall"
+                android:textColor="@color/sage"
+                android:visibility="gone" />
+
+            <TextView
+                style="@style/Kasrat.SectionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_step_2" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_code_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:placeholderText="@string/delete_code_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_code"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_input"
-                    android:paddingHorizontal="16dp"
-                    android:hint="@string/hint_code"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLength="6"
-                    android:textColorHint="@color/outline"
-                    android:textColor="@color/on_surface" />
+                    android:textAppearance="@style/TextAppearance.Kasrat.Count"
+                    android:textDirection="ltr" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_confirm_delete"
-                    style="@style/Widget.Material3.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="@string/confirm_delete"
-                    android:backgroundTint="@color/error"
-                    android:textColor="@color/on_error" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/delete_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:background="@drawable/bg_error_plate"
+                android:padding="@dimen/space_12"
+                android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/link_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/cancel"
-            android:textColor="@color/primary"
-            android:textStyle="bold" />
-    </LinearLayout>
-</ScrollView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_confirm_delete"
+                style="@style/Widget.Kasrat.Button.Danger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:enabled="false"
+                android:text="@string/confirm_delete"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/link_cancel"
+                style="@style/Widget.Kasrat.Button.Ghost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:text="@string/delete_keep" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

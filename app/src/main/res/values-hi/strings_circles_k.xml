@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 6a · Circles list, new circle, join (Stitch). -->
+<resources>
+    <string name="groups_avatar_shape">आकार</string>
+    <string name="groups_avatar_color">रंग</string>
+    <string name="circles_create">सर्कल बनाएँ</string>
+    <string name="circles_empty_body">अपने परिवार को एक निजी सर्कल में जोड़ें, हफ़्ते का सलवात लक्ष्य बाँटें और प्यार से एक-दूसरे का हौसला बढ़ाएँ।</string>
+    <string name="circles_summary">आपके सर्कलों ने मिलकर %1$s पढ़े</string>
+    <string name="circles_new_title">नया सर्कल</string>
+    <string name="circles_name_label">सर्कल का नाम</string>
+    <string name="circles_name_hint">ख़ान और सिद्दीक़ी परिवार</string>
+    <string name="circles_desc_label">विवरण</string>
+    <string name="circles_optional">(वैकल्पिक)</string>
+    <string name="circles_desc_hint">रोज़ मग़रिब से पहले मिलकर सलवात</string>
+    <string name="circles_goal_resets">हर जुमे को मग़रिब के बाद नया होता है</string>
+    <string name="circles_goal_lakh">%d लाख</string>
+    <string name="circles_goal_k">%dk</string>
+    <string name="circles_private_sub">सिर्फ़ इनवाइट कोड से जुड़ें</string>
+    <string name="circles_public_sub">समुदाय में कोई भी ढूँढ सकता है</string>
+    <string name="circles_create_button">सर्कल बनाएँ</string>
+    <string name="circles_join_title">सर्कल से जुड़ें</string>
+    <string name="circles_join_body">परिवार का भेजा 6 अक्षरों वाला इनवाइट कोड डालें।</string>
+    <string name="circles_join_code_cd">इनवाइट कोड, 6 अक्षर या अंक</string>
+    <string name="circles_paste">पेस्ट करें</string>
+    <string name="circles_join_not_found">इस कोड का कोई सर्कल नहीं। जाँचकर फिर कोशिश करें।</string>
+    <string name="circles_join_looking">ढूँढ रहे हैं…</string>
+    <string name="circles_invite_eyebrow">सर्कल न्योता</string>
+    <string name="circles_join_button">सर्कल से जुड़ें</string>
+    <string name="circles_join_note">आज से आपके लॉग यहाँ गिने जाएँगे</string>
+    <string name="circles_members_privacy">%1$s · %2$s</string>
+    <string name="circles_of_goal">%2$s में से %1$s</string>
+    <string name="circles_started">%1$s से</string>
+    <string name="circles_open">सर्कल खोलें</string>
+    <string name="circles_more">+%d</string>
+    <string name="circles_joining">जुड़ रहे हैं…</string>
+    <string name="circles_requested">अनुरोध भेजा गया</string>
+    <string name="circles_requested_note">कोई एडमिन आपको जोड़ेगा। आपको सूचना मिलेगी।</string>
+</resources>

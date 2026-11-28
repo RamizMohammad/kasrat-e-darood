@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 7b · Weekly report and share story (Stitch). -->
+<resources>
+    <string name="report_k_certificate">Weekly Certificate</string>
+    <string name="report_k_prev">Earlier week</string>
+    <string name="report_k_next">Later week</string>
+    <string name="report_k_week">Week %1$d · %2$s</string>
+    <string name="report_k_title">A blessed week, %1$s</string>
+    <string name="report_k_title_now">Your week so far, %1$s</string>
+    <string name="report_k_title_quiet">A quiet week, %1$s</string>
+    <string name="report_k_darood">darood</string>
+    <string name="report_k_top">Top %1$d%% of the ummah</string>
+    <string name="report_k_top_short">Top %1$d%%</string>
+    <string name="report_k_rank">#%1$s in the ummah</string>
+    <string name="report_k_rhythm">Daily rhythm</string>
+    <string name="report_k_avg">Avg %1$s / day</string>
+    <string name="report_k_best_day">Best day</string>
+    <string name="report_k_best_value">%1$s · %2$s</string>
+    <string name="report_k_streak">Streak</string>
+    <string name="report_k_streak_short">%1$d-day streak</string>
+    <string name="report_k_active">Active days</string>
+    <string name="report_k_active_value">%1$d of %2$d days</string>
+    <string name="report_k_most">Most recited</string>
+    <string name="report_k_circles">Circle results</string>
+    <string name="report_k_circle_meta">%1$s · %2$s darood</string>
+    <string name="report_k_share">Share as image</string>
+    <string name="report_k_pdf">Download PDF</string>
+    <string name="report_k_preparing">Preparing…</string>
+    <string name="report_k_recited">darood recited</string>
+    <string name="report_k_wordmark">Kasrat-e-Darood</string>
+    <string name="report_k_salawat_ar" translatable="false">صَلَّى ٱللَّٰهُ عَلَيْهِ وَسَلَّمَ</string>
+</resources>

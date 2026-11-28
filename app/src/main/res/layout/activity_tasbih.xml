@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 4 · Tasbih (Stitch tasbih_counter_teal / tasbih_counter_night_teal): back · title ·
+     display settings; target tabs (33 · 100 · 1,000 · Custom); the ring with the lap count
+     and "of 100 · lap 2"; "Tap anywhere to count"; Undo / Reset lap; "Save 167 darood".
+     The whole middle is the tap area; volume keys count too. Night colours are set in code. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Kasrat.IconButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_back"
+            app:icon="@drawable/ic_ph_arrow_left"
+            app:iconTint="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/tasbih_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+            android:textColor="@color/text_primary"
+            tools:text="Darood-e-Ibrahimi" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tasbih_settings"
+            style="@style/Widget.Kasrat.IconButton.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/tasbih_settings_cd"
+            app:icon="@drawable/ic_ph_sliders_horizontal"
+            app:iconTint="@color/text_primary" />
+    </LinearLayout>
+
+    <!-- Target tabs -->
+    <LinearLayout
+        android:id="@+id/tasbih_targets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView android:id="@+id/target_33" style="@style/K.TextTab" android:fontFeatureSettings="tnum" android:text="33" tools:ignore="HardcodedText" />
+        <TextView style="@style/K.TextTabDot" />
+        <TextView android:id="@+id/target_100" style="@style/K.TextTab" android:fontFeatureSettings="tnum" android:text="100" tools:ignore="HardcodedText" />
+        <TextView style="@style/K.TextTabDot" />
+        <TextView android:id="@+id/target_1000" style="@style/K.TextTab" android:fontFeatureSettings="tnum" tools:text="1,000" />
+        <TextView style="@style/K.TextTabDot" />
+        <TextView android:id="@+id/target_custom" style="@style/K.TextTab" android:text="@string/tasbih_custom" />
+    </LinearLayout>
+
+    <!-- Tap area -->
+    <LinearLayout
+        android:id="@+id/tasbih_tap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingVertical="24dp">
+
+        <FrameLayout
+            android:layout_width="264dp"
+            android:layout_height="264dp">
+
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.TasbihRingView
+                android:id="@+id/tasbih_ring"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.CountRollTextView
+                    android:id="@+id/tasbih_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:lineHeight="48sp"
+                    android:text="0"
+                    android:textAppearance="@style/TextAppearance.K.DisplayLg"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/tasbih_of"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFeatureSettings="tnum"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_secondary"
+                    tools:text="of 100 · lap 2" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tasbih_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/tasbih_tap_hint"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_secondary" />
+
+        <!-- Kept for TasbihActivity (not in Stitch's screen) -->
+        <TextView
+            android:id="@+id/tasbih_arabic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Logged / error notes -->
+    <LinearLayout
+        android:id="@+id/tasbih_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.TickView
+            android:id="@+id/tasbih_tick"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/tasbih_done_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/TextAppearance.K.LabelLg"
+            android:textColor="@color/amber" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tasbih_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_error_plate"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:textAppearance="@style/TextAppearance.K.BodySm"
+        android:textColor="@color/brick"
+        android:visibility="gone" />
+
+    <!-- Undo / Reset lap -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tasbih_undo"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/tasbih_undo"
+                app:icon="@drawable/ic_ph_arrow_u_up_left"
+                app:iconSize="18dp"
+                app:iconTint="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/tasbih_undo_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:importantForAccessibility="no"
+                android:text="@string/tasbih_undo"
+                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tasbih_reset"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/tasbih_reset_lap"
+                app:icon="@drawable/ic_ph_arrow_counter_clockwise"
+                app:iconSize="18dp"
+                app:iconTint="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/tasbih_reset_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:importantForAccessibility="no"
+                android:text="@string/tasbih_reset_lap"
+                android:textAppearance="@style/TextAppearance.K.LabelSm"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/tasbih_log"
+        style="@style/Widget.K.Button.Hero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        tools:text="Save 167 darood" />
+</LinearLayout>

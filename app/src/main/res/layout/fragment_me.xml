@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Phase 7a · Me (Stitch me_teal): 88dp avatar on a soft aura, serif name, "Member since";
+    the streak card (flame, "14 days", Active streak, M–S dots); Lifetime · This week · Best
+    streak · Circles; "Last 12 weeks" heat map; History · Weekly reports · Notifications ·
+    Settings. Pads itself clear of the floating bottom bar. Driven by ui/profile/MeFragment.
+-->
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/me_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/me_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:id="@+id/me_column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/k_page_margin">
+
+            <!-- Hero -->
+            <LinearLayout
+                android:id="@+id/me_hero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="40dp"
+                android:paddingBottom="24dp">
+
+                <FrameLayout
+                    android:layout_width="136dp"
+                    android:layout_height="136dp"
+                    android:layout_marginVertical="-24dp"
+                    android:clipChildren="false">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.9"
+                        android:background="@drawable/bg_k_aura_glow"
+                        android:importantForAccessibility="no" />
+
+                    <FrameLayout
+                        android:layout_width="92dp"
+                        android:layout_height="92dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_k_avatar_ring_white"
+                        android:elevation="10dp"
+                        android:outlineAmbientShadowColor="@color/transparent"
+                        android:outlineSpotShadowColor="@color/k_shadow_card"
+                        android:padding="2dp">
+
+                        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+                            android:id="@+id/me_avatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/me_k_avatar_cd" />
+                    </FrameLayout>
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/me_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:accessibilityHeading="true"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                    android:textColor="@color/text_primary"
+                    android:textDirection="firstStrong"
+                    tools:text="Mohammad Ramiz" />
+
+                <TextView
+                    android:id="@+id/me_since"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_secondary"
+                    android:visibility="gone"
+                    tools:text="Member since Mar 2025"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+            <!-- Couldn't load (only when nothing is saved) -->
+            <LinearLayout
+                android:id="@+id/me_error"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/me_k_error"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/me_retry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_k_ivory_pill"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/action_try_again"
+                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+
+            <!-- Streak -->
+            <LinearLayout
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_ph_flame"
+                        app:tint="@color/amber" />
+
+                    <TextView
+                        android:id="@+id/me_streak"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFeatureSettings="tnum"
+                        android:text="—"
+                        android:textAppearance="@style/TextAppearance.K.DisplayLgMobile"
+                        android:textColor="@color/text_primary"
+                        tools:text="14 days" />
+
+                    <TextView
+                        android:id="@+id/me_streak_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_k_active_streak"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/amber" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/me_week"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <!-- Stats 2 × 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:clipChildren="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    style="@style/K.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_k_lifetime"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/text_muted" />
+
+                    <TextView
+                        android:id="@+id/me_lifetime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFeatureSettings="tnum"
+                        android:text="—"
+                        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                        android:textColor="@color/text_primary" />
+                </LinearLayout>
+                <Space android:layout_width="14dp" android:layout_height="0dp" />
+                <LinearLayout
+                    style="@style/K.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_k_this_week"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/text_muted" />
+
+                    <TextView
+                        android:id="@+id/me_week_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFeatureSettings="tnum"
+                        android:text="—"
+                        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                        android:textColor="@color/text_primary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:clipChildren="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    style="@style/K.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_k_best_streak"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/text_muted" />
+
+                    <TextView
+                        android:id="@+id/me_best"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFeatureSettings="tnum"
+                        android:text="—"
+                        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                        android:textColor="@color/text_primary" />
+                </LinearLayout>
+                <Space android:layout_width="14dp" android:layout_height="0dp" />
+                <LinearLayout
+                    style="@style/K.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_k_circles"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/text_muted" />
+
+                    <TextView
+                        android:id="@+id/me_circles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFeatureSettings="tnum"
+                        android:text="—"
+                        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                        android:textColor="@color/text_primary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Last 12 weeks -->
+            <LinearLayout
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:accessibilityHeading="true"
+                        android:text="@string/me_k_last_12"
+                        android:textAppearance="@style/TextAppearance.K.TitleMd"
+                        android:textColor="@color/text_primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:importantForAccessibility="no"
+                        android:text="@string/me_k_less"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/text_muted" />
+
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginStart="4dp" android:background="@drawable/bg_k_heat_0" />
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginStart="4dp" android:background="@drawable/bg_k_heat_1" />
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginStart="4dp" android:background="@drawable/bg_k_heat_2" />
+                    <View android:layout_width="10dp" android:layout_height="10dp" android:layout_marginStart="4dp" android:background="@drawable/bg_k_heat_3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:importantForAccessibility="no"
+                        android:text="@string/me_k_more"
+                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                        android:textColor="@color/text_muted" />
+                </LinearLayout>
+
+                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.KHeatmapView
+                    android:id="@+id/me_heatmap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp" />
+            </LinearLayout>
+
+            <!-- History · Weekly reports · Notifications · Settings -->
+            <LinearLayout
+                android:id="@+id/me_menu"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

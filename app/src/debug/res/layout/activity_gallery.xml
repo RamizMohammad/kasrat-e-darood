@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug gallery: every v3 type style and shared component on one scroll. Text is not translated. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:id="@+id/column"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_screen">
+
+        <TextView style="@style/Kasrat.SectionLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TYPE" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Display · Every durood" android:textAppearance="@style/TextAppearance.Kasrat.Display" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Headline · Join the circle" android:textAppearance="@style/TextAppearance.Kasrat.Headline" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="HeadlineSmall · Group name" android:textAppearance="@style/TextAppearance.Kasrat.HeadlineSmall" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Body · Pick a recitation and add your count." android:textAppearance="@style/TextAppearance.Kasrat.Body" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Label · Settings row" android:textAppearance="@style/TextAppearance.Kasrat.Label" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Meta · 62,410 / 1,00,000 · 2h ago" android:textAppearance="@style/TextAppearance.Kasrat.Meta" android:textColor="@color/text_secondary" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="MetaSmall · step 1 of 3" android:textAppearance="@style/TextAppearance.Kasrat.MetaSmall" android:textColor="@color/text_muted" />
+
+        <TextView style="@style/Kasrat.SectionLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RECITATION ON PAPER" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_lang_card"
+            android:orientation="vertical"
+            android:padding="@dimen/paper_padding">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="اللّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ" android:textAppearance="@style/TextAppearance.Kasrat.Arabic" android:textColor="@color/paper_ink" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="O Allah, send blessings upon Muhammad and the family of Muhammad." android:textAppearance="@style/TextAppearance.Kasrat.Recitation.Card" android:textColor="@color/paper_ink" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="×1,240 THIS WEEK" android:textAppearance="@style/TextAppearance.Kasrat.Meta" android:textColor="@color/paper_meta" />
+        </LinearLayout>
+
+        <TextView style="@style/Kasrat.SectionLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="BUTTONS" />
+        <com.google.android.material.button.MaterialButton android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Primary" />
+        <com.google.android.material.button.MaterialButton style="@style/Widget.Kasrat.Button.Light" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="Light · Continue with Google" app:icon="@drawable/ic_google" app:iconTint="@null" />
+        <com.google.android.material.button.MaterialButton style="@style/Widget.Kasrat.Button.Outlined" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="Outlined" />
+        <com.google.android.material.button.MaterialButton style="@style/Widget.Kasrat.Button.Danger" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="Danger · Delete group" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton style="@style/Widget.Kasrat.Button.Ghost" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ghost" />
+            <com.google.android.material.button.MaterialButton style="@style/Widget.Kasrat.Button.Link" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Link" />
+            <com.google.android.material.button.MaterialButton style="@style/Widget.Kasrat.Button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:enabled="false" android:text="Disabled" />
+        </LinearLayout>
+
+        <TextView style="@style/Kasrat.SectionLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="INPUTS + TOGGLES" />
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" app:placeholderText="Email address">
+            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Email address" android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout android:id="@+id/error_field" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_12">
+            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:text="not-an-email" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButtonToggleGroup android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_12" android:checkedButton="@id/seg_week" app:selectionRequired="true" app:singleSelection="true">
+            <com.google.android.material.button.MaterialButton android:id="@+id/seg_week" style="@style/Widget.Kasrat.Button.Segment" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Week" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/seg_all" style="@style/Widget.Kasrat.Button.Segment" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="All time" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+        <com.google.android.material.chip.ChipGroup android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_12">
+            <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:checkable="true" android:checked="true" android:text="Durood" />
+            <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:checkable="true" android:text="Surah" />
+            <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:checkable="true" android:text="Dhikr" />
+        </com.google.android.material.chip.ChipGroup>
+        <com.google.android.material.materialswitch.MaterialSwitch android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:checked="true" android:text="Hide me on leaderboards" />
+        <com.google.android.material.checkbox.MaterialCheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Remind me after Isha" />
+
+        <TextView style="@style/Kasrat.SectionLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TAGS, PROGRESS, AVATARS" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView style="@style/Kasrat.Tag" android:layout_width="wrap_content" android:layout_height="wrap_content" android:drawableStart="@drawable/dot_amber" android:text="NEW ACCOUNT" />
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView android:layout_width="@dimen/avatar_md" android:layout_height="@dimen/avatar_md" android:layout_marginStart="@dimen/space_md" app:aura="aura_04" />
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView android:id="@+id/avatar_spec" android:layout_width="@dimen/avatar_md" android:layout_height="@dimen/avatar_md" android:layout_marginStart="@dimen/space_sm" />
+            <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView android:layout_width="@dimen/avatar_md" android:layout_height="@dimen/avatar_md" android:layout_marginStart="@dimen/space_sm" app:aura="aura_02" app:auraSelected="true" />
+        </LinearLayout>
+        <com.google.android.material.progressindicator.LinearProgressIndicator android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_md" android:progress="62" />
+        <com.google.android.material.progressindicator.CircularProgressIndicator android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_md" android:indeterminate="true" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_md" android:background="@drawable/bg_error_plate" android:paddingHorizontal="@dimen/space_md" android:paddingVertical="@dimen/space_12" android:text="Error plate · Can't reach the server." android:textAppearance="@style/TextAppearance.Kasrat.BodyMedium" android:textColor="@color/brick" />
+
+        <TextView style="@style/Kasrat.SectionLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="OVERLAYS" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/open_dialog" style="@style/Widget.Kasrat.Button.Outlined" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="KasratDialog" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/open_sheet" style="@style/Widget.Kasrat.Button.Outlined" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="ChoiceSheet" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/open_menu" style="@style/Widget.Kasrat.Button.Outlined" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="PopMenu" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/open_snack" style="@style/Widget.Kasrat.Button.Outlined" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="Snackbar" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/open_avatar" style="@style/Widget.Kasrat.Button.Outlined" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_sm" android:text="Avatar studio" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

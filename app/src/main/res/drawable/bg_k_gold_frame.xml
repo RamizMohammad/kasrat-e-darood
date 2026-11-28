@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hall featured week: 2dp gold → gold-soft → gold diagonal frame around a white 28dp card
+     (Stitch: p-0.5 linear-gradient(135deg, #C9A24B, #FFEFD4 48%, #C9A24B)). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:angle="315" android:startColor="#C9A24B" android:centerColor="#FFEFD4" android:endColor="#C9A24B" />
+            <corners android:radius="@dimen/k_radius_lg" />
+        </shape>
+    </item>
+    <item android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/surface_lowest" />
+            <corners android:radius="26dp" />
+        </shape>
+    </item>
+</layer-list>

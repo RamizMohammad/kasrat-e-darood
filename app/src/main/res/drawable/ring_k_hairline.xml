@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- #3 podium (hairline): white disc with a 2dp ring (ring-2 … p-0.5 bg-pure-white). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/surface_lowest" />
+    <stroke android:width="2dp" android:color="@color/k_hairline" />
+</shape>

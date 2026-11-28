@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Emblem builder (Stitch new_circle_teal): a 96dp preview, then Shape · Color · Pattern rows
+     of 32dp options. GroupAvatarPicker fills the rows. -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.GroupAvatarView
+        android:id="@+id/gap_preview"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center_horizontal"
+        android:elevation="6dp"
+        android:outlineAmbientShadowColor="@color/transparent"
+        android:outlineProvider="background"
+        android:outlineSpotShadowColor="@color/k_shadow_card"
+        android:background="@drawable/bg_k_emblem_white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView style="@style/K.PickerLabel" android:text="@string/groups_avatar_shape" />
+        <LinearLayout android:id="@+id/gap_marks" style="@style/K.PickerRow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView style="@style/K.PickerLabel" android:text="@string/groups_avatar_color" />
+        <LinearLayout android:id="@+id/gap_colours" style="@style/K.PickerRow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView style="@style/K.PickerLabel" android:text="@string/groups_avatar_pattern" />
+        <LinearLayout android:id="@+id/gap_patterns" style="@style/K.PickerRow" />
+    </LinearLayout>
+</merge>

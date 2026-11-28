@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- No circles yet (Stitch circles_empty_teal): three overlapping rings, "Recite together",
+     the line about it, Create a circle / Join with code. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="24dp"
+    android:paddingBottom="32dp">
+
+    <ImageView
+        android:layout_width="176dp"
+        android:layout_height="176dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/k_circles_empty" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/groups_empty_title"
+        android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+        android:textColor="@color/text_primary" />
+
+    <TextView
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/circles_empty_body"
+        android:textAppearance="@style/TextAppearance.K.BodyMd"
+        android:textColor="@color/k_deep_ink_75" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/groups_empty_create"
+        style="@style/Widget.K.Button.Hero"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:minHeight="@dimen/button_height"
+        android:text="@string/circles_create" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/groups_empty_join"
+        style="@style/Widget.K.Button.Paper"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:elevation="0dp"
+        android:text="@string/groups_join_code"
+        app:icon="@null"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+</LinearLayout>

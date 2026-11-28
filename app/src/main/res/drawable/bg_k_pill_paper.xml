@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stitch top pill ("Bismillah"): white capsule with a 1px hairline. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/surface_lowest" />
+    <stroke android:width="@dimen/hairline" android:color="@color/hairline" />
+    <corners android:radius="100dp" />
+</shape>

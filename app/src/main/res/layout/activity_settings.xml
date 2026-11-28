@@ -1,149 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    Phase 7c · Settings (Stitch settings_teal): back, "Settings", then cards: Account ·
+    Recitation · Reminders · Appearance · Prayer times · Notifications · Privacy · About, and a
+    centred "Sign out". Prayer times and Notifications aren't in Stitch; they keep the app's
+    existing choices. Driven by ui/settings/SettingsActivity.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
-    android:fillViewport="true">
+    android:background="@color/ink"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/settings_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="48dp"
-        android:paddingBottom="32dp">
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/amber"
+        app:trackColor="@color/transparent" />
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="center_vertical" android:orientation="horizontal"
-            android:layout_marginTop="20dp">
-            <TextView android:id="@+id/btn_back"
-                android:layout_width="40dp" android:layout_height="40dp"
-                android:gravity="center" android:text="‹" android:textSize="30sp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:textColor="@color/on_surface" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" android:text="@string/settings"
-                android:textSize="28sp" android:textStyle="bold"
-                android:fontFamily="serif" android:textColor="@color/primary" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/settings_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:id="@+id/settings_column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/k_page_margin"
+            android:paddingTop="16dp"
+            android:paddingBottom="40dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_back"
+                style="@style/Widget.Kasrat.IconButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/action_back"
+                app:icon="@drawable/ic_ph_arrow_left"
+                app:iconTint="@color/text_primary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="24dp"
+                android:accessibilityHeading="true"
+                android:text="@string/me_k_settings"
+                android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                android:textColor="@color/text_primary" />
+
+            <LinearLayout
+                android:id="@+id/settings_error"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/set_k_load_error"
+                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/settings_retry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_k_ivory_pill"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/action_try_again"
+                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="0dp"
+                android:text="@string/set_k_account" />
+
+            <LinearLayout
+                android:id="@+id/settings_account"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="24dp"
+                android:text="@string/set_k_recitation" />
+
+            <LinearLayout
+                android:id="@+id/settings_recitation"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="24dp"
+                android:text="@string/set_k_reminders" />
+
+            <LinearLayout
+                android:id="@+id/settings_reminders"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="24dp"
+                android:text="@string/set_k_appearance" />
+
+            <LinearLayout
+                android:id="@+id/settings_appearance"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="24dp"
+                android:text="@string/set_k_prayer" />
+
+            <LinearLayout
+                android:id="@+id/settings_prayer"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="24dp"
+                android:text="@string/set_k_notifications" />
+
+            <LinearLayout
+                android:id="@+id/settings_notify"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="24dp"
+                android:text="@string/set_k_privacy" />
+
+            <LinearLayout
+                android:id="@+id/settings_privacy"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                style="@style/K.SectionEyebrow"
+                android:layout_marginTop="24dp"
+                android:text="@string/set_k_about" />
+
+            <LinearLayout
+                android:id="@+id/settings_about"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/k_divider"
+                android:orientation="vertical"
+                android:showDividers="middle" />
+
+            <TextView
+                android:id="@+id/settings_signout"
+                style="@style/K.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:minHeight="56dp"
+                android:padding="16dp"
+                android:text="@string/set_k_sign_out"
+                android:textAppearance="@style/TextAppearance.K.LabelLg"
+                android:textColor="@color/k_muted_red" />
         </LinearLayout>
-
-        <!-- Language -->
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="center_vertical" android:orientation="horizontal"
-            android:layout_marginTop="24dp" android:layout_marginStart="4dp">
-            <ImageView android:layout_width="20dp" android:layout_height="20dp"
-                android:src="@drawable/ic_globe" app:tint="@color/primary" />
-            <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginStart="10dp"
-                android:text="@string/language" />
-        </LinearLayout>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_en"
-            style="@style/Noor.LangCard"
-            android:layout_marginTop="10dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal"
-                android:padding="18dp">
-                <LinearLayout android:layout_width="0dp" android:layout_weight="1"
-                    android:layout_height="wrap_content" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="English" android:textSize="18sp" android:textStyle="bold"
-                        android:textColor="@color/on_surface" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="English" android:textSize="13sp"
-                        android:textColor="@color/on_surface_variant" />
-                </LinearLayout>
-                <ImageView android:id="@+id/check_en" android:layout_width="24dp"
-                    android:layout_height="24dp" android:src="@drawable/ic_check"
-                    app:tint="@color/primary" android:visibility="gone" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_hi"
-            style="@style/Noor.LangCard"
-            android:layout_marginTop="10dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal"
-                android:padding="18dp">
-                <LinearLayout android:layout_width="0dp" android:layout_weight="1"
-                    android:layout_height="wrap_content" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="हिन्दी" android:textSize="18sp" android:textStyle="bold"
-                        android:textColor="@color/on_surface" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Hindi" android:textSize="13sp"
-                        android:textColor="@color/on_surface_variant" />
-                </LinearLayout>
-                <ImageView android:id="@+id/check_hi" android:layout_width="24dp"
-                    android:layout_height="24dp" android:src="@drawable/ic_check"
-                    app:tint="@color/primary" android:visibility="gone" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_ur"
-            style="@style/Noor.LangCard"
-            android:layout_marginTop="10dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal"
-                android:padding="18dp">
-                <LinearLayout android:layout_width="0dp" android:layout_weight="1"
-                    android:layout_height="wrap_content" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="اردو" android:textSize="18sp" android:textStyle="bold"
-                        android:textColor="@color/on_surface" android:textDirection="rtl" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Urdu" android:textSize="13sp"
-                        android:textColor="@color/on_surface_variant" />
-                </LinearLayout>
-                <ImageView android:id="@+id/check_ur" android:layout_width="24dp"
-                    android:layout_height="24dp" android:src="@drawable/ic_check"
-                    app:tint="@color/primary" android:visibility="gone" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Appearance -->
-        <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="14dp" app:contentPadding="18dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal">
-                <ImageView android:layout_width="22dp" android:layout_height="22dp"
-                    android:src="@drawable/ic_moon" app:tint="@color/primary" />
-                <LinearLayout android:layout_width="0dp" android:layout_weight="1"
-                    android:layout_height="wrap_content" android:layout_marginStart="14dp"
-                    android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/dark_mode" android:textColor="@color/on_surface"
-                        android:textSize="16sp" android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/dark_mode_subtitle" android:textColor="@color/on_surface_variant"
-                        android:textSize="12sp" />
-                </LinearLayout>
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_dark"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Danger zone -->
-        <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_marginTop="28dp"
-            android:layout_marginStart="4dp" android:text="@string/account" />
-
-        <com.google.android.material.card.MaterialCardView style="@style/Widget.Noor.Card"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" app:contentPadding="4dp">
-            <LinearLayout android:id="@+id/row_delete_account" style="@style/Noor.ProfileRow">
-                <ImageView style="@style/Noor.ProfileRowIcon" android:src="@drawable/ic_lock" app:tint="@color/error" />
-                <TextView style="@style/Noor.ProfileRowLabel" android:text="@string/delete_account"
-                    android:textColor="@color/error" />
-                <ImageView style="@style/Noor.ProfileRowChevron" android:src="@drawable/ic_chevron_right" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

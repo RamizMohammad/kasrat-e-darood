@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- P4: Ranks, Hall of Fame, closing the week. -->
+<resources>
+    <string name="ranks_title">लीडरबोर्ड</string>
+    <string name="ranks_global">सभी</string>
+    <string name="ranks_groups">ग्रुप</string>
+    <string name="ranks_scope_week">इस हफ़्ते</string>
+    <string name="ranks_scope_all">अब तक</string>
+    <string name="ranks_label_week">सब मिलकर, इस हफ़्ते</string>
+    <string name="ranks_label_all">सब मिलकर, अब तक</string>
+    <string name="ranks_week_n">हफ़्ता %1$d</string>
+    <string name="ranks_week_closes">हफ़्ता %1$d · बंद होगा %2$s</string>
+    <string name="ranks_week_everyone">इस हफ़्ते सबके पाठ</string>
+    <string name="ranks_all_everyone">अब तक दर्ज हर पाठ</string>
+    <string name="ranks_you">आप</string>
+    <string name="ranks_hidden_name">एक सदस्य</string>
+    <string name="ranks_podium_cd">स्थान %1$s: %2$s, %3$s</string>
+    <string name="ranks_row_cd">रैंक %1$s, %2$s, %3$s पाठ</string>
+    <string name="ranks_change_up">पिछले हफ़्ते %1$d से ऊपर</string>
+    <string name="ranks_change_down">पिछले हफ़्ते %1$d से नीचे</string>
+    <string name="ranks_next_up">आगे: %1$s, %2$s आगे</string>
+    <string name="ranks_your_rank">आप #%1$s पर हैं</string>
+    <string name="ranks_empty_week_title">इस हफ़्ते अभी कोई पाठ नहीं</string>
+    <string name="ranks_empty_all_title">अभी कुछ दर्ज नहीं</string>
+    <string name="ranks_empty_hint">एक दर्ज करें और बोर्ड शुरू हो जाएगा।</string>
+    <string name="ranks_error_title">रैंक लोड नहीं हो सके</string>
+    <string name="ranks_error_hint">कनेक्शन जाँचें और फिर कोशिश करें।</string>
+    <string name="ranks_close_week">हफ़्ता बंद करें</string>
+    <string name="ranks_close_title">यह हफ़्ता अभी बंद करें?</string>
+    <string name="ranks_close_summary">हफ़्ता %1$d: %3$s लोगों के %2$s पाठ।</string>
+    <string name="ranks_close_top">सबसे आगे: %1$s</string>
+    <string name="ranks_close_body">यह हॉल ऑफ़ फ़ेम में चला जाएगा और नया हफ़्ता अभी शुरू होगा। वरना यह शुक्रवार शाम खुद बंद हो जाता है।</string>
+    <string name="ranks_close_confirm">हफ़्ता बंद करें</string>
+    <string name="ranks_close_failed">हफ़्ता बंद नहीं हो सका। फिर कोशिश करें।</string>
+    <string name="ranks_closed">हफ़्ता %1$d बंद हुआ</string>
+    <string name="hall_title">हॉल ऑफ़ फ़ेम</string>
+    <string name="hall_total_label">मिलकर पाठ</string>
+    <string name="hall_nobody">इस हफ़्ते किसी ने दर्ज नहीं किया।</string>
+    <string name="hall_week_cd">हफ़्ता %1$d, मिलकर %2$s पाठ</string>
+    <string name="hall_empty_title">अभी कोई पिछला हफ़्ता नहीं</string>
+    <string name="hall_empty_hint">हर हफ़्ता शुक्रवार शाम बंद होकर यहाँ आता है।</string>
+    <string name="hall_error_title">हॉल ऑफ़ फ़ेम लोड नहीं हो सका</string>
+</resources>

@@ -1,179 +1,525 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Phase 3 · Home (Stitch home_teal): star pattern behind the top, date + greeting with
+     streak and avatar, hero card (today + daily-intention ring) on a soft glow, verse card,
+     prayer timeline, "Your circles" carousel, "Continue reciting" card. The floating bottom
+     bar sits over the end; HomeFragment pads the scroll by MainActivity.navSpace(). -->
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
-    android:fillViewport="true">
+    android:background="@color/ink">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="24dp"
-        android:paddingBottom="24dp">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
-        <!-- Header -->
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <ImageView android:id="@+id/home_avatar"
-                android:layout_width="44dp" android:layout_height="44dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_profile" />
+                android:src="@drawable/k_star_pattern" />
+
             <LinearLayout
-                android:layout_width="0dp" android:layout_weight="1"
+                android:id="@+id/home_column"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp" android:orientation="vertical">
-                <TextView android:id="@+id/txt_greeting"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/greeting" android:textSize="22sp"
-                    android:textStyle="bold" android:fontFamily="serif"
-                    android:textColor="@color/primary" />
-                <TextView android:id="@+id/txt_welcome"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/tagline" android:textSize="13sp"
-                    android:textColor="@color/on_surface_variant" />
-            </LinearLayout>
-            <ImageView android:id="@+id/home_bell"
-                android:layout_width="24dp" android:layout_height="24dp"
-                android:src="@drawable/ic_bell" app:tint="@color/on_surface_variant"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true" android:focusable="true" />
-        </LinearLayout>
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
 
-        <!-- Today's date -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Noor.Card"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <!-- ── Header ─────────────────────────────────────────── -->
+                <LinearLayout
+                    android:id="@+id/home_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/k_page_margin"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="16dp">
 
-                <!-- Skeleton -->
-                <LinearLayout android:id="@+id/date_skeleton"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <View android:layout_width="96dp" android:layout_height="12dp"
-                        android:background="@drawable/bg_skeleton" />
-                    <View android:layout_width="180dp" android:layout_height="26dp"
-                        android:layout_marginTop="10dp" android:background="@drawable/bg_skeleton" />
-                    <View android:layout_width="140dp" android:layout_height="14dp"
-                        android:layout_marginTop="8dp" android:background="@drawable/bg_skeleton" />
-                    <View android:layout_width="90dp" android:layout_height="26dp"
-                        android:layout_marginTop="12dp" android:background="@drawable/bg_skeleton_pill" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                <!-- Content -->
-                <LinearLayout android:id="@+id/date_content"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:visibility="gone">
-                    <TextView style="@style/Text.Overline"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="TODAY'S DATE" />
-                    <TextView android:id="@+id/txt_hijri_date"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp" android:text="—"
-                        android:textSize="26sp" android:textStyle="bold" android:fontFamily="serif"
-                        android:textColor="@color/on_surface" />
-                    <TextView android:id="@+id/txt_greg_date"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="—" android:textColor="@color/on_surface_variant"
-                        android:textSize="14sp" />
-                    <TextView android:id="@+id/txt_fasting"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp" android:paddingHorizontal="12dp"
-                        android:paddingVertical="6dp" android:background="@drawable/bg_gold_chip"
-                        android:text="Fasting" android:textColor="@color/secondary"
-                        android:textSize="12sp" android:fontFamily="sans-serif-medium"
-                        android:visibility="gone" />
-                </LinearLayout>
-            </FrameLayout>
-        </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/home_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.K.BodySm"
+                            android:textColor="@color/text_secondary"
+                            tools:text="Friday, 27 Nov · 6 Jumada II 1448" />
 
-        <!-- Prayer times -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Noor.Card"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
-            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/home_ramadan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                            android:textColor="@color/amber"
+                            android:visibility="gone" />
 
-                <!-- Skeleton -->
-                <LinearLayout android:id="@+id/prayer_skeleton"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <View android:layout_width="160dp" android:layout_height="12dp"
-                        android:layout_marginBottom="6dp" android:background="@drawable/bg_skeleton" />
-                    <include layout="@layout/row_prayer_skeleton" />
-                    <include layout="@layout/row_prayer_skeleton" />
-                    <include layout="@layout/row_prayer_skeleton" />
-                    <include layout="@layout/row_prayer_skeleton" />
-                    <include layout="@layout/row_prayer_skeleton" />
-                </LinearLayout>
-
-                <!-- Content -->
-                <LinearLayout android:id="@+id/prayer_content"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:visibility="gone">
-                    <TextView style="@style/Text.Overline" android:id="@+id/txt_prayer_location"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="PRAYER TIMES" />
-                    <include layout="@layout/row_prayer" android:id="@+id/row_fajr" />
-                    <include layout="@layout/row_prayer" android:id="@+id/row_dhuhr" />
-                    <include layout="@layout/row_prayer" android:id="@+id/row_asr" />
-                    <include layout="@layout/row_prayer" android:id="@+id/row_maghrib" />
-                    <include layout="@layout/row_prayer" android:id="@+id/row_isha" />
-                </LinearLayout>
-            </FrameLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Countdown -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Noor.Card"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="vertical" android:gravity="center">
-                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:gravity="center_vertical" android:orientation="horizontal">
-                    <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                        android:src="@drawable/ic_star" app:tint="@color/gold" />
-                    <TextView style="@style/Text.Overline"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp" android:text="COUNTDOWN TO JUMU'AH" />
-                </LinearLayout>
-                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp" android:orientation="horizontal" android:gravity="center">
-                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:orientation="vertical" android:gravity="center">
-                        <TextView android:id="@+id/txt_jumuah_days"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="—" android:textSize="34sp" android:textStyle="bold"
-                            android:fontFamily="serif" android:textColor="@color/primary" />
-                        <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="DAYS" />
+                        <TextView
+                            android:id="@+id/home_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:accessibilityHeading="true"
+                            android:textAppearance="@style/TextAppearance.K.HeadlineLgMobile"
+                            android:textColor="@color/text_primary"
+                            tools:text="Assalamu Alaikum, Ramiz" />
                     </LinearLayout>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp" android:text=":" android:textSize="30sp"
-                        android:textColor="@color/outline_variant" />
-                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:orientation="vertical" android:gravity="center">
-                        <TextView android:id="@+id/txt_jumuah_hours"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="—" android:textSize="34sp" android:textStyle="bold"
-                            android:fontFamily="serif" android:textColor="@color/primary" />
-                        <TextView style="@style/Text.Overline" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="HOURS" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/home_streak"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_k_streak"
+                            android:drawablePadding="6dp"
+                            android:elevation="3dp"
+                            android:gravity="center_vertical"
+                            android:outlineAmbientShadowColor="@color/transparent"
+                            android:outlineSpotShadowColor="@color/k_shadow_card"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="6dp"
+                            android:textAppearance="@style/TextAppearance.K.SerifTitle"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            tools:text="14"
+                            tools:visibility="visible" />
+
+                        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+                            android:id="@+id/home_avatar"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/bg_k_emblem_white"
+                            android:contentDescription="@string/header_profile_cd"
+                            android:elevation="3dp"
+                            android:outlineAmbientShadowColor="@color/transparent"
+                            android:outlineSpotShadowColor="@color/k_shadow_card" />
                     </LinearLayout>
                 </LinearLayout>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" android:text="Prepare your heart"
-                    android:textColor="@color/on_surface_variant" android:textSize="13sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+                <!-- ── Content ────────────────────────────────────────── -->
+                <LinearLayout
+                    android:id="@+id/home_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/k_page_margin">
+
+                    <!-- Totals error -->
+                    <LinearLayout
+                        android:id="@+id/home_totals_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:background="@drawable/bg_error_plate"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/home_totals_error_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingVertical="12dp"
+                            android:text="@string/home_totals_error"
+                            android:textAppearance="@style/TextAppearance.K.BodySm"
+                            android:textColor="@color/brick" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/home_totals_retry"
+                            style="@style/Widget.Kasrat.Button.Link"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_retry"
+                            android:textColor="@color/brick" />
+                    </LinearLayout>
+
+                    <!-- Hero: today + daily intention ring, on a soft mesh glow -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+
+                        <View
+                            android:id="@+id/home_glow"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="-12dp"
+                            android:alpha="0.45"
+                            android:background="@drawable/bg_k_hero_glow"
+                            android:importantForAccessibility="no" />
+
+                        <LinearLayout
+                            style="@style/K.Card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="24dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.CountRollTextView
+                                    android:id="@+id/home_today"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:lineHeight="48sp"
+                                    android:text="0"
+                                    android:textAppearance="@style/TextAppearance.K.DisplayLg"
+                                    android:textColor="@color/text_primary" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="@string/home_today_caption"
+                                    android:textAppearance="@style/TextAppearance.K.BodySm"
+                                    android:textColor="@color/text_muted" />
+
+                                <TextView
+                                    android:id="@+id/home_trend"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:drawablePadding="4dp"
+                                    android:gravity="center_vertical"
+                                    android:textAppearance="@style/TextAppearance.K.LabelSm"
+                                    android:textColor="@color/amber"
+                                    android:visibility="gone"
+                                    tools:text="+18% vs yesterday"
+                                    tools:visibility="visible" />
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:id="@+id/home_intention_box"
+                                android:layout_width="104dp"
+                                android:layout_height="104dp"
+                                android:layout_marginStart="16dp"
+                                android:background="?attr/selectableItemBackgroundBorderless">
+
+                                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.KRingView
+                                    android:id="@+id/home_ring"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:importantForAccessibility="no" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="12dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:lineSpacingMultiplier="0.9"
+                                        android:text="@string/home_intention"
+                                        android:textAppearance="@style/TextAppearance.K.LabelSm"
+                                        android:textColor="@color/text_muted" />
+
+                                    <TextView
+                                        android:id="@+id/home_intention"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:textAppearance="@style/TextAppearance.K.SerifTitle"
+                                        android:textColor="@color/text_primary"
+                                        tools:text="1,500" />
+                                </LinearLayout>
+                            </FrameLayout>
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <!-- Verse -->
+                    <LinearLayout
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="28dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/onb_1_ref"
+                            android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                            android:textColor="@color/text_muted" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/onb_1_ar"
+                            android:textAppearance="@style/TextAppearance.K.ArabicLg"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/onb_1_trans"
+                            android:textAppearance="@style/TextAppearance.K.SerifItalic"
+                            android:textColor="@color/text_muted" />
+                    </LinearLayout>
+
+                    <!-- Prayer timeline -->
+                    <FrameLayout
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:padding="20dp">
+
+                        <View
+                            android:id="@+id/prayer_skeleton"
+                            android:layout_width="match_parent"
+                            android:layout_height="58dp"
+                            android:background="@drawable/bg_k_skeleton_line" />
+
+                        <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.PrayerTimelineView
+                            android:id="@+id/prayer_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/prayer_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/prayer_state_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.K.TitleMd"
+                                android:textColor="@color/text_primary" />
+
+                            <TextView
+                                android:id="@+id/prayer_state_body"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textAppearance="@style/TextAppearance.K.BodySm"
+                                android:textColor="@color/text_muted" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/prayer_state_action"
+                                style="@style/Widget.Kasrat.Button.Link"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="-12dp"
+                                android:layout_marginTop="4dp"
+                                android:minHeight="40dp" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <!-- Your circles -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/home_circles_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:accessibilityHeading="true"
+                            android:text="@string/home_your_circles"
+                            android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:id="@+id/home_circles_manage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:drawablePadding="2dp"
+                            android:paddingVertical="4dp"
+                            android:text="@string/home_see_all"
+                            android:textAppearance="@style/TextAppearance.K.LabelSm"
+                            android:textColor="@color/amber"
+                            android:textStyle="bold"
+                            app:drawableEndCompat="@drawable/ic_ph_caret_right"
+                            app:drawableTint="@color/amber" />
+                    </LinearLayout>
+
+                    <HorizontalScrollView
+                        android:id="@+id/home_circles_scroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/neg_margin_screen"
+                        android:layout_marginTop="12dp"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:paddingHorizontal="@dimen/k_page_margin"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="20dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/home_groups_row"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
+
+                    <!-- No circles yet -->
+                    <LinearLayout
+                        android:id="@+id/home_circles_empty"
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_circles_empty_title"
+                            android:textAppearance="@style/TextAppearance.K.TitleMd"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/home_circles_empty_body"
+                            android:textAppearance="@style/TextAppearance.K.BodySm"
+                            android:textColor="@color/text_muted" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/home_circles_empty_action"
+                            style="@style/Widget.Kasrat.Button.Link"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="-12dp"
+                            android:minHeight="40dp"
+                            android:text="@string/home_circles_empty_action" />
+                    </LinearLayout>
+
+                    <!-- Continue reciting -->
+                    <LinearLayout
+                        android:id="@+id/home_continue"
+                        style="@style/K.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="32dp"
+                        android:orientation="vertical"
+                        android:padding="24dp"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_continue"
+                                    android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                                    android:textColor="@color/text_muted" />
+
+                                <TextView
+                                    android:id="@+id/home_continue_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                                    android:textColor="@color/text_primary"
+                                    tools:text="Darood-e-Ibrahimi" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/home_continue_progress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:fontFeatureSettings="tnum"
+                                android:textAppearance="@style/TextAppearance.K.BodySm"
+                                android:textColor="@color/text_muted"
+                                tools:text="33 / 100" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/home_continue_ar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_k_ivory_box"
+                            android:padding="16dp"
+                            android:textAppearance="@style/TextAppearance.K.ArabicMd"
+                            android:textColor="@color/text_primary" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/home_open_tasbih"
+                            style="@style/Widget.K.Button.Hero"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:minHeight="@dimen/button_height"
+                            android:text="@string/home_open_tasbih"
+                            app:icon="@drawable/ic_ph_hands_praying"
+                            app:iconPadding="8dp"
+                            app:iconSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

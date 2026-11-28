@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 6a · Circles list, new circle, join (Stitch). -->
+<resources>
+    <string name="groups_avatar_shape">شکل</string>
+    <string name="groups_avatar_color">رنگ</string>
+    <string name="circles_create">حلقہ بنائیں</string>
+    <string name="circles_empty_body">اپنے گھر والوں کو ایک نجی حلقے میں جمع کریں، ہفتہ وار صلوات کا ہدف بانٹیں اور نرمی سے ایک دوسرے کی حوصلہ افزائی کریں۔</string>
+    <string name="circles_summary">آپ کے حلقوں نے مل کر %1$s پڑھے</string>
+    <string name="circles_new_title">نیا حلقہ</string>
+    <string name="circles_name_label">حلقے کا نام</string>
+    <string name="circles_name_hint">خان اور صدیقی خاندان</string>
+    <string name="circles_desc_label">تفصیل</string>
+    <string name="circles_optional">(اختیاری)</string>
+    <string name="circles_desc_hint">روزانہ مغرب سے پہلے مل کر صلوات</string>
+    <string name="circles_goal_resets">ہر جمعہ مغرب کے بعد نیا ہوتا ہے</string>
+    <string name="circles_goal_lakh">%d لاکھ</string>
+    <string name="circles_goal_k">%dk</string>
+    <string name="circles_private_sub">صرف دعوتی کوڈ سے شامل ہوں</string>
+    <string name="circles_public_sub">برادری میں کوئی بھی ڈھونڈ سکتا ہے</string>
+    <string name="circles_create_button">حلقہ بنائیں</string>
+    <string name="circles_join_title">حلقے میں شامل ہوں</string>
+    <string name="circles_join_body">گھر والوں کا بھیجا ہوا 6 حروف کا دعوتی کوڈ درج کریں۔</string>
+    <string name="circles_join_code_cd">دعوتی کوڈ، 6 حروف یا اعداد</string>
+    <string name="circles_paste">پیسٹ کریں</string>
+    <string name="circles_join_not_found">اس کوڈ کا کوئی حلقہ نہیں۔ دیکھ کر دوبارہ کوشش کریں۔</string>
+    <string name="circles_join_looking">تلاش جاری…</string>
+    <string name="circles_invite_eyebrow">حلقے کی دعوت</string>
+    <string name="circles_join_button">حلقے میں شامل ہوں</string>
+    <string name="circles_join_note">آج سے آپ کے لاگ یہاں شمار ہوں گے</string>
+    <string name="circles_members_privacy">%1$s · %2$s</string>
+    <string name="circles_of_goal">%2$s میں سے %1$s</string>
+    <string name="circles_started">%1$s سے</string>
+    <string name="circles_open">حلقہ کھولیں</string>
+    <string name="circles_more">+%d</string>
+    <string name="circles_joining">شامل ہو رہے ہیں…</string>
+    <string name="circles_requested">درخواست بھیج دی</string>
+    <string name="circles_requested_note">کوئی ایڈمن آپ کو شامل کرے گا۔ آپ کو اطلاع ملے گی۔</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notifications group heading: "TODAY" / "EARLIER". -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ng_label"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:accessibilityHeading="true"
+    android:paddingHorizontal="@dimen/k_page_margin"
+    android:paddingTop="24dp"
+    android:paddingBottom="8dp"
+    android:textAllCaps="true"
+    android:textAppearance="@style/TextAppearance.K.Eyebrow"
+    android:textColor="@color/text_secondary"
+    tools:text="Today" />

@@ -1,5 +1,7 @@
 package in.mohammad.ramiz.islamic.kasrat_e_darrod.data.remote.aladhan;
 
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.BuildConfig;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -9,7 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /** Singleton Retrofit client for the public AlAdhan API. */
 public final class AlAdhanClient {
-    public static final String BASE_URL = "https://api.aladhan.com/";
+    /** From ALADHAN_BASE_URL in secrets.properties (always ends in "/"). */
+    public static final String BASE_URL = BuildConfig.ALADHAN_BASE_URL;
 
     /** Default calculation method (1 = University of Islamic Sciences, Karachi). */
     public static final int DEFAULT_METHOD = 1;
@@ -23,7 +26,7 @@ public final class AlAdhanClient {
     public static AlAdhanService get() {
         if (service == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            logging.setLevel(HttpLoggingInterceptor.Level.NONE); // URLs carry the user's location
 
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(logging)

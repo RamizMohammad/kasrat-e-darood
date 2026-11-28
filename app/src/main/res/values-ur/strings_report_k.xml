@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 7b · Weekly report and share story (Stitch). -->
+<resources>
+    <string name="report_k_certificate">ہفتہ وار سند</string>
+    <string name="report_k_prev">پچھلا ہفتہ</string>
+    <string name="report_k_next">اگلا ہفتہ</string>
+    <string name="report_k_week">ہفتہ %1$d · %2$s</string>
+    <string name="report_k_title">ایک بابرکت ہفتہ، %1$s</string>
+    <string name="report_k_title_now">اب تک آپ کا ہفتہ، %1$s</string>
+    <string name="report_k_title_quiet">ایک خاموش ہفتہ، %1$s</string>
+    <string name="report_k_darood">درود</string>
+    <string name="report_k_top">امت کے ٹاپ %1$d%%</string>
+    <string name="report_k_top_short">ٹاپ %1$d%%</string>
+    <string name="report_k_rank">امت میں #%1$s</string>
+    <string name="report_k_rhythm">روزانہ کی ترتیب</string>
+    <string name="report_k_avg">اوسط %1$s / دن</string>
+    <string name="report_k_best_day">بہترین دن</string>
+    <string name="report_k_best_value">%1$s · %2$s</string>
+    <string name="report_k_streak">سلسلہ</string>
+    <string name="report_k_streak_short">%1$d دن کا سلسلہ</string>
+    <string name="report_k_active">فعال دن</string>
+    <string name="report_k_active_value">%2$d میں سے %1$d دن</string>
+    <string name="report_k_most">سب سے زیادہ پڑھا</string>
+    <string name="report_k_circles">حلقوں کے نتائج</string>
+    <string name="report_k_circle_meta">%1$s · %2$s درود</string>
+    <string name="report_k_share">تصویر کے طور پر شیئر کریں</string>
+    <string name="report_k_pdf">PDF ڈاؤن لوڈ کریں</string>
+    <string name="report_k_preparing">تیار ہو رہا ہے…</string>
+    <string name="report_k_recited">درود پڑھے</string>
+    <string name="report_k_wordmark">کثرتِ درود</string>
+</resources>

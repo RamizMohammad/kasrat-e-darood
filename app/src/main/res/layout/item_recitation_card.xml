@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Recite card (Stitch recite_teal): eyebrow (category · In session), Fraunces title,
+     heart, Arabic, meaning; bottom-right "+33" pill, or the stepper once it's in the log
+     (then the card gets a deep-teal/35 hairline). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
+
+    <LinearLayout
+        android:id="@+id/card"
+        style="@style/K.Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/card_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                    android:textColor="@color/text_muted"
+                    tools:text="DAROOD · IN SESSION" />
+
+                <TextView
+                    android:id="@+id/card_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+                    android:textColor="@color/text_primary"
+                    tools:text="Darood-e-Ibrahimi" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/card_heart"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="-8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/recite_fav_add"
+                android:padding="8dp"
+                android:src="@drawable/ic_ph_heart"
+                app:tint="@color/text_muted" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/card_arabic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textAppearance="@style/TextAppearance.K.ArabicMd"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/card_transliteration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/card_meaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textAppearance="@style/TextAppearance.K.BodySm"
+            android:textColor="@color/text_muted" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/card_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/bg_k_stepper"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:textAppearance="@style/TextAppearance.K.SerifLabel"
+                android:textColor="@color/text_primary"
+                tools:text="+33" />
+
+            <LinearLayout
+                android:id="@+id/card_stepper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/bg_k_stepper"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/card_minus"
+                    style="@style/K.StepMinus"
+                    android:contentDescription="@string/cart_remove" />
+
+                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.CountRollTextView
+                    android:id="@+id/card_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:gravity="center"
+                    android:minWidth="28dp"
+                    android:textAppearance="@style/TextAppearance.K.SerifLabel"
+                    android:textColor="@color/text_primary"
+                    tools:text="100" />
+
+                <ImageView
+                    android:id="@+id/card_plus"
+                    style="@style/K.StepPlus"
+                    android:contentDescription="@string/quick_add" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

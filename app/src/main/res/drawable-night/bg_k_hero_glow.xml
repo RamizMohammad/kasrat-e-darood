@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark theme copy (Phase D): teal → gold, light fills → night surfaces. -->
+<!-- Home hero "mesh glow": teal at 20%/25%, rose at 80%/30%, teal at 60%/85%; the view sits
+     12dp outside the card at 45% opacity (Stitch: -inset-3 opacity-45 blur-2xl). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:type="radial" android:centerX="0.2" android:centerY="0.25"
+                android:gradientRadius="60%" android:startColor="#38C9A24B" android:endColor="#00C9A24B" />
+            <corners android:radius="@dimen/k_radius_lg" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:type="radial" android:centerX="0.8" android:centerY="0.3"
+                android:gradientRadius="60%" android:startColor="#33C9A24B" android:endColor="#00C9A24B" />
+            <corners android:radius="@dimen/k_radius_lg" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:type="radial" android:centerX="0.6" android:centerY="0.85"
+                android:gradientRadius="60%" android:startColor="#2EC9A24B" android:endColor="#00C9A24B" />
+            <corners android:radius="@dimen/k_radius_lg" />
+        </shape>
+    </item>
+</layer-list>

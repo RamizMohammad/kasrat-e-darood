@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Goal reached" capsule: gold-soft/30, gold/70 hairline. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#4DFFEFD4" />
+    <stroke android:width="@dimen/hairline" android:color="#B3C9A24B" />
+    <corners android:radius="100dp" />
+</shape>

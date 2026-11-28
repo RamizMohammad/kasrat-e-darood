@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Podium (Stitch ranks_teal): #2 · #1 · #3 bottom-aligned. #1: crown, 72dp gold ring,
+     title-md name; #2: 56dp deep-teal/60 ring; #3: 56dp hairline ring. A white rank badge
+     with the ring's colour sits on each avatar's lower edge. Rings follow RANK (PodiumView). -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+    <LinearLayout
+        android:id="@+id/podium_second"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:paddingBottom="8dp">
+
+            <FrameLayout
+                android:id="@+id/podium_second_ring"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/ring_k_teal"
+                android:padding="4dp">
+
+                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+                    android:id="@+id/podium_second_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/podium_second_step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@drawable/bg_k_badge_teal"
+                android:paddingHorizontal="6dp"
+                android:textAppearance="@style/TextAppearance.K.SerifLabel"
+                android:textColor="@color/text_primary"
+                tools:text="1" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/podium_second_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/text_primary"
+            tools:text="Amina" />
+
+        <TextView
+            android:id="@+id/podium_second_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textAppearance="@style/TextAppearance.K.SerifLabel"
+            android:textColor="@color/k_deep_ink_75"
+            android:textSize="13sp"
+            tools:text="42,180" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/podium_first"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/podium_first_crown"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginBottom="6dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_ph_crown"
+            app:tint="@color/k_gold" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:paddingBottom="8dp">
+
+            <FrameLayout
+                android:id="@+id/podium_first_ring"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/ring_k_gold"
+                android:padding="4dp">
+
+                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+                    android:id="@+id/podium_first_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/podium_first_step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@drawable/bg_k_badge_gold"
+                android:paddingHorizontal="6dp"
+                android:textAppearance="@style/TextAppearance.K.SerifLabel"
+                android:textColor="@color/text_primary"
+                tools:text="1" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/podium_first_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.TitleMd"
+            android:textColor="@color/text_primary"
+            tools:text="Amina" />
+
+        <TextView
+            android:id="@+id/podium_first_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textAppearance="@style/TextAppearance.K.SerifLabel"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            tools:text="42,180" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/podium_third"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:paddingBottom="8dp">
+
+            <FrameLayout
+                android:id="@+id/podium_third_ring"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/ring_k_hairline"
+                android:padding="4dp">
+
+                <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+                    android:id="@+id/podium_third_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/podium_third_step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@drawable/bg_k_badge_hairline"
+                android:paddingHorizontal="6dp"
+                android:textAppearance="@style/TextAppearance.K.SerifLabel"
+                android:textColor="@color/text_primary"
+                tools:text="1" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/podium_third_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/text_primary"
+            tools:text="Amina" />
+
+        <TextView
+            android:id="@+id/podium_third_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textAppearance="@style/TextAppearance.K.SerifLabel"
+            android:textColor="@color/k_deep_ink_75"
+            android:textSize="13sp"
+            tools:text="42,180" />
+    </LinearLayout>
+
+    </LinearLayout>
+</merge>

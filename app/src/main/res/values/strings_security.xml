@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="security_rooted_title">This phone is rooted</string>
+    <string name="security_rooted_body">Other apps on a rooted phone can read app data. Kasrat-e-Darood keeps your sign-in encrypted, but your account is safer on a phone that isn\'t rooted.</string>
+    <string name="security_rooted_continue">I understand, continue</string>
+    <string name="security_tampered_title">This copy of the app can\'t run</string>
+    <string name="security_tampered_body">This copy of Kasrat-e-Darood has been modified, or something is interfering with it. For your account\'s safety it has been signed out. Please install the app from Google Play.</string>
+    <string name="security_close">Close</string>
+</resources>

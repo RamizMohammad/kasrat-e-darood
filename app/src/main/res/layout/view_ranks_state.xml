@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Empty / error card under the board header. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/K.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/k_page_margin"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:id="@+id/state_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_ph_trophy"
+        android:tint="@color/k_gold" />
+
+    <TextView
+        android:id="@+id/state_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.K.HeadlineSm"
+        android:textColor="@color/text_primary" />
+
+    <TextView
+        android:id="@+id/state_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.K.BodySm"
+        android:textColor="@color/text_muted" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/state_action"
+        style="@style/Widget.Kasrat.Button.Link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+</LinearLayout>

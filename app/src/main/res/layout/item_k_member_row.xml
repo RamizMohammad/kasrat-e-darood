@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circle settings member: 36dp face, name, role (teal for owner / admin / moderator), dots. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="14dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="14dp">
+
+    <in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.AuraAvatarView
+        android:id="@+id/mem_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:importantForAccessibility="no" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mem_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.K.BodyMd"
+            android:textColor="@color/text_primary"
+            android:textDirection="firstStrong"
+            tools:text="Ayesha" />
+
+        <TextView
+            android:id="@+id/mem_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.K.LabelSm"
+            android:textColor="@color/amber"
+            tools:text="Admin" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/mem_more"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/circle_member_actions"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_ph_dots_three"
+        app:tint="@color/text_muted" />
+</LinearLayout>

@@ -12,56 +12,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.R;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.core.Haptics;
 import in.mohammad.ramiz.islamic.kasrat_e_darrod.data.Cart;
+import in.mohammad.ramiz.islamic.kasrat_e_darrod.ui.components.CountRollTextView;
 
-/** Renders the lines in the cart review sheet, with a remove action. */
-public class CartLineAdapter extends RecyclerView.Adapter<CartLineAdapter.VH> {
+/** Cart lines in the review sheet: name, Arabic, − count + and remove. Edits go straight to the Cart. */
+public class CartLineAdapter extends RecyclerView.Adapter<CartLineAdapter.Holder> {
 
-    public interface OnRemove { void onRemove(Cart.Line line); }
+    private List<Cart.Line> lines = new ArrayList<>();
 
-    private final List<Cart.Line> lines;
-    private final OnRemove onRemove;
-
-    public CartLineAdapter(List<Cart.Line> lines, OnRemove onRemove) {
-        this.lines = new ArrayList<>(lines);
-        this.onRemove = onRemove;
-    }
-
-    public void setLines(List<Cart.Line> newLines) {
-        lines.clear();
-        lines.addAll(newLines);
-        notifyDataSetChanged();
+    public void setLines(@NonNull List<Cart.Line> next) {
+        List<Cart.Line> prev = lines;
+        lines = next;
+        if (prev.size() != next.size()) {
+            notifyDataSetChanged();
+            return;
+        }
+        for (int i = 0; i < next.size(); i++) {
+            if (!prev.get(i).id.equals(next.get(i).id)) {
+                notifyDataSetChanged();
+                return;
+            }
+        }
+        notifyItemRangeChanged(0, next.size(), RecitationCardAdapter.CART);   // counts only
     }
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_cart_line, parent, false);
-        return new VH(v);
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart_line, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH h, int position) {
-        Cart.Line line = lines.get(position);
-        h.urdu.setText(line.urduName);
-        h.english.setText(line.englishName);
-        h.count.setText("×" + line.count);
-        h.remove.setOnClickListener(v -> {
-            if (onRemove != null) onRemove.onRemove(line);
+    public void onBindViewHolder(@NonNull Holder h, int position) {
+        bind(h, lines.get(position), false);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull Holder h, int position, @NonNull List<Object> payloads) {
+        bind(h, lines.get(position), !payloads.isEmpty());
+    }
+
+    private void bind(@NonNull Holder h, @NonNull Cart.Line l, boolean animate) {
+        h.name.setText(l.englishName);
+        h.arabic.setText(l.arabicName);
+        h.arabic.setVisibility(l.arabicName == null || l.arabicName.isEmpty() ? View.GONE : View.VISIBLE);
+        h.count.setCount(l.count, animate && h.count.hasCount());
+        h.plus.setOnClickListener(v -> {
+            Haptics.tick(v.getContext());
+            Cart.get().add(l.id, l.arabicName, l.englishName, l.step);
         });
+        h.minus.setOnClickListener(v -> {
+            Haptics.tick(v.getContext());
+            Cart.get().subtract(l.id);
+        });
+        h.remove.setOnClickListener(v -> Cart.get().remove(l.id));
     }
 
     @Override
     public int getItemCount() { return lines.size(); }
 
-    static class VH extends RecyclerView.ViewHolder {
-        final TextView urdu, english, count, remove;
-        VH(@NonNull View v) {
+    static final class Holder extends RecyclerView.ViewHolder {
+        final TextView name, arabic;
+        final CountRollTextView count;
+        final View plus, minus, remove;
+
+        Holder(@NonNull View v) {
             super(v);
-            urdu = v.findViewById(R.id.line_urdu);
-            english = v.findViewById(R.id.line_english);
+            name = v.findViewById(R.id.line_name);
+            arabic = v.findViewById(R.id.line_arabic);
             count = v.findViewById(R.id.line_count);
+            plus = v.findViewById(R.id.line_plus);
+            minus = v.findViewById(R.id.line_minus);
             remove = v.findViewById(R.id.line_remove);
         }
     }

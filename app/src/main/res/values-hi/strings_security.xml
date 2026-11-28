@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="security_rooted_title">यह फ़ोन रूटेड है</string>
+    <string name="security_rooted_body">रूटेड फ़ोन पर दूसरे ऐप्स, ऐप का डेटा पढ़ सकते हैं। कसरत-ए-दरूद आपका साइन-इन एन्क्रिप्ट करके रखता है, फिर भी बिना रूट वाले फ़ोन पर आपका अकाउंट ज़्यादा सुरक्षित है।</string>
+    <string name="security_rooted_continue">समझ गया, जारी रखें</string>
+    <string name="security_tampered_title">ऐप की यह कॉपी नहीं चल सकती</string>
+    <string name="security_tampered_body">कसरत-ए-दरूद की इस कॉपी में बदलाव किया गया है, या कोई चीज़ इसमें दख़ल दे रही है। आपके अकाउंट की सुरक्षा के लिए आपको साइन आउट कर दिया गया है। कृपया ऐप Google Play से इंस्टॉल करें।</string>
+    <string name="security_close">बंद करें</string>
+</resources>

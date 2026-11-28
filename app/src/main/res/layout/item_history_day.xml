@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- History day heading: "TODAY" · "333 darood". -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="24dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/day_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:accessibilityHeading="true"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.K.Eyebrow"
+        android:textColor="@color/text_secondary"
+        tools:text="Today" />
+
+    <TextView
+        android:id="@+id/day_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFeatureSettings="tnum"
+        android:textAppearance="@style/TextAppearance.K.LabelSm"
+        android:textColor="@color/text_secondary"
+        tools:text="333 darood" />
+</LinearLayout>

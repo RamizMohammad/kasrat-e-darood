@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Text tab underline (border-b): 1dp deep teal at the bottom. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="bottom|fill_horizontal" android:height="1dp">
+        <shape android:shape="rectangle"><solid android:color="@color/amber" /></shape>
+    </item>
+</layer-list>

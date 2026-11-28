@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circles summary (Stitch circles_teal): "THIS WEEK", "Your circles recited 1,48,320
+     together", a small rising teal line. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp">
+
+    <LinearLayout
+        style="@style/K.Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="16dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ranks_tab_week"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.K.Eyebrow"
+                android:textColor="@color/text_muted" />
+
+            <TextView
+                android:id="@+id/groups_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="@style/TextAppearance.K.BodyMd"
+                android:textColor="@color/text_primary"
+                tools:text="Your circles recited 1,48,320 together" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/k_sparkline" />
+    </LinearLayout>
+</FrameLayout>
